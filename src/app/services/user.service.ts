@@ -13,5 +13,11 @@ export class UserService {
     return this._http.post(this.apiUrl+"/api/login", user);
   }
 
+  getName(email: string) {
+    return this._http.get(this.apiUrl+"/api/users/"+email);
+  }
+
+  
+
   constructor() { }
 }

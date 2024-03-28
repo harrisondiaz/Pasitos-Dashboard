@@ -5,8 +5,15 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrl: './navbar.component.scss',
+  inputs: ['name'],
 })
 export class NavbarComponent {
-
+  name = '';
+  logout() {
+    localStorage.removeItem('access_token');
+    localStorage.setItem('sessionBefore', 'true');
+    localStorage.removeItem('currentUser');
+    window.location.reload();
+  }
 }

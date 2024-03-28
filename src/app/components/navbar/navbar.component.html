@@ -1,133 +1,122 @@
-<nav id="header" class="bg-white fixed w-full z-10 top-0 shadow">
-    <div
-      class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0"
-    >
-      <div class="w-1/2 pl-2 md:pl-0">
-        <a
-          class="text-gray-900 text-xl xl:text-3xl no-underline text-nowrap hover:no-underline font-bold text-better"
-        >
-          <i class="fas fa-sun text-pink-600 pr-3"></i> Dashboard Parceritos Baby
-        </a>
-      </div>
-      <div class="w-1/2 pr-0">
-        <div class="flex relative inline-block float-right">
-          <div class="relative text-sm">
-            <button
-             id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
-              id="userButton"
-              class="flex items-center focus:outline-none mr-3"
-            >
-              <img
-                class="w-8 h-8 rounded-full mr-4"
-                src="https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/public%20images/_3edd1255-0380-49c4-8654-19416669e32f.jpeg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwdWJsaWMgaW1hZ2VzL18zZWRkMTI1NS0wMzgwLTQ5YzQtODY1NC0xOTQxNjY2OWUzMmYuanBlZyIsImlhdCI6MTcxMTM5MzM3MCwiZXhwIjoyMzQyNTQ1MzcwfQ.GqyzvBWVdRgGKIAoQBaUGZ9mNVaVARGbrB6zp9nBXbE&t=2024-03-25T19%3A02%3A52.033Z"
-                alt="Avatar of User"
-              />
-              <span class="hidden md:inline-block">Hola, </span>
-              <svg
-                class="pl-2 h-2"
-                version="1.1"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 129 129"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                enable-background="new 0 0 129 129"
-              >
-                <g>
-                  <path
-                    d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z"
-                  ></path>
-                </g>
-              </svg>
-            </button>
-            <div
-              id="dropdown"
-              class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible"
-            >
-              <ul class="list-reset">
-                <li>
-                  <a
-                    
-                    class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"
-                    >Salida segura</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="block lg:hidden pr-4">
-            <button
-              id="nav-toggle"
-              class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-gray-900 hover:border-teal-500 appearance-none focus:outline-none"
-            >
-              <svg
-                class="fill-current h-3 w-3"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>Menu</title>
-                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden lg:block mt-2 lg:mt-0 bg-white z-20"
-        id="nav-content"
+<nav class=" bg-white border-gray-200 dark:bg-gray-900">
+  <div
+    class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+  >
+    <a class="flex items-center space-x-3 rtl:space-x-reverse">
+      <span
+        class="self-center text-better text-xl md:text-4xl text-pink-500 font-semibold whitespace-nowrap dark:text-white"
+        >Dashboard Parceritos Baby</span
       >
-        <ul class="list-reset lg:flex flex-1 items-center px-4 md:px-0">
-          <li class="mr-6 my-2 md:my-0">
+    </a>
+    <div
+      class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse"
+    >
+      <button
+        type="button"
+        class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+        id="user-menu-button"
+        aria-expanded="false"
+        data-dropdown-toggle="user-dropdown"
+        data-dropdown-placement="bottom"
+      >
+        <span class="sr-only">Open user menu</span>
+        <img
+          class="w-8 h-8 rounded-full mr-4"
+          src="https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/public%20images/_098d782c-ffec-4fc3-9b1c-8354a638dc8a.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwdWJsaWMgaW1hZ2VzL18wOThkNzgyYy1mZmVjLTRmYzMtOWIxYy04MzU0YTYzOGRjOGEuanBnIiwiaWF0IjoxNzExNjQ1NDQ3LCJleHAiOjIzNDI3OTc0NDd9._36sw3UHFDLJ-1FEvcphthV2fa59cKp28L1gu5GpPcA&t=2024-03-28T17%3A04%3A08.738Z"
+          alt="Avatar of User"
+        />
+      </button>
+      <!-- Dropdown menu -->
+      <div
+        class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+        id="user-dropdown"
+      >
+        <div class="px-4 py-3">
+          <span class="block text-sm text-gray-900 dark:text-white">Hola</span>
+          <span
+            class="block text-sm text-gray-500 truncate dark:text-gray-400"
+            >{{ name }}</span
+          >
+        </div>
+        <ul class="py-2" aria-labelledby="user-menu-button">
+          <li>
             <a
-              href="#"
-              class="block py-1 md:py-3 pl-1 align-middle text-gray-600 no-underline hover:text-gray-900 border-b-2 border-white hover:border-orange-600"
+              (click)="logout()"
+              class="block px-4 cursor-pointer py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+              >Salida segura</a
             >
-              <i class="fas fa-fw mr-3 "></i><span
-                class="pb-1 md:pb-0 text-sm">Inicio</span
-              >
-            </a>
-          </li>
-          <li class="mr-6 my-2 md:my-0">
-            <a
-              href="/product"
-              class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-pink-500"
-            >
-              <i class="fas fa-fw mr-3"></i><span
-                class="pb-1 md:pb-0 text-sm">Productos</span
-              >
-            </a>
-          </li>
-          <li class="mr-6 my-2 md:my-0">
-            <a
-              href="#"
-              class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-purple-500"
-            >
-              <i class="fa  fa-fw mr-3"></i><span
-                class="pb-1 md:pb-0 text-sm">Proveedores</span
-              >
-            </a>
-          </li>
-          <li class="mr-6 my-2 md:my-0">
-            <a
-              href="#"
-              class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-green-500"
-            >
-              <i class="fas fa-fw mr-3"></i><span
-                class="pb-1 md:pb-0 text-sm">Reportes</span
-              >
-            </a>
-          </li>
-          <li class="mr-6 my-2 md:my-0">
-            <a
-              href="#"
-              class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-gray-900 border-b-2 border-white hover:border-red-500"
-            >
-              <i class="fa fa-wallet fa-fw mr-3"></i><span
-                class="pb-1 md:pb-0 text-sm">Creo que si</span
-              >
-            </a>
           </li>
         </ul>
       </div>
+      <button
+        data-collapse-toggle="navbar-user"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-user"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
+        </svg>
+      </button>
     </div>
-  </nav>
+    <div
+      class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+      id="navbar-user"
+    >
+      <ul
+        class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+      >
+        <li>
+          <a
+            href="#"
+            class="block poppins-medium py-2 px-3 text-white bg-pink-700 rounded md:bg-transparent md:text-pink-700 md:p-0 md:dark:text-pink-500"
+            aria-current="page"
+            >Inicio</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block poppins-medium py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-pink-700"
+            >Productos</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block poppins-medium py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-pink-700"
+            >Proveedores</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block poppins-medium py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-pink-700"
+            >Clientes</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block poppins-medium py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-pink-700 md:p-0 dark:text-white md:dark:hover:text-pink-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-pink-700"
+            >Reportes</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
