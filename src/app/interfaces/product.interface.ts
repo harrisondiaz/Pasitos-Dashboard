@@ -12,6 +12,7 @@ export interface Product {
     supplier:       string;
     homePrice:      HomePrice;
     photos:         Photo[];
+    description:    string;
 }
 
 export interface HomePrice {
