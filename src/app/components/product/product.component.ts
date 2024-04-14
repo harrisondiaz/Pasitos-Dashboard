@@ -46,7 +46,10 @@ export class ProductComponent implements OnInit{
     }
   }
 
-  
+  setWindow(pasare: string) {
+    localStorage.setItem('window', pasare);
+    window.location.reload();
+  }
 
 
   getProducts() {

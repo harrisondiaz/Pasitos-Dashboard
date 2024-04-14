@@ -241,17 +241,29 @@
   </div>
 </aside>
 
-<div class="p-4 mt-20 sm:ml-64">
-  @if(window==="home"){
-  <app-body name="{{ name }}" />
-  }@else if (window==="product") {
-  <app-product />
-  }@else if (window==="provider") {
-  <app-provider />
-  }@else if (window==="client") {
-  <app-client />
-  }@else if (window==="report") {
-  <app-report />
+<div class="p-4  sm:ml-64">
+  @switch (window) {
+    @case ('home'){
+      <app-body name="{{ name }}" />
+    }
+    @case ('product'){
+      <app-product />
+    }
+    @case ('provider'){
+      <app-provider />
+    }
+    @case ('client'){
+      <app-client />
+    }
+    @case ('report'){
+      <app-report />
+    }
+    @case ('new-product') {
+      <app-new-produc />
+    }
+    @default {
+      <app-body name="{{ name }}" />
+    }
   }
 </div>
 

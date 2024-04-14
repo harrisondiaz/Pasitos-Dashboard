@@ -13,6 +13,7 @@ export interface Product {
     homePrice:      HomePrice;
     photos:         Photo[];
     description:    string;
+    type:           string;
 }
 
 export interface HomePrice {

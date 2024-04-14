@@ -1,0 +1,155 @@
+<div class="flex flex-col mt-12">
+  <h1 class="text-3xl font-bold text-start">Nuevo producto</h1>
+  <form class="flex flex-col w-10/12 mx-auto mt-10  gap-4">
+    <div class="md:flex md:flex-row mb-4 md:w-3/6 md:gap-x-5">
+      <div class="md:flex md:flex-col md:w-full">
+        <label
+          for="id"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >ID</label
+        >
+        <input
+          formControlName="productID"
+          [defaultValue]="1"
+          id="id"
+          name="id"
+          type="number"
+          class="mb-6 select-none bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+        <p
+          class="block text-sm font-medium text-gray-500 dark:text-gray-300 -translate-y-5"
+        >
+          El ID se generará automáticamente.
+        </p>
+      </div>
+
+      <div class="md:flex md:flex-col md:w-full">
+        <label
+          for="reference"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Referencia</label
+        >
+        <input
+          formControlName="reference"
+          id="reference"
+          name="reference"
+          type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+    </div>
+
+    <div class="w-full">
+      <label
+        for="productName"
+        class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+        >Nombre del producto</label
+      >
+      <input
+        formControlName="productName"
+        id="productName"
+        name="productName"
+        type="text"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      />
+    </div>
+    <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
+      <div class="flex flex-col w-6/12">
+        <label
+          for="quantity"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Cantidad</label
+        >
+        <input
+          formControlName="quantity"
+          id="quantity"
+          name="quantity"
+          type="number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col w-full">
+        <label
+          for="category"
+          class="block text-sm font-medium text-gray-900 dark:text-white"
+          >Categoría</label
+        >
+        <select
+          formControlName="category"
+          id="category"
+          name="category"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option selected>Seleccione una opción</option>
+          <option value="alimentación">Alimentación</option>
+          <option value="aseo">Aseo</option>
+          <option value="para dormir">Para dormir</option>
+          <option value="juguete">Juguete</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
+      <div class="flex flex-col w-full">
+        <label
+          for="stock"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Stock</label
+        >
+        <input
+          formControlName="stock"
+          id="stock"
+          name="stock"
+          type="number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col w-full">
+        <label
+          for="type"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Tipo de unidad</label
+        >
+        <select
+          formControlName="type"
+          id="type"
+          name="type"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option value="unidad" selected>Unidad</option>
+          <option value="paquete">Paquete</option>
+          <option value="caja">Caja</option>
+        </select>
+      </div>
+    </div>
+    <div class="mb-4">
+      <label
+        for="descripcion"
+        class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+        >Descripción</label
+      >
+      <textarea
+        formControlName="descripcion"
+        id="descripcion"
+        name="descripcion"
+        rows="5"
+        class="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+      ></textarea>
+    </div>
+
+    <div class="flex items-center justify-between mt-4">
+      <button
+        (click)="setWindow('product')"
+        type="button"
+        class="px-4 py-2 rounded-md bg-gray-300 text-gray-600 font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
+      >
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+        Guardar producto
+      </button>
+    </div>
+  </form>
+</div>
