@@ -1,6 +1,6 @@
 <div class="flex flex-col mt-12">
   <h1 class="text-3xl font-bold text-start">Nuevo producto</h1>
-  <form class="flex flex-col w-10/12 mx-auto mt-10  gap-4">
+  <form class="flex flex-col sm:w-full md:w-10/12 md:mx-auto mt-10 gap-4">
     <div class="md:flex md:flex-row mb-4 md:w-3/6 md:gap-x-5">
       <div class="md:flex md:flex-col md:w-full">
         <label
@@ -54,7 +54,7 @@
       />
     </div>
     <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
-      <div class="flex flex-col w-6/12">
+      <div class="flex flex-col md:w-6/12">
         <label
           for="quantity"
           class="block text-sm font-medium text-gray-700 dark:text-gray-400"
@@ -86,6 +86,51 @@
           <option value="para dormir">Para dormir</option>
           <option value="juguete">Juguete</option>
         </select>
+      </div>
+    </div>
+    <div class="flex flex-col md:flex-row md:gap-x-5 gap-y-5">
+      <div class="flex flex-col w-full">
+        <label
+          for="costWithoutVAT"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Costo sin IVA</label
+        >
+        <input
+          formControlName="costWithoutVAT"
+          id="costWithoutVAT"
+          name="costWithoutVAT"
+          type="number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col w-full">
+        <label
+          for="costWithVAT"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Costo con IVA</label
+        >
+        <input
+          formControlName="costWithVAT"
+          id="costWithVAT"
+          name="costWithVAT"
+          type="number"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
+      </div>
+      <div class="flex flex-col w-full">
+        <label
+          for="vat"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >IVA</label
+        >
+        <input
+          formControlName="vat"
+          id="vat"
+          name="vat"
+          type="number"
+          [defaultValue]="19"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
       </div>
     </div>
     <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
@@ -120,6 +165,104 @@
           <option value="caja">Caja</option>
         </select>
       </div>
+    </div>
+    <div
+      class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+    >
+      @for (item of selectedColors; track $index) {
+      <div class="flex flex-col">
+        <label
+          for="color"
+          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+          >Color</label
+        >
+        <select
+          formControlName="color"
+          id="color"
+          name="color"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          <option selected>Selecione un color</option>
+          <option value="white">Blanco</option>
+          <option value="black">Negro</option>
+          <option value="black">Negro</option>
+          <option value="brown">Marrón</option>
+          <option value="green">Verde</option>
+          <option value="pink">Rosa</option>
+          <option value="purple">Púrpura</option>
+          <option value="red">Rojo</option>
+          <option value="white">Blanco</option>
+          <option value="yellow">Amarillo</option>
+          <option value="blue">Azul</option>
+        </select>
+
+        <div class="flex items-center justify-center w-full mt-5">
+          <label
+            for="dropzone-file"
+            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg
+                class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <p class="mx-5 mb-2 text-sm text-center text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Da click para subir</span> o sujeta
+                y suelta un archivo
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                SVG, PNG, JPG or GIF (MAX. 800x400px)
+              </p>
+            </div>
+            <input id="dropzone-file" formControlName="url" type="file" class="hidden" />
+          </label>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="flex flex-row gap-x-5">
+      <button
+        (click)="addImages()"
+        type="button"
+        class="flex flex-row focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-900"
+      >
+        <svg
+          class="w-5 h-5 me-2 text-white dark:text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+        </svg>
+        Agregar Color
+      </button>
+      <button
+        (click)="remove()"
+        type="button"
+        class="flex flex-row focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      >
+        <svg
+          class="w-5 h-5 me-2 text-white dark:text-gray-400"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zm0 5h2v9H9zm4 0h2v9h-2z"
+          />
+        </svg>
+        Borrar
+      </button>
     </div>
     <div class="mb-4">
       <label
