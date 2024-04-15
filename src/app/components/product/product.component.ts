@@ -9,41 +9,49 @@ import { elementAt } from 'rxjs';
   standalone: true,
   imports: [ItemCardComponent],
   templateUrl: './product.component.html',
-  styleUrl: './product.component.scss'
+  styleUrl: './product.component.scss',
 })
-export class ProductComponent implements OnInit{
-
+export class ProductComponent implements OnInit {
   productList: Product[] = [];
-  renderer: any;
-  waiting: boolean = true;
+  groupedPhotosByColor: Record<string, Photo[]> = {};
+  currentColor: string = 'blue';
+  colorOrder: string[] = [];
 
-  toggleModal() {
-    const element: HTMLElement | null = document.getElementById('crud-modal');
-    if (element) {
-      element.classList.remove('hidden');
-    }
+  getProducts() {
+    this.productService.getAll().subscribe({
+      next: (products) => {
+        this.productList = products;
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
-  close(){
-    const element: HTMLElement | null = document.getElementById('crud-modal');
-    if (element) {
-      element.classList.add('hidden');
-    }
+  setColor(color: string) {
+    this.currentColor = color;
   }
 
-  selectedColors: Photo[] = [{ color: '', url: '' }];
-  currentImageIndex = 0;
-
-  addImages() {
-    this.selectedColors.push({ color: '', url: '' });
-    this.currentImageIndex = this.selectedColors.length - 1;
+  getColor(product: Product): string[] {
+    if (product && product.photos) {
+      this.groupedPhotosByColor = this.groupPhotosByColor(product.photos);
+      this.colorOrder = Object.keys(this.groupedPhotosByColor); // Capture color order
+      return this.colorOrder;
+    }
+    return []; // Add a default return value
   }
 
-  remove(){
-    if(this.selectedColors.length > 1){
-      this.selectedColors.pop();
-      this.currentImageIndex = this.selectedColors.length - 1;
-    }
+  groupPhotosByColor(photos: Photo[]): Record<string, Photo[]> {
+    const groupedPhotos: Record<string, Photo[]> = {};
+
+    photos.forEach((photo) => {
+      if (!groupedPhotos[photo.color]) {
+        groupedPhotos[photo.color] = [];
+      }
+      groupedPhotos[photo.color].push(photo);
+    });
+
+    return groupedPhotos;
   }
 
   setWindow(pasare: string) {
@@ -51,28 +59,23 @@ export class ProductComponent implements OnInit{
     window.location.reload();
   }
 
-
-  getProducts() {
-    console.log(this.productService.getAll());
-
-    this.productService.getAll().subscribe({
-      next: (products) => {
-        this.productList= products;
-      },
-      error: (error) => {
-        console.error(error);
-      }
-    
+  formatColors(product: Product): [string, string[]][] {
+    const colors = this.getColor(product);
+    return colors.map((color) => {
+      const photoUrls = this.groupedPhotosByColor[color].map(
+        (photo) => photo.url
+      );
+      return [color, photoUrls];
     });
   }
 
-  constructor(private productService: ProductService) { }
+  print(text: string) {
+    console.log(text);
+  }
+
+  constructor(private productService: ProductService) {}
 
   ngOnInit() {
     this.getProducts();
-    setTimeout(() => {
-      this.waiting = false;
-    }, 5000);
   }
-
 }

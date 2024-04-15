@@ -1,5 +1,5 @@
 <div>
-  <div class="group2  visible md:invisible">
+  <div class="group2 mt-16 -mb-32  visible md:invisible">
     <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
       <g>
         <path
@@ -10,7 +10,6 @@
     <input placeholder="Busqueda" type="search" class="input" />
   </div>
   <div class="flex items-center justify-between p-4 md:p-5 mb-10">
-    
     <div
       class="invisible md:visible flex flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"
     >
@@ -82,66 +81,100 @@
   </div>
 </div>
 
-<div
-  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mx-24"
->
-  @if(!waiting){ @for (item of productList; track item.productID) {
-  <app-item-card [product]="item"></app-item-card>
 
-  } }@else {
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:mx-24"
+>
+  @for (item of productList; track item.productID) {
 
   <div
-    role="status"
-    class="max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
+    class="w-full max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
   >
-    <div
-      class="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-700"
-    >
-      <svg
-        class="w-10 h-10 text-gray-200 dark:text-gray-600"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 16 20"
+    @for (color of formatColors(item); track $index) { @if
+    (currentColor===color[0]) {
+    <img
+      src="{{ color[1] }}"
+      alt="{{ item.productName }}"
+      class="w-full h-96 object-contain rounded-lg shadow-lg"
+    />
+    }@else{
+    <img
+      src="{{ color[1] }}"
+      alt="{{ item.productName }}"
+      class="w-full h-96 object-contain rounded-lg shadow-lg hidden"
+    />
+
+    } }
+    <a href="#" class="md:mt-3">
+      <h5
+        class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
       >
-        <path
-          d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z"
-        />
-        <path
-          d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z"
-        />
-      </svg>
+        {{ item.productName }}
+      </h5>
+    </a>
+
+    <div class="space-x-5 mx-1 my-5">
+      @for (color of formatColors(item); track $index) { @if
+      (currentColor===color[0]) {
+      <button
+        (click)="setColor(color[0])"
+        class="bg-{{ color[0] }} size-10 rounded-lg outline outline-offset-2 "
+      ></button>
+      } @else {
+      <button
+        (click)="setColor(color[0])"
+        class="bg-{{
+          color[0]
+        }} size-10 rounded-lg outline outline-offset-2 outline-1"
+      ></button>
+
+      } }
     </div>
-    <div
-      class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"
-    ></div>
-    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-    <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-    <div class="flex items-center mt-4">
-      <svg
-        class="w-10 h-10 me-3 text-gray-200 dark:text-gray-700"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 20 20"
+    <div class="flex items-center justify-between">
+      <span class="text-3xl font-bold text-gray-900 dark:text-white"
+        >${{ item.totalCost }}</span
       >
-        <path
-          d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"
-        />
-      </svg>
-      <div>
-        <div
-          class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"
-        ></div>
-        <div class="w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
-      </div>
     </div>
-    <span class="sr-only">Loading...</span>
+    <div class="flex flex-row justify-between mt-2">
+      <!--Delete Button-->
+      <button
+        type="button"
+        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zm0 5h2v9H9zm4 0h2v9h-2z"
+          />
+        </svg>
+      </button>
+      <!--Edit Button-->
+      <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-7 w-7"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="M3 21v-4.25L16.2 3.575q.3-.275.663-.425t.762-.15q.4 0 .775.15t.65.45L20.425 5q.3.275.438.65T21 6.4q0 .4-.137.763t-.438.662L7.25 21zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z"
+          />
+        </svg>
+      </button>
+    </div>
   </div>
 
   }
 </div>
+
 <div
   (click)="setWindow('new-product')"
   class="visible md:invisible fixed bottom-0 right-0 mb-8 mr-8 rounded-full bg-lime-500 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500 transition ease-in-out duration-150"
