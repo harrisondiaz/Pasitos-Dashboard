@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+/*import { Component } from '@angular/core';
 import { Product, HomePrice, Photo } from '../../interfaces/product.interface';
 
 @Component({
@@ -87,4 +87,4 @@ export class ItemCardComponent {
       element.classList.add('hidden');
     }
   }
-}
+}*/

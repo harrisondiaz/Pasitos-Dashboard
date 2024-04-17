@@ -94,7 +94,7 @@
             <ul class="py-1" role="none">
               <li>
                 <a
-                  href="#"
+                  (click)="logout()"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                   role="menuitem"
                   >Salida segura</a
@@ -158,7 +158,7 @@
       </li>
       <li>
         <a
-          href="#"
+          (click)="setWindow('provider')"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
@@ -177,7 +177,7 @@
       </li>
       <li>
         <a
-          href="#"
+          (click)="setWindow('client')"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
@@ -197,7 +197,7 @@
 
       <li>
         <a
-          href="#"
+          (click)="setWindow('report')"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
         >
           <svg
@@ -241,8 +241,11 @@
   </div>
 </aside>
 
-<div class="p-4  sm:ml-64">
+<div class="p-4 sm:ml-64">
   @switch (window) {
+    @case('edit-product') {
+      <app-product-edit />
+    }
     @case ('home'){
       <app-body name="{{ name }}" />
     }
@@ -261,10 +264,11 @@
     @case ('new-product') {
       <app-new-produc />
     }
+    
     @default {
       <app-body name="{{ name }}" />
     }
   }
 </div>
 
-<app-footer />
+

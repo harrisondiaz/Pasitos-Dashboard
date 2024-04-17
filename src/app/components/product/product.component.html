@@ -1,5 +1,5 @@
-<div>
-  <div class="group2 mt-16 -mb-32  visible md:invisible">
+<div class="mt-20">
+  <div class="group2 visible  md:invisible -mb-20">
     <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
       <g>
         <path
@@ -9,9 +9,9 @@
     </svg>
     <input placeholder="Busqueda" type="search" class="input" />
   </div>
-  <div class="flex items-center justify-between p-4 md:p-5 mb-10">
+  <div class="flex items-center justify-between p-4 md:-mt-20 md:p-5 md:mb-2">
     <div
-      class="invisible md:visible flex flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"
+      class="flex invisible  md:visible  flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"
     >
       <div class="group">
         <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -28,7 +28,6 @@
           (click)="setWindow('new-product')"
           type="button"
           class="flex text-white bg-lime-500 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5"
-          data-modal-toggle="crud-modal"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -106,9 +105,9 @@
     />
 
     } }
-    <a href="#" class="md:mt-3">
+    <a href="#" class="md:mt-5">
       <h5
-        class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"
       >
         {{ item.productName }}
       </h5>
@@ -119,14 +118,14 @@
       (currentColor===color[0]) {
       <button
         (click)="setColor(color[0])"
-        class="bg-{{ color[0] }} size-10 rounded-lg outline outline-offset-2 "
+        class="bg-{{ color[0] }} size-10 rounded-full outline outline-3 outline-offset-2 "
       ></button>
       } @else {
       <button
         (click)="setColor(color[0])"
         class="bg-{{
           color[0]
-        }} size-10 rounded-lg outline outline-offset-2 outline-1"
+        }} size-10 rounded-full  outline-offset-2 outline-1"
       ></button>
 
       } }
@@ -154,8 +153,8 @@
         </svg>
       </button>
       <!--Edit Button-->
-      <button
-        type="button"
+      <a
+      (click)="setEdit('edit-product', item)"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2.5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       >
         <svg
@@ -168,19 +167,19 @@
             d="M3 21v-4.25L16.2 3.575q.3-.275.663-.425t.762-.15q.4 0 .775.15t.65.45L20.425 5q.3.275.438.65T21 6.4q0 .4-.137.763t-.438.662L7.25 21zM17.6 7.8L19 6.4L17.6 5l-1.4 1.4z"
           />
         </svg>
-      </button>
+      </a>
     </div>
   </div>
 
   }
 </div>
-
+<!--Add mobile product-->
 <div
   (click)="setWindow('new-product')"
   class="visible md:invisible fixed bottom-0 right-0 mb-8 mr-8 rounded-full bg-lime-500 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500 transition ease-in-out duration-150"
 >
   <svg
-    class="w-20 h-20 text-white mx-auto"
+    class="w-14 h-14 text-white mx-auto"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 24 24"
   >

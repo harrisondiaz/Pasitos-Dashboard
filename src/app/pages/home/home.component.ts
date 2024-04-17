@@ -8,6 +8,7 @@ import { ClientComponent } from '../../components/client/client.component';
 import { ProviderComponent } from '../../components/provider/provider.component';
 import { ReportComponent } from '../../components/report/report.component';
 import { NewProducComponent } from '../../components/new-produc/new-produc.component';
+import { ProductEditComponent } from '../../components/product-edit/product-edit.component';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +21,7 @@ import { NewProducComponent } from '../../components/new-produc/new-produc.compo
     ProviderComponent,
     ReportComponent,
     NewProducComponent,
+    ProductEditComponent,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -62,6 +64,7 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('sessionBefore', 'true');
     localStorage.removeItem('currentUser');
     localStorage.removeItem('window');
+    localStorage.removeItem('product');
     localStorage.removeItem('toast');
     window.location.reload();
   }

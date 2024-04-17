@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { Photo, Product } from '../../interfaces/product.interface';
-import { ItemCardComponent } from '../item-card/item-card.component';
+//import { ItemCardComponent } from '../item-card/item-card.component';
 import { elementAt } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [ItemCardComponent],
+  imports: [],
   templateUrl: './product.component.html',
   styleUrl: './product.component.scss',
 })
@@ -56,6 +56,12 @@ export class ProductComponent implements OnInit {
 
   setWindow(pasare: string) {
     localStorage.setItem('window', pasare);
+    window.location.reload();
+  }
+  
+  setEdit(pasare: string, product: Product) {
+    localStorage.setItem('window', pasare);
+    localStorage.setItem('product', JSON.stringify(product));
     window.location.reload();
   }
 

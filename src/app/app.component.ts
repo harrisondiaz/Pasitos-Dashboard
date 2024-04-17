@@ -4,16 +4,18 @@ import { OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { FooterComponent } from "./components/footer/footer.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    ReactiveFormsModule,
-  ],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
+    selector: 'app-root',
+    standalone: true,
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    imports: [
+        RouterOutlet,
+        ReactiveFormsModule,
+        FooterComponent
+    ]
 })
 export class AppComponent implements OnInit {
   title = 'Pasitos-Dashboard';
