@@ -9,22 +9,26 @@ import { ProviderComponent } from '../../components/provider/provider.component'
 import { ReportComponent } from '../../components/report/report.component';
 import { NewProducComponent } from '../../components/new-produc/new-produc.component';
 import { ProductEditComponent } from '../../components/product-edit/product-edit.component';
+import { ViewProviderComponent } from "../../components/view-provider/view-provider.component";
+import { NewProviderComponent } from "../../components/new-provider/new-provider.component";
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [
-    FooterComponent,
-    BodyComponent,
-    ProductComponent,
-    ClientComponent,
-    ProviderComponent,
-    ReportComponent,
-    NewProducComponent,
-    ProductEditComponent,
-  ],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
+    selector: 'app-home',
+    standalone: true,
+    templateUrl: './home.component.html',
+    styleUrl: './home.component.scss',
+    imports: [
+        FooterComponent,
+        BodyComponent,
+        ProductComponent,
+        ClientComponent,
+        ProviderComponent,
+        ReportComponent,
+        NewProducComponent,
+        ProductEditComponent,
+        ViewProviderComponent,
+        NewProviderComponent
+    ]
 })
 export class HomeComponent implements OnInit {
   name = '';

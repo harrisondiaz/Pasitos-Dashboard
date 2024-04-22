@@ -14,13 +14,15 @@ import { elementAt } from 'rxjs';
 export class ProductComponent implements OnInit {
   productList: Product[] = [];
   groupedPhotosByColor: Record<string, Photo[]> = {};
-  currentColor: string = 'blue';
   colorOrder: string[] = [];
+  isLoading: boolean = true;
 
   getProducts() {
     this.productService.getAll().subscribe({
       next: (products) => {
         this.productList = products;
+        this.isLoading = false;
+        this.setCurrentColor();
       },
       error: (error) => {
         console.error(error);
@@ -28,8 +30,12 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  setColor(color: string) {
-    this.currentColor = color;
+  setColor(product: Product,color: string) {
+    this.productList.forEach((element) => {
+      if (element.productID === product.productID) {
+        element.currentColor = color;
+      }
+    });
   }
 
   getColor(product: Product): string[] {
@@ -77,6 +83,13 @@ export class ProductComponent implements OnInit {
 
   print(text: string) {
     console.log(text);
+  }
+
+  setCurrentColor(){
+    this.productList.forEach((element) => {
+      element.currentColor = element.photos[0].color;
+    });
+    console.log(this.productList);
   }
 
   constructor(private productService: ProductService) {}

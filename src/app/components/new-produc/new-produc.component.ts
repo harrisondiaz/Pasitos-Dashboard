@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Photo, HomePrice, Product } from '../../interfaces/product.interface';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -54,12 +55,27 @@ export class NewProducComponent {
     }
   }
 
+  images: File[] = [];
+
+  postProduct() {
+    const formData = new FormData();
+    this.images.forEach((image, index) => {
+      formData.append(`image${index}`, image, image.name);
+    });
+  
+
+    this.http.post('http://example.com/api/upload', formData).subscribe(
+      (response) => console.log(response),
+      (error) => console.log(error)
+    );
+  }
+
   setWindow(pasare: string) {
     localStorage.setItem('window', pasare);
     window.location.reload();
   }
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }

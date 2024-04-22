@@ -1,0 +1,228 @@
+<!-- Return -->
+<div class="flex items-center justify-between mt-14">
+  <button
+    (click)="setWindow()"
+    class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 dark:focus:ring-gray-700 focus:ring-opacity-50 dark:focus:ring-opacity-50"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6 me-2 text-gray-700 dark:text-gray-200"
+      viewBox="0 0 24 24"
+    >
+      <path fill="#0284c7" d="m14 17l-5-5l5-5z" />
+    </svg>
+    Volver
+  </button>
+  <!-- edit button -->
+  <button
+    (click)="setEdit()"
+    class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-700 border border-blue-700 rounded-md dark:bg-blue-600 dark:border-blue-600 hover:bg-blue-800 dark:hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 dark:focus:ring-blue-800 focus:ring-opacity-50 dark:focus:ring-opacity-50"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 me-2 text-white"
+      viewBox="0 0 24 24"
+    >
+      <path
+        fill="currentColor"
+        d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"
+      />
+    </svg>
+    Editar
+  </button>
+</div>
+<div class="relative overflow-x-auto border shadow-md md:mx-40 sm:rounded-lg mt-5">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <tbody>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 border-b uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Naturaleza:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getNature() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Régimen de Impuestos:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getTaxRegime() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Tipo de Documento:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getDocumentType() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Documento:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getDocument() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Dígito de Verificación:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getVerificationDigit() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Primer Nombre:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getFirstName() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Otros Nombres:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getOtherNames() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Primer Apellido:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getLastName() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Segundo Apellido:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getSecondLastName() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Razón Social:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getBusinessName() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Departamento:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getDepartment() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Ciudad:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getCities() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4 text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Dirección:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getAddress() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4   text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Barrio:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getNeighborhood() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4  text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Teléfono:
+        </th>
+        <td class="px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getPhone() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class=" px-6 py-4  text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Zona:
+        </th>
+        <td class= " px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getZone() }}
+        </td>
+      </tr>
+      <tr>
+        <th
+          scope="row"
+          class="  px-6 py-4  text-xs text-gray-700 uppercase border-b bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          Correo Electrónico:
+        </th>
+        <td class=" px-6 py-4 bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          {{ getEmail() }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

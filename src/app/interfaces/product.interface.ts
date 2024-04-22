@@ -14,6 +14,7 @@ export interface Product {
     photos:         Photo[];
     description:    string;
     type:           string;
+    currentColor:   string;
 }
 
 export interface HomePrice {
