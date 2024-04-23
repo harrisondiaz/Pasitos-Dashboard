@@ -2,7 +2,7 @@
 <div class="mt-20">
   
     
-  <div class="group2 visible md:invisible -mb-20">
+  <div class="group2 visible md:invisible -mb-20 mx-5">
     <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
       <g>
         <path
@@ -82,7 +82,7 @@
   </div>
 </div>
 
-<div class="relative overflow-x-auto mx-auto md:mx-10 shadow-md sm:rounded-lg">
+<div class="relative overflow-x-auto md:mx-10 shadow-md sm:rounded-lg mx-5">
   <table
     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
@@ -100,125 +100,138 @@
       </tr>
     </thead>
     <tbody>
-      @for (item of providerList; track $index) {
-      <tr
-        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-      >
-        <th
-          scope="row"
-          class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-        >
-          {{ getBusinessName(item) }}
-        </th>
-        <td class="px-6 py-4 hidden md:table-cell">
-          {{ item.address }} - {{ item.city }}
-        </td>
-        <td class="px-6 py-4">
-          {{ item.phone }}
-        </td>
-        <td class="px-6 py-4 hidden md:table-cell">
-          {{ getEmail(item) }}
-        </td>
-        <td class="px-6 py-4">
-          @if(isButtonVisible){
-          <button
-            (click)="toggleDropdown()"
-            id="dropdownMenuIconHorizontalButton"
-            data-dropdown-toggle="dropdownDotsHorizontal"
-            class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            type="button"
+      @if(isLoading){
+        @for (item of shimmer; track $index) {
+          <tr class="animate-pulse">
+            <td class="px-6 py-4 bg-gray-200"></td>
+            <td class="px-6 py-4 hidden md:table-cell bg-gray-200"></td>
+            <td class="px-6 py-4 bg-gray-200"></td>
+            <td class="px-6 py-4 hidden md:table-cell bg-gray-200"></td>
+            <td class="px-6 py-4 bg-gray-200"></td>
+          </tr>
+        }
+      
+      }@else {
+        @for (item of providerList; track $index) {
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
-            <svg
-              class="w-6 h-6"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 16 3"
+            <th
+              scope="row"
+              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
-              <path
-                d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-              />
-            </svg>
-          </button>
+              {{ getBusinessName(item) }}
+            </th>
+            <td class="px-6 py-4 hidden md:table-cell">
+              {{ item.address }} - {{ item.city }}
+            </td>
+            <td class="px-6 py-4">
+              {{ item.phone }}
+            </td>
+            <td class="px-6 py-4 hidden md:table-cell">
+              {{ getEmail(item) }}
+            </td>
+            <td class="px-6 py-4">
+              @if(isButtonVisible){
+              <button
+                (click)="toggleDropdown()"
+                id="dropdownMenuIconHorizontalButton"
+                data-dropdown-toggle="dropdownDotsHorizontal"
+                class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                type="button"
+              >
+                <svg
+                  class="w-6 h-6"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 16 3"
+                >
+                  <path
+                    d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                  />
+                </svg>
+              </button>
+              }
+    
+              <!-- Dropdown menu -->
+              @if (isDropdownOpen){
+              <div
+                id="dropdownDotsHorizontal"
+                class="flex flex-row w-full bg-white dark:bg-gray-700"
+              >
+                <ul
+                  class="flex flex-row text-gray-700 dark:text-gray-200"
+                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                >
+                  <li class="mx-3">
+                    <!-- View Button -->
+                    <button (click)="setView('view-provider', item)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-7 w-7 text-black dark:text-white hover:underline"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li class="mr-3">
+                    <!-- Edit Button -->
+                    <button (click)="setEdit('edit-provider',item)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-7 w-7 text-black dark:text-white hover:underline"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h8.925l-2 2H5v14h14v-6.95l2-2V19q0 .825-.587 1.413T19 21zm4-6v-4.25l9.175-9.175q.3-.3.675-.45t.75-.15q.4 0 .763.15t.662.45L22.425 3q.275.3.425.663T23 4.4q0 .375-.137.738t-.438.662L13.25 15zM21.025 4.4l-1.4-1.4zM11 13h1.4l5.8-5.8l-.7-.7l-.725-.7L11 11.575zm6.5-6.5l-.725-.7zl.7.7z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <!-- Delete Button -->
+                  <li class="mr-3">
+                    <button (click)="toggleDelete(item)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-7 w-7 text-red-600 dark:text-red-500 hover:underline"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          fill="currentColor"
+                          d="m9.4 16.5l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L16 9.9l-1.4-1.4l-2.6 2.6l-2.6-2.6L8 9.9l2.6 2.6L8 15.1zM7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                  <li>
+                    <!-- Close Button -->
+                    <button (click)="toggleDropdown()">
+                      <svg
+                        class="w-6 h-6 text-black dark:text-white hover:underline"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor"
+                        viewBox="0 0 16 3"
+                      >
+                        <path
+                          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                        />
+                      </svg>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+    
+              }
+            </td>
+          </tr>
           }
-
-          <!-- Dropdown menu -->
-          @if (isDropdownOpen){
-          <div
-            id="dropdownDotsHorizontal"
-            class="flex flex-row w-full bg-white dark:bg-gray-700"
-          >
-            <ul
-              class="flex flex-row text-gray-700 dark:text-gray-200"
-              aria-labelledby="dropdownMenuIconHorizontalButton"
-            >
-              <li class="mx-3">
-                <!-- View Button -->
-                <button (click)="setView('view-provider', item)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-7 w-7 text-black dark:text-white hover:underline"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"
-                    />
-                  </svg>
-                </button>
-              </li>
-              <li class="mr-3">
-                <!-- Edit Button -->
-                <button>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-7 w-7 text-black dark:text-white hover:underline"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h8.925l-2 2H5v14h14v-6.95l2-2V19q0 .825-.587 1.413T19 21zm4-6v-4.25l9.175-9.175q.3-.3.675-.45t.75-.15q.4 0 .763.15t.662.45L22.425 3q.275.3.425.663T23 4.4q0 .375-.137.738t-.438.662L13.25 15zM21.025 4.4l-1.4-1.4zM11 13h1.4l5.8-5.8l-.7-.7l-.725-.7L11 11.575zm6.5-6.5l-.725-.7zl.7.7z"
-                    />
-                  </svg>
-                </button>
-              </li>
-              <!-- Delete Button -->
-              <li class="mr-3">
-                <button (click)="toggleDelete(item)">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-7 w-7 text-red-600 dark:text-red-500 hover:underline"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="m9.4 16.5l2.6-2.6l2.6 2.6l1.4-1.4l-2.6-2.6L16 9.9l-1.4-1.4l-2.6 2.6l-2.6-2.6L8 9.9l2.6 2.6L8 15.1zM7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21z"
-                    />
-                  </svg>
-                </button>
-              </li>
-              <li>
-                <!-- Close Button -->
-                <button (click)="toggleDropdown()">
-                  <svg
-                    class="w-6 h-6 text-black dark:text-white hover:underline"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="currentColor"
-                    viewBox="0 0 16 3"
-                  >
-                    <path
-                      d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          }
-        </td>
-      </tr>
       }
     </tbody>
   </table>
@@ -389,3 +402,17 @@
     </button>
   </div>
   }
+
+  <!--Add mobile product-->
+<div
+(click)="setWindow('new-provider')"
+class="visible md:invisible fixed bottom-0 right-0 mb-8 mr-8 rounded-full bg-lime-500 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lime-500 transition ease-in-out duration-150"
+>
+<svg
+  class="w-14 h-14 text-white mx-auto"
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+>
+  <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+</svg>
+</div>

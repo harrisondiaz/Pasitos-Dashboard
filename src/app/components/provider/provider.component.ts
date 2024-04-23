@@ -21,7 +21,8 @@ export class ProviderComponent {
   isDeleted: boolean = false;
   isDeletedCorrectly: boolean = false;
   isDeletedIncorrectly: boolean = false;
-
+  isLoading: boolean = true;
+  shimmer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -180,6 +181,7 @@ export class ProviderComponent {
     this.providerService.getAll().subscribe({
       next: (providers) => {
         this.providerList = providers;
+        this.isLoading = false;
       },
       error: (error) => {
         console.error(error);
@@ -189,6 +191,12 @@ export class ProviderComponent {
 
   setWindow(pasare: string) {
     localStorage.setItem('window', pasare);
+    window.location.reload();
+  }
+
+  setEdit(pasare: string, provider: Provider) {
+    localStorage.setItem('window', pasare);
+    localStorage.setItem('provider', JSON.stringify(provider));
     window.location.reload();
   }
 

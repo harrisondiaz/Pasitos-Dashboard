@@ -11,6 +11,7 @@ import { NewProducComponent } from '../../components/new-produc/new-produc.compo
 import { ProductEditComponent } from '../../components/product-edit/product-edit.component';
 import { ViewProviderComponent } from "../../components/view-provider/view-provider.component";
 import { NewProviderComponent } from "../../components/new-provider/new-provider.component";
+import { EditProviderComponent } from "../../components/edit-provider/edit-provider.component";
 
 @Component({
     selector: 'app-home',
@@ -27,7 +28,8 @@ import { NewProviderComponent } from "../../components/new-provider/new-provider
         NewProducComponent,
         ProductEditComponent,
         ViewProviderComponent,
-        NewProviderComponent
+        NewProviderComponent,
+        EditProviderComponent
     ]
 })
 export class HomeComponent implements OnInit {

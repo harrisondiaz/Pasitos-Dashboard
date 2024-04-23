@@ -1,5 +1,20 @@
-<div class="mt-16">
-  <div class="flex flex-col mt-12">
+<div class="mt-20">
+  <div class="flex flex-col mt-12 mx-5">
+    <div class="mb-5">
+      <button
+          (click)="setWindow('product')"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 dark:focus:ring-gray-700 focus:ring-opacity-50 dark:focus:ring-opacity-50"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 me-2 text-gray-700 dark:text-gray-200"
+            viewBox="0 0 24 24"
+          >
+            <path fill="#0284c7" d="m14 17l-5-5l5-5z" />
+          </svg>
+          Volver
+        </button>
+    </div>
     <h1 class="text-3xl font-bold text-start">Editar producto</h1>
     <form class="flex flex-col sm:w-full md:w-10/12 md:mx-auto mt-10 gap-4">
       <div class="md:flex md:flex-row mb-4 md:w-3/6 md:gap-x-5">

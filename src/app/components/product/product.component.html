@@ -1,5 +1,5 @@
 <div class="mt-20">
-  <div class="group2 visible  md:invisible -mb-20">
+  <div class="group2 visible mx-5  md:invisible -mb-20">
     <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
       <g>
         <path
@@ -83,7 +83,7 @@
 
 
 <div
-  class="grid grid-cols-1 md:grid-cols-3  gap-4 md:mx-24"
+  class="grid sm:grid-cols-none md:grid-cols-2 lg:grid-cols-4  gap-4  justify-center md:mx-24 "
 >
   @if (isLoading) {
     <div class="w-full max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -117,7 +117,7 @@
         />
     
         } }
-        <a href="#" class="md:mt-5">
+        <a  class="md:mt-5">
           <h5
             class="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white"
           >
@@ -125,23 +125,22 @@
           </h5>
         </a>
     
-        <div class="space-x-5 mx-1 my-5">
-          @for (color of formatColors(item); track $index) { @if
-          (item.currentColor === color[0]) {
-          <button
-            (click)="setColor(item,color[0])"
-            class="bg-{{ color[0] }} size-10 rounded-full outline outline-3 outline-offset-2 "
-          ></button>
-          } @else {
-          <button
-            (click)="setColor(item,color[0])"
-            class="bg-{{
-              color[0]
-            }} size-10 rounded-full  outline-offset-2 outline-1"
-          ></button>
-    
-          } }
+        <div class="min-w-full mx-1 my-5 flex flex-row items-center gap-x-3">
+          @for (color of formatColors(item); track $index) {
+            @if (item.currentColor === color[0]) {
+              <button
+                (click)="setColor(item,color[0])"
+                class="bg-{{ color[0] }} size-10 md:size-5 lg:size-10 rounded-full outline outline-3 outline-offset-2 mb-5"
+              ></button>
+            } @else {
+              <button
+                (click)="setColor(item,color[0])"
+                class="bg-{{ color[0] }} size-10 md:size-5 lg:size-10 rounded-full outline-offset-2 outline-1 mb-5"
+              ></button>
+            }
+          }
         </div>
+        
         <div class="flex items-center justify-between">
           <span class="text-3xl font-bold text-gray-900 dark:text-white"
             >${{ item.homePrice.value }}</span
