@@ -46,6 +46,7 @@ export class EditProviderComponent {
   isLoaded: boolean = true;
   department: string[] = [];
   isIncomplete: boolean = false;
+  isUpdated: boolean = false;
 
   getColombia() {
     this.colombiaService.getAll().subscribe((colombiaData: ColombiaData[]) => {
@@ -64,7 +65,7 @@ export class EditProviderComponent {
       })
     );
     this.isLoaded = false;
-    this.department = Array.from(departments);
+    this.department = Array.from(departments).sort();
   }
 
   getCitiesByDepartment(event: any ) {
@@ -75,6 +76,8 @@ export class EditProviderComponent {
         this.cities.push(colombia.MUNICIPIO);
       }
     });
+
+    this.cities = this.cities.sort(); 
   }
 
   setWindow(pasare: string) {
@@ -83,8 +86,21 @@ export class EditProviderComponent {
   }
 
   submit() {
-    if (this.form.valid) {
-      
+    if (this.form.valid && this.isDifferent()) {
+      const id = this.provider._id;
+      this.provider = this.form.value as Provider;
+      this.provider._id = id;
+      console.log(this.provider);
+      this.providerService.update(this.provider).subscribe((provider: Provider) => {
+        localStorage.removeItem('provider');
+        this.isUpdated = true;
+        setInterval(() => {
+          this.isUpdated = false;
+          this.setWindow('provider');
+        }, 5000);
+        
+      });
+
     } else {
       this.isIncomplete = true;
       setInterval(() => {
@@ -102,6 +118,11 @@ export class EditProviderComponent {
     private providerService: ProviderService
   ) {
     this.getColombia();
+  }
+
+  //validations the form is differents the provider
+   isDifferent() {
+    return JSON.stringify(this.form.value) !== JSON.stringify(this.provider);
   }
 
   ngOnInit() {

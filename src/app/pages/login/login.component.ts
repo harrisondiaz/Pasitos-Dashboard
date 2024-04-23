@@ -39,7 +39,10 @@ export class LoginComponent {
             this.router.navigate(['dashboard']);
             
           }else {
-            this.novisible = !this.novisible;
+            this.novisible = true;
+            setInterval(() => {
+              this.novisible = false;
+            }, 5000);
             this.loginForm.reset();
           }
         });

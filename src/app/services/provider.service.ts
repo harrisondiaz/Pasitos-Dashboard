@@ -26,5 +26,9 @@ export class ProviderService {
     return this._http.delete<Provider>(this.apiUrl + '/providers/' + provider._id);
   }
 
+  update(provider: Provider) {
+    return this._http.put<Provider>(this.apiUrl + '/providers/' + provider._id, provider);
+  }
+
   constructor() { }
 }
