@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ColombiaData } from '../../interfaces/colombia.interface';
 import { ColombiaService } from '../../services/colombia.service';
 import { ProviderService } from '../../services/provider.service';
@@ -11,25 +16,39 @@ import { MatInputModule } from '@angular/material/input';
 @Component({
   selector: 'app-edit-provider',
   standalone: true,
-  imports: [ReactiveFormsModule, MatAutocompleteModule, MatFormFieldModule, MatInputModule],
+  imports: [
+    ReactiveFormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
   templateUrl: './edit-provider.component.html',
-  styleUrl: './edit-provider.component.scss'
+  styleUrl: './edit-provider.component.scss',
 })
 export class EditProviderComponent {
-
-  provider: Provider = localStorage.getItem('provider') ? JSON.parse(localStorage.getItem('provider') as string) : {} as Provider;
+  id: number = localStorage.getItem('provider')
+    ? JSON.parse(localStorage.getItem('provider') as string)
+    : 0;
+  provider: Provider = {} as Provider;
+  aux: Provider = {} as Provider;
 
   form = new FormGroup({
     nature: new FormControl(this.provider.nature, Validators.required),
-    taxRegime: new FormControl(this.provider.taxRegime, Validators.required),
-    documentType: new FormControl(this.provider.documentType, Validators.required),
+    taxregime: new FormControl(this.provider.taxregime, Validators.required),
+    documenttype: new FormControl(
+      this.provider.documenttype,
+      Validators.required
+    ),
     document: new FormControl(this.provider.document, Validators.required),
-    verificationDigit: new FormControl(this.provider.verificationDigit),
-    firstName: new FormControl(this.provider.firstName),
-    otherNames: new FormControl(this.provider.otherNames),
-    lastName: new FormControl(this.provider.lastName),
-    secondLastName: new FormControl(this.provider.secondLastName),
-    businessName: new FormControl(this.provider.businessName, Validators.required),
+    verificationdigit: new FormControl(this.provider.verificationdigit),
+    firstname: new FormControl(this.provider.firstname),
+    othernames: new FormControl(this.provider.othernames),
+    lastname: new FormControl(this.provider.lastname),
+    secondlastname: new FormControl(this.provider.secondlastname),
+    businessname: new FormControl(
+      this.provider.businessname,
+      Validators.required
+    ),
     department: new FormControl(this.provider.department, Validators.required),
     city: new FormControl(this.provider.city, Validators.required),
     address: new FormControl(this.provider.address, Validators.required),
@@ -38,8 +57,6 @@ export class EditProviderComponent {
     zone: new FormControl(this.provider.zone),
     email: new FormControl(this.provider.email),
   });
-
-  
 
   colombia: ColombiaData[] = [];
   cities: string[] = [];
@@ -68,7 +85,7 @@ export class EditProviderComponent {
     this.department = Array.from(departments).sort();
   }
 
-  getCitiesByDepartment(event: any ) {
+  getCitiesByDepartment(event: any) {
     const department = event.target.value;
     this.cities = [];
     this.colombia.forEach((colombia) => {
@@ -77,7 +94,7 @@ export class EditProviderComponent {
       }
     });
 
-    this.cities = this.cities.sort(); 
+    this.cities = this.cities.sort();
   }
 
   setWindow(pasare: string) {
@@ -87,20 +104,19 @@ export class EditProviderComponent {
 
   submit() {
     if (this.form.valid && this.isDifferent()) {
-      const id = this.provider._id;
+      const id = this.provider.id;
       this.provider = this.form.value as Provider;
-      this.provider._id = id;
+      this.provider.id = id;
       console.log(this.provider);
-      this.providerService.update(this.provider).subscribe((provider: Provider) => {
-        localStorage.removeItem('provider');
-        this.isUpdated = true;
-        setInterval(() => {
-          this.isUpdated = false;
-          this.setWindow('provider');
-        }, 5000);
-        
-      });
-
+      this.providerService
+        .update(this.provider)
+        .subscribe((provider: Provider) => {
+          this.isUpdated = true;
+          setInterval(() => {
+            this.isUpdated = false;
+            this.setWindow('provider');
+          }, 5000);
+        });
     } else {
       this.isIncomplete = true;
       setInterval(() => {
@@ -121,11 +137,26 @@ export class EditProviderComponent {
   }
 
   //validations the form is differents the provider
-   isDifferent() {
-    return JSON.stringify(this.form.value) !== JSON.stringify(this.provider);
+  isDifferent() {
+    console.log(JSON.stringify(this.aux) !== JSON.stringify(this.form.value));
+    return  JSON.stringify(this.aux) !== JSON.stringify(this.form.value);
+  }
+
+  getProvider() {
+    this.providerService.searchById(this.id).subscribe({
+      next: (res: any) => {
+        this.provider = res[0];
+        this.aux = this.provider;
+        this.form.patchValue(this.provider);
+        console.log(this.form.value);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   ngOnInit() {
-    
+    this.getProvider();
   }
 }

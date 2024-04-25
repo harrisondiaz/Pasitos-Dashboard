@@ -1,5 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Provider } from '../../interfaces/provider.interface';
+import { ProviderService } from '../../services/provider.service';
 
 @Component({
   selector: 'app-view-provider',
@@ -9,14 +10,22 @@ import { Provider } from '../../interfaces/provider.interface';
   styleUrl: './view-provider.component.scss',
 })
 export class ViewProviderComponent {
+  id: number = localStorage.getItem('provider') ? JSON.parse(localStorage.getItem('provider') as string) : 0;
+  providers: Provider[] = [];
   provider: Provider = {} as Provider;
 
-  constructor() {}
+  constructor(private providerService: ProviderService) {}
 
   ngOnInit() {
-    this.provider = localStorage.getItem('provider')
-      ? JSON.parse(localStorage.getItem('provider') as string)
-      : ({} as Provider);
+    this.providerService.searchById(this.id).subscribe({
+      next: (res: any) => {
+        this.provider = res[0];
+        console.log(this.provider);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
   }
 
   getNature() {
@@ -27,19 +36,19 @@ export class ViewProviderComponent {
       : 'No tiene naturaleza registrada';
   }
 
-  getTaxRegime() {
-    return this.provider.taxRegime !== '' &&
-      this.provider.taxRegime !== undefined &&
-      this.provider.taxRegime !== null
-      ? this.provider.taxRegime
+  gettaxregime() {
+    return this.provider.taxregime !== '' &&
+      this.provider.taxregime !== undefined &&
+      this.provider.taxregime !== null
+      ? this.provider.taxregime
       : 'No tiene régimen de impuestos registrado';
   }
 
-  getDocumentType() {
-    return this.provider.documentType !== '' &&
-      this.provider.documentType !== undefined &&
-      this.provider.documentType !== null
-      ? this.provider.documentType
+  getdocumenttype() {
+    return this.provider.documenttype !== '' &&
+      this.provider.documenttype !== undefined &&
+      this.provider.documenttype !== null
+      ? this.provider.documenttype
       : 'No tiene tipo de documento registrado';
   }
 
@@ -51,51 +60,51 @@ export class ViewProviderComponent {
       : 'No tiene documento registrado';
   }
 
-  getVerificationDigit() {
-    return this.provider.verificationDigit !== 0 &&
-      this.provider.verificationDigit !== undefined &&
-      this.provider.verificationDigit !== null
-      ? this.provider.verificationDigit
+  getverificationdigit() {
+    return this.provider.verificationdigit !== 0 &&
+      this.provider.verificationdigit !== undefined &&
+      this.provider.verificationdigit !== null
+      ? this.provider.verificationdigit
       : 'No tiene dígito de verificación registrado';
   }
 
-  getFirstName() {
-    return this.provider.firstName !== '' &&
-      this.provider.firstName !== undefined &&
-      this.provider.firstName !== null
-      ? this.provider.firstName
+  getfirstname() {
+    return this.provider.firstname !== '' &&
+      this.provider.firstname !== undefined &&
+      this.provider.firstname !== null
+      ? this.provider.firstname
       : 'No tiene primer nombre registrado';
   }
 
-  getOtherNames() {
-    return this.provider.otherNames !== '' &&
-      this.provider.otherNames !== undefined &&
-      this.provider.otherNames !== null
-      ? this.provider.otherNames
+  getothernames() {
+    return this.provider.othernames !== '' &&
+      this.provider.othernames !== undefined &&
+      this.provider.othernames !== null
+      ? this.provider.othernames
       : 'No tiene otros nombres registrados';
   }
 
-  getLastName() {
-    return this.provider.lastName !== '' &&
-      this.provider.lastName !== undefined &&
-      this.provider.lastName !== null
-      ? this.provider.lastName
+  getlastname() {
+    return this.provider.lastname !== '' &&
+      this.provider.lastname !== undefined &&
+      this.provider.lastname !== null
+      ? this.provider.lastname
       : 'No tiene primer apellido registrado';
   }
 
-  getSecondLastName() {
-    return this.provider.secondLastName !== '' &&
-      this.provider.secondLastName !== undefined &&
-      this.provider.secondLastName !== null
-      ? this.provider.secondLastName
+  getSecondlastname() {
+    return this.provider.secondlastname !== '' &&
+      this.provider.secondlastname !== undefined &&
+      this.provider.secondlastname !== null
+      ? this.provider.secondlastname
       : 'No tiene segundo apellido registrado';
   }
 
-  getBusinessName() {
-    return this.provider.businessName !== '' &&
-      this.provider.businessName !== undefined &&
-      this.provider.businessName !== null
-      ? this.provider.businessName
+  getbusinessname() {
+    return this.provider.businessname !== '' &&
+      this.provider.businessname !== undefined &&
+      this.provider.businessname !== null
+      ? this.provider.businessname
       : 'No tiene razón social registrada';
   }
 
@@ -157,7 +166,7 @@ export class ViewProviderComponent {
 
   setEdit() {
     localStorage.setItem('window', 'edit-provider');
-    localStorage.setItem('provider', JSON.stringify(this.provider));
+    localStorage.setItem('provider', JSON.stringify(this.provider.id));
     window.location.reload();
   }
 

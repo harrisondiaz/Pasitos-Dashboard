@@ -1,17 +1,22 @@
 import { Component } from '@angular/core';
 import { Provider } from '../../interfaces/provider.interface';
 import { ProviderService } from '../../services/provider.service';
-import { ViewProviderComponent } from "../view-provider/view-provider.component";
+import { ViewProviderComponent } from '../view-provider/view-provider.component';
 import { ColombiaService } from '../../services/colombia.service';
+import { FormControl } from '@angular/forms';
+import { PdfService } from '../../services/pdf.service';
+
 
 @Component({
-    selector: 'app-provider',
-    standalone: true,
-    templateUrl: './provider.component.html',
-    styleUrl: './provider.component.scss',
-    imports: [ViewProviderComponent]
+  selector: 'app-provider',
+  standalone: true,
+  templateUrl: './provider.component.html',
+  styleUrl: './provider.component.scss',
+  imports: [ViewProviderComponent],
 })
+
 export class ProviderComponent {
+  
   providerList: Provider[] = [];
   colombia: any[] = [];
   isDropdownOpen: boolean = false;
@@ -23,6 +28,9 @@ export class ProviderComponent {
   isDeletedIncorrectly: boolean = false;
   isLoading: boolean = true;
   shimmer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  search1 = new FormControl('');
+  search2 = new FormControl('');
+  providers: Provider[] = [];
 
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
@@ -63,41 +71,41 @@ export class ProviderComponent {
     this.isViewVisible = !this.isViewVisible;
   }
 
-  getFirstName(provider: Provider) {
-    if (provider.firstName !== '') {
-      return provider.firstName;
+  getfirstname(provider: Provider) {
+    if (provider.firstname !== '') {
+      return provider.firstname;
     } else {
       return 'No tiene nombre registrado';
     }
   }
 
-  getOtherNames(provider: Provider) {
-    if (provider.otherNames !== '') {
-      return provider.otherNames;
+  getothernames(provider: Provider) {
+    if (provider.othernames !== '') {
+      return provider.othernames;
     } else {
       return 'No tiene otros nombres registrados';
     }
   }
 
-  getLastName(provider: Provider) {
-    if (provider.lastName !== '') {
-      return provider.lastName;
+  getlastname(provider: Provider) {
+    if (provider.lastname !== '') {
+      return provider.lastname;
     } else {
       return 'No tiene apellido registrado';
     }
   }
 
-  getSecondLastName(provider: Provider) {
-    if (provider.secondLastName !== '') {
-      return provider.secondLastName;
+  getSecondlastname(provider: Provider) {
+    if (provider.secondlastname !== '') {
+      return provider.secondlastname;
     } else {
       return 'No tiene segundo apellido registrado';
     }
   }
 
-  getVerificationDigit(provider: Provider) {
-    if (provider.verificationDigit !== 0) {
-      return provider.verificationDigit;
+  getverificationdigit(provider: Provider) {
+    if (provider.verificationdigit !== 0) {
+      return provider.verificationdigit;
     } else {
       return 'No tiene dígito de verificación registrado';
     }
@@ -111,18 +119,18 @@ export class ProviderComponent {
     }
   }
 
-  getBusinessName(provider: Provider) {
-    if (provider.businessName !== '') {
-      return provider.businessName;
+  getbusinessname(provider: Provider) {
+    if (provider.businessname !== '') {
+      return provider.businessname;
     } else {
       return (
-        provider.firstName +
+        provider.firstname +
         ' ' +
-        provider.otherNames +
+        provider.othernames +
         ' ' +
-        provider.lastName +
+        provider.lastname +
         ' ' +
-        provider.secondLastName
+        provider.secondlastname
       );
     }
   }
@@ -175,13 +183,13 @@ export class ProviderComponent {
     }
   }
 
-
-
-  getProviders() {
+  async getProviders() {
     this.providerService.getAll().subscribe({
       next: (providers) => {
         this.providerList = providers;
         this.isLoading = false;
+        this.providers = this.providerList;
+        console.log(this.providers);
       },
       error: (error) => {
         console.error(error);
@@ -196,20 +204,58 @@ export class ProviderComponent {
 
   setEdit(pasare: string, provider: Provider) {
     localStorage.setItem('window', pasare);
-    localStorage.setItem('provider', JSON.stringify(provider));
+    localStorage.setItem('provider', JSON.stringify(provider.id));
     window.location.reload();
   }
 
   setView(pasare: string, provider: Provider) {
     localStorage.setItem('window', pasare);
-    localStorage.setItem('provider', JSON.stringify(provider));
+    localStorage.setItem('provider', JSON.stringify(provider.id));
     window.location.reload();
   }
 
-  
-  constructor(private providerService: ProviderService) {}
+  constructor(private providerService: ProviderService, private pdfService: PdfService) {}
 
   ngOnInit() {
     this.getProviders();
+  }
+
+  searchProviders(event?: any) {
+    let term = '';
+    if (event) {
+      term = event.target.value.toLowerCase();
+      console.log(term);
+    }
+
+    if (term !== '') {
+      this.providers = this.providerList.filter((provider) => {
+        // Si term no es una cadena vacía, comprueba si businessname, city, department, neighborhood, zone o address incluyen term
+        const condition =
+          term !== '' &&
+          (provider.businessname.toLowerCase().includes(term) ||
+            provider.city.toLowerCase().includes(term) ||
+            provider.department.toLowerCase().includes(term) ||
+            provider.neighborhood.toLowerCase().includes(term) ||
+            provider.zone.toLowerCase().includes(term) ||
+            provider.email.toLowerCase().includes(term) ||
+            provider.phone.toString().includes(term) ||
+            provider.address.toLowerCase().includes(term));
+
+        // Devuelve true si se cumple la condición
+        return condition;
+      });
+    } else {
+      this.providers = this.providerList;
+    }
+  }
+
+  
+  exportProviders() {
+    this.pdfService.exportProviders(this.providers).subscribe({
+      next: (response) => {
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+      }});
   }
 }

@@ -10,7 +10,7 @@
         ></path>
       </g>
     </svg>
-    <input placeholder="Busqueda" type="search" class="input" />
+    <input (input)="searchProviders($event)" formControlName="search1" placeholder="Busqueda" type="search" class="input" />
   </div>
   <div class="flex items-center justify-between p-4 md:-mt-20 md:p-5 md:mb-2">
     <div
@@ -24,7 +24,7 @@
             ></path>
           </g>
         </svg>
-        <input placeholder="Busqueda" type="search" class="input" />
+        <input (input)="searchProviders($event)" formControlName="search2" placeholder="Busqueda" type="search" class="input" />
       </div>
       <div class="flex felx-row gap-5">
         <button
@@ -43,6 +43,7 @@
           <p>Agregar nuevo proveedor</p>
         </button>
         <button
+          (click)="exportProviders()"
           class="cursor-pointer group relative flex gap-1.5 px-8 py-2 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md"
         >
           <svg
@@ -112,7 +113,7 @@
         }
       
       }@else {
-        @for (item of providerList; track $index) {
+        @for (item of providers; track $index) {
           <tr
             class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
           >
@@ -120,7 +121,7 @@
               scope="row"
               class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
             >
-              {{ getBusinessName(item) }}
+              {{ getbusinessname(item) }}
             </th>
             <td class="px-6 py-4 hidden md:table-cell">
               {{ item.address }} - {{ item.city }}

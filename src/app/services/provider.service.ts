@@ -7,6 +7,7 @@ import { environment } from '../../environments/environment.development';
   providedIn: 'root'
 })
 export class ProviderService {
+  
 
   
   private readonly _http = inject(HttpClient);
@@ -23,11 +24,15 @@ export class ProviderService {
   }
 
   delete(provider: Provider) {
-    return this._http.delete<Provider>(this.apiUrl + '/providers/' + provider._id);
+    return this._http.delete<Provider>(this.apiUrl + '/providers/' + provider.id);
   }
 
   update(provider: Provider) {
-    return this._http.put<Provider>(this.apiUrl + '/providers/' + provider._id, provider);
+    return this._http.put<Provider>(this.apiUrl + '/providers/' + provider.id, provider);
+  }
+
+  searchById(id: number) {
+    return this._http.get<Provider>(this.apiUrl + '/providers/' + id);
   }
 
   constructor() { }

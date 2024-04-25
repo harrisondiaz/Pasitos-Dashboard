@@ -1,16 +1,16 @@
 export interface Product {
     productID:      number;
     reference:      string;
-    productName:    string;
+    productname:    string;
     quantity:       number;
-    costWithoutVAT: number;
-    costWithVAT:    number;
+    costwithoutvat: number;
+    costwithvat:    number;
     vat:            number;
-    totalCost:      number;
+    totalcost:      number;
     stock:          number;
     classification: string;
     supplier:       string;
-    homePrice:      HomePrice;
+    homeprice:      HomePrice;
     photos:         Photo[];
     description:    string;
     type:           string;
@@ -19,8 +19,8 @@ export interface Product {
 
 export interface HomePrice {
     value:            number;
-    profitPercentage: number;
-    profitValue:      number;
+    utilityPercentage: number;
+    utilityValue:      number;
 }
 
 export interface Photo {

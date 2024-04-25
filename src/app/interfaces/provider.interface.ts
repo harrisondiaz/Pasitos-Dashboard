@@ -1,15 +1,15 @@
 export interface Provider {
-    _id(_id: any): unknown;
+    id: number;
     nature: string;
-    taxRegime: string;
-    documentType: string;
+    taxregime: string;
+    documenttype: string;
     document: string;
-    verificationDigit: number;
-    firstName: string;
-    otherNames: string;
-    lastName: string;
-    secondLastName: string;
-    businessName: string;
+    verificationdigit: number;
+    firstname: string;
+    othernames: string;
+    lastname: string;
+    secondlastname: string;
+    businessname: string;
     department: string;
     city: string;
     address: string;
