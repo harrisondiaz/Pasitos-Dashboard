@@ -85,6 +85,7 @@ export class NewProviderComponent {
   }
 
   submit() {
+    console.log(this.form.valid);
     if (this.form.valid) {
       this.providerService.create(this.form.value as Provider).subscribe({
         next: (response) => {

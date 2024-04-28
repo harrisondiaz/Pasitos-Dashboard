@@ -3,6 +3,7 @@ import { ProductService } from '../../services/product.service';
 import { Photo, Product } from '../../interfaces/product.interface';
 //import { ItemCardComponent } from '../item-card/item-card.component';
 import { elementAt } from 'rxjs';
+import { PdfService } from '../../services/pdf.service';
 
 @Component({
   selector: 'app-product',
@@ -21,6 +22,7 @@ export class ProductComponent implements OnInit {
     this.productService.getAll().subscribe({
       next: (products) => {
         this.productList = products;
+        console.log(this.productList);
         this.isLoading = false;
         this.setCurrentColor();
       },
@@ -32,7 +34,7 @@ export class ProductComponent implements OnInit {
 
   setColor(product: Product,color: string) {
     this.productList.forEach((element) => {
-      if (element.productID === product.productID) {
+      if (element.id === product.id) {
         element.currentColor = color;
       }
     });
@@ -67,7 +69,7 @@ export class ProductComponent implements OnInit {
   
   setEdit(pasare: string, product: Product) {
     localStorage.setItem('window', pasare);
-    localStorage.setItem('product', JSON.stringify(product));
+    localStorage.setItem('id', product.id.toString()); // Convert product.id to string
     window.location.reload();
   }
 
@@ -85,14 +87,25 @@ export class ProductComponent implements OnInit {
     console.log(text);
   }
 
+  getPDF(){
+    this.pdfService.exportProducts(this.productList).subscribe({
+      next: (pdf) => {
+        const url = window.URL.createObjectURL(pdf);
+        window.open(url);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+    });
+  }
+
   setCurrentColor(){
     this.productList.forEach((element) => {
       element.currentColor = element.photos[0].color;
     });
-    console.log(this.productList);
   }
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private pdfService: PdfService) {}
 
   ngOnInit() {
     this.getProducts();

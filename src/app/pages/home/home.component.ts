@@ -12,6 +12,8 @@ import { ProductEditComponent } from '../../components/product-edit/product-edit
 import { ViewProviderComponent } from "../../components/view-provider/view-provider.component";
 import { NewProviderComponent } from "../../components/new-provider/new-provider.component";
 import { EditProviderComponent } from "../../components/edit-provider/edit-provider.component";
+import { AuthService } from '../../services/auth.service';
+import { UserComponent } from "../../components/user/user.component";
 
 @Component({
     selector: 'app-home',
@@ -29,7 +31,8 @@ import { EditProviderComponent } from "../../components/edit-provider/edit-provi
         ProductEditComponent,
         ViewProviderComponent,
         NewProviderComponent,
-        EditProviderComponent
+        EditProviderComponent,
+        UserComponent
     ]
 })
 export class HomeComponent implements OnInit {
@@ -66,28 +69,27 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    localStorage.removeItem('access_token');
     localStorage.setItem('sessionBefore', 'true');
-    localStorage.removeItem('currentUser');
     localStorage.removeItem('window');
-    localStorage.removeItem('product');
     localStorage.removeItem('toast');
+    this.authService.signOut();
+   
+  }
+
+  setWindow(parse: string) {
+    localStorage.setItem('window', parse);
+    localStorage.setItem('toast', 'true');
+    this.window = parse;
     window.location.reload();
   }
 
-  setWindow(window: string) {
-    localStorage.setItem('window', window);
-    localStorage.setItem('toast', 'true');
-    this.window = window;
-  }
-
-  constructor(private user: UserService) {}
+  constructor(private authService: AuthService) {}
   ngOnInit() {
-    const currentUser = localStorage.getItem('currentUser');
+    const currentUser =  this.authService.getCurrentUser().subscribe((user) => {
+      this.name = user?.email ?? '';
+    });
     localStorage.setItem('toast', 'false');
     this.window = localStorage.getItem('window') ?? 'home';
-    console.log(currentUser);
-    this.name = currentUser ?? '';
     this.isSession();
   }
 }

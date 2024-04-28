@@ -7,4 +7,5 @@ export const routes: Routes = [
     {path: '', component: LoginComponent, pathMatch: 'full'},
     {path:'dashboard', component: HomeComponent, },
     
+    
 ];

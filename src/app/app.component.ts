@@ -5,6 +5,7 @@ import { initFlowbite } from 'flowbite';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
 import { FooterComponent } from "./components/footer/footer.component";
+import { AuthService } from './services/auth.service';
 
 @Component({
     selector: 'app-root',
@@ -22,14 +23,15 @@ export class AppComponent implements OnInit {
   name = '';
   ngOnInit(): void {
     initFlowbite();
-    const accessToken = localStorage.getItem('access_token');
-    if (accessToken) {
-      this.name = localStorage.getItem('currentUser') ?? ''; 
-      this.router.navigate(['dashboard']);
+    this.authService.getCurrentUser().subscribe((user) => {
+      this.name = user?.email ?? '';
+      if (user?.aud === 'authenticated') {
+        this.router.navigate(['/']);
     } else {
-      this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
     }
-    localStorage.setItem('sessionBefore', 'false');
+    });
+
   }
-  constructor(private router: Router, private userService: UserService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 }

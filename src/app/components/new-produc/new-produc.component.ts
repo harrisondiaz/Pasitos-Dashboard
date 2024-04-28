@@ -1,35 +1,35 @@
 import { Component } from '@angular/core';
 import { Photo, HomePrice, Product } from '../../interfaces/product.interface';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { NgxCurrencyDirective } from 'ngx-currency';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({
   selector: 'app-new-produc',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, NgxCurrencyDirective],
   templateUrl: './new-produc.component.html',
   styleUrl: './new-produc.component.scss'
 })
 export class NewProducComponent {
 
   form = new FormGroup({
-    productID: new FormControl('', Validators.required),
+    id: new FormControl('', Validators.required),
     reference: new FormControl('', Validators.required),
-    productName: new FormControl('', Validators.required),
-    quantity: new FormControl('', Validators.required),
-    costWithoutVAT: new FormControl('', Validators.required),
-    costWithVAT: new FormControl('', Validators.required),
-    vat: new FormControl('', Validators.required),
-    totalCost: new FormControl('', Validators.required),
-    stock: new FormControl('', Validators.required),
-    classification: new FormControl('', Validators.required),
-    supplier: new FormControl('', Validators.required),
-    homePrice: new FormGroup({
-      value: new FormControl('', Validators.required),
-      profitPercentage: new FormControl('', Validators.required),
-      profitValue: new FormControl('', Validators.required),
-    }),
+    productname: new FormControl('', Validators.required),
+    quantity: new FormControl(0, Validators.required),
+    costwithoutvat: new FormControl(0, Validators.required),
+    costwithvat: new FormControl(0, Validators.required),
+    vat: new FormControl(0.0, Validators.required),
+    totalcost: new FormControl(0, Validators.required),
+    stock: new FormControl(0, Validators.required),
+    classification: new FormControl(0, Validators.required),
+    supplier: new FormControl(0, Validators.required),
+    homepricevalue: new FormControl(0, Validators.required),
+    homepriceutilitypercentage: new FormControl(0.0, Validators.required),
+    homepriceutilityvalue: new FormControl(0, Validators.required),
     photos: new FormArray([
       new FormGroup({
         color: new FormControl('', Validators.required),
@@ -40,8 +40,45 @@ export class NewProducComponent {
     type: new FormControl('', Validators.required),
   });
 
-  selectedColors: Photo[] = [{ color: '', url: '' }];
+  isNegative = false;
+  selectedColors: Photo[] = [];
+  selectedColors2: Photo[] = [{ color: '', url: '' }];
   currentImageIndex = 0;
+  providerList: any = [];
+
+  setValues() {
+    this.form.valueChanges.subscribe(values => {
+
+      /**
+       * Calcula el costo total en función del costo sin IVA y el IVA
+       */
+      const costWithoutVat  = values.costwithoutvat!;
+      const costWithVAT = values.costwithvat!;
+      const vat = ((costWithVAT - costWithoutVat) / costWithoutVat) * 100;
+      const totalCost = costWithoutVat + (costWithoutVat * vat) / 100;
+      this.form.get('totalcost')?.setValue(totalCost, { emitEvent: false });
+      this.form.get('vat')?.setValue(vat, { emitEvent: false });
+
+
+      /**
+       * Calcula el porcentaje de utilidad y el valor de utilidad en función del precio del producto 
+       */
+      const homePriceValue = values.homepricevalue!;
+      const utilityPercentage = homePriceValue !==0 ? ((homePriceValue-values.totalcost!) / homePriceValue )*100:0;
+      const utilityValue = homePriceValue !== 0 ? homePriceValue - values.totalcost! : 0;
+      if(homePriceValue < values.totalcost!){
+        this.isNegative = true;
+      }else{
+        this.isNegative = false;
+      }
+      
+  
+      // Actualiza el valor de utility en el formulario, pero evita que se dispare un nuevo evento de cambio de valor
+      this.form.get('homepriceutilityvalue')?.setValue(utilityValue, { emitEvent: false });
+      this.form.get('homepriceutilitypercentage')?.setValue(utilityPercentage, { emitEvent: false });
+    });
+  }
+
 
   addImages() {
     this.selectedColors.push({ color: '', url: '' });
@@ -62,12 +99,7 @@ export class NewProducComponent {
     this.images.forEach((image, index) => {
       formData.append(`image${index}`, image, image.name);
     });
-  
-
-    this.http.post('http://example.com/api/upload', formData).subscribe(
-      (response) => console.log(response),
-      (error) => console.log(error)
-    );
+    
   }
 
   setWindow(pasare: string) {
@@ -75,9 +107,13 @@ export class NewProducComponent {
     window.location.reload();
   }
 
-  constructor(private http: HttpClient) { }
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+    this.productService.getProviders().subscribe((providers: any) => {
+      this.providerList = providers;
+    });
+    this.setValues();
   }
 
 }

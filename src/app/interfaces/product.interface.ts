@@ -1,5 +1,5 @@
 export interface Product {
-    productID:      number;
+    id:      number;
     reference:      string;
     productname:    string;
     quantity:       number;
@@ -19,8 +19,8 @@ export interface Product {
 
 export interface HomePrice {
     value:            number;
-    utilityPercentage: number;
-    utilityValue:      number;
+    utilitypercentage: number;
+    utilityvalue:      number;
 }
 
 export interface Photo {

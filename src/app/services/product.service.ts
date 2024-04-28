@@ -14,5 +14,13 @@ export class ProductService {
     return this._http.get<Product[]>(this.apiUrl + '/products').pipe(res => res);
   }
 
+  getById(id: number) {
+    return this._http.get<Product>(this.apiUrl + '/products/' + id).pipe(res => res);
+  }
+
+  getProviders() {
+    return this._http.get(this.apiUrl + '/provider/names').pipe(res => res);
+  }
+
   constructor() {}
 }
