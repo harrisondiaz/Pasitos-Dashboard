@@ -4,6 +4,7 @@ import { Photo, Product } from '../../interfaces/product.interface';
 //import { ItemCardComponent } from '../item-card/item-card.component';
 import { elementAt } from 'rxjs';
 import { PdfService } from '../../services/pdf.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -63,14 +64,12 @@ export class ProductComponent implements OnInit {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
   
   setEdit(pasare: string, product: Product) {
-    localStorage.setItem('window', pasare);
     localStorage.setItem('id', product.id.toString()); // Convert product.id to string
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
   formatColors(product: Product): [string, string[]][] {
@@ -105,7 +104,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  constructor(private productService: ProductService, private pdfService: PdfService) {}
+  constructor(private productService: ProductService, private pdfService: PdfService, private router: Router) {}
 
   ngOnInit() {
     this.getProducts();

@@ -31,7 +31,12 @@ export class LoginComponent {
   onSubmit() {
     if (this.loginForm.valid) {
       const user = this.loginForm.value;
-      this.signUpWithRetry(user.email!, user.password!);
+      this.signUpWithRetry(user.email!, user.password!).then(
+        () => {
+          this.router.navigate(['/dashboard']);
+          window.location.reload();
+        }
+      );
     }
   }
 

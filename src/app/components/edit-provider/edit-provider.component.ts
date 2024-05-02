@@ -12,6 +12,8 @@ import { Provider } from '../../interfaces/provider.interface';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-provider',
@@ -98,8 +100,14 @@ export class EditProviderComponent {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
+  }
+  
+
+
+
+  goBack() {
+    this.location.back();
   }
 
   submit() {
@@ -131,7 +139,9 @@ export class EditProviderComponent {
 
   constructor(
     private colombiaService: ColombiaService,
-    private providerService: ProviderService
+    private providerService: ProviderService,
+    private location: Location,
+    private router: Router
   ) {
     this.getColombia();
   }

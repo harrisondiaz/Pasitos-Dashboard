@@ -1,2 +1,9 @@
-<router-outlet />
-<app-footer />
+<div class="w-full h-full">
+  @if (shouldShowHeader()) {
+  <app-header></app-header>
+  }
+  <router-outlet></router-outlet>
+  @if (shouldShowHeader()) {
+  <app-footer></app-footer>
+  }
+</div>

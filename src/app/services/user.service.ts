@@ -10,12 +10,9 @@ export class UserService {
   private readonly _http = inject(HttpClient);
   private readonly apiUrl = environment.backend.url;
 
-  getUser(user: any) {
-    return this._http.post(this.apiUrl+"/api/login", user);
-  }
 
   getName(email: string) {
-    return this._http.get(this.apiUrl+"/api/users/"+email);
+    return this._http.get(this.apiUrl+"/user/"+email).pipe(res => res);
   }
 
   

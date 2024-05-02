@@ -1,599 +1,602 @@
-<div class="mt-20">
-  <div class="flex flex-col mt-12 mx-5">
-    <div class="mb-5">
-      <button
-        (click)="setWindow('product')"
-        class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 dark:focus:ring-gray-700 focus:ring-opacity-50 dark:focus:ring-opacity-50"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 me-2 text-gray-700 dark:text-gray-200"
-          viewBox="0 0 24 24"
-        >
-          <path fill="#0284c7" d="m14 17l-5-5l5-5z" />
-        </svg>
-        Volver
-      </button>
-    </div>
-    <h1 class="text-3xl font-bold text-start">Editar producto</h1>
-    <form
-      [formGroup]="form"
-      class="flex flex-col sm:w-full md:w-10/12 md:mx-auto mt-10 gap-4"
-    >
-      <div class="md:flex md:flex-row mb-4 md:w-3/6 md:gap-x-5">
-        <div class="md:flex md:flex-col md:w-full">
-          <label
-            for="id"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >ID</label
-          >
-          <input
-            formControlName="id"
-            id="id"
-            name="id"
-            type="number"
-            class="mb-6 select-none bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-          <p
-            class="block text-sm font-medium text-gray-500 dark:text-gray-300 -translate-y-5"
-          >
-            El ID se generará automáticamente.
-          </p>
-        </div>
-
-        <div class="md:flex md:flex-col md:w-full">
-          <label
-            for="reference"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Referencia</label
-          >
-          <input
-            formControlName="reference"
-            id="reference"
-            name="reference"
-            type="text"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-      </div>
-
-      <div class="md:w-3/4">
-        <label
-          for="productName"
-          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-          >Nombre del producto</label
-        >
-        <input
-          formControlName="productname"
-          id="productName"
-          name="productName"
-          type="text"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        />
-      </div>
-      <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
-        <div class="flex flex-col md:w-6/12">
-          <label
-            for="quantity"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Cantidad</label
-          >
-          <input
-            formControlName="quantity"
-            id="quantity"
-            name="quantity"
-            type="number"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="type"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Tipo de unidad</label
-          >
-          <select
-            formControlName="type"
-            id="type"
-            name="type"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option
-              value="UNIDAD"
-              [selected]="this.form.value.type === 'UNIDAD'"
-            >
-              Unidad
-            </option>
-            <option
-              value="PAQUETE"
-              [selected]="this.form.value.type === 'PAQUETE'"
-            >
-              Paquete
-            </option>
-            <option value="CAJA" [selected]="this.form.value.type === 'CAJA'">
-              Caja
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="flex flex-col md:w-9/12 md:flex-row md:gap-x-5 gap-y-5">
-        <div class="flex flex-col w-full">
-          <label
-            for="costWithoutVAT"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Costo sin IVA</label
-          >
-          <input
-            formControlName="costwithoutvat"
-            id="costWithoutVAT"
-            name="costWithoutVAT"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '$ ',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="costWithVAT"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Costo con IVA</label
-          >
-          <input
-            formControlName="costwithvat"
-            id="costWithVAT"
-            name="costWithVAT"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '$ ',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="vat"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >IVA</label
-          >
-          <input
-            formControlName="vat"
-            id="vat"
-            name="vat"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '',
-              suffix: ' %',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            [defaultValue]="19"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="totalCost"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Costo total</label
-          >
-          <input
-            formControlName="totalcost"
-            id="totalCost"
-            name="totalCost"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '$ ',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            readonly
-          />
-        </div>
-      </div>
-      <div class="flex flex-col md:w-3/6 md:flex-row md:gap-x-5 gap-y-5">
-        <div class="flex flex-col w-full">
-          <label
-            for="homePrice"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Precio de venta</label
-          >
-          <input
-            formControlName="homepricevalue"
-            id="homePrice"
-            name="homePrice"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '$ ',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-          @if(isNegative){
-          <p
-            class="block text-sm font-medium text-red-500 "
-          > El precio de venta no puede ser menor al precio total.</p>
-          }
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="homepriceutilitypercentage"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Porcentaje de utilidad</label
-          >
-          <input
-            formControlName="homepriceutilitypercentage"
-            id="homepriceutilitypercentage"
-            name="homepriceutilitypercentage"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '',
-              suffix: ' %',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: true,
-              allowZero: true,
-              precision: 0
-            }"
-            [defaultValue]="30"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            readonly
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="homepriceutility"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Utilidad</label
-          >
-          <input
-            formControlName="homepriceutilityvalue"
-            id="homepriceutility"
-            name="homepriceutility"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '$ ',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: true,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            readonly
-          />
-        </div>
-      </div>
-      <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
-        <div class="flex flex-col w-full">
-          <label
-            for="stock"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Stock</label
-          >
-          <input
-            formControlName="stock"
-            id="stock"
-            name="stock"
-            type="text"
-            currencyMask
-            [options]="{
-              prefix: '',
-              thousands: ',',
-              decimal: '.',
-              align: 'left',
-              allowNegative: false,
-              allowZero: true,
-              precision: 0
-            }"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          />
-        </div>
-        <div class="flex flex-col w-full">
-          <label
-            for="category"
-            class="block text-sm font-medium text-gray-900 dark:text-white"
-            >Categoría</label
-          >
-          <select
-            formControlName="category"
-            id="category"
-            name="category"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option
-              value="Alimentación"
-              [selected]="this.form.value.classification === 'Alimentación'"
-            >
-              Alimentación
-            </option>
-            <option
-              value="Aseo"
-              [selected]="this.form.value.classification === 'Aseo'"
-            >
-              Aseo
-            </option>
-            <option
-              value="Para Dormir"
-              [selected]="this.form.value.classification === 'Para Dormir'"
-            >
-              Para dormir
-            </option>
-            <option
-              value="Jugueteria"
-              [selected]="this.form.value.classification === 'Jugueteria'"
-            >
-              Jugueteria
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="flex flex-row">
-        <div class="flex flex-col w-full">
-          <label
-            for="provider" class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Proveedor</label
-          >
-          <select
-            formControlName="provider"
-            id="provider"
-            name="provider"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-          @for (item of providerList; track $index) {
-            <option
-              value="{{ item.id}}"
-              [selected]="this.form.value.supplier === item.id"
-            >
-              {{ item.businessname }}
-            </option>
-          }
-          </select>
-        </div>
-      </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
-      >
-        @for (item of selectedColors; track $index) {
-        <div class="flex flex-col">
-          <label
-            for="color"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Color</label
-          >
-          <select
-            id="color"
-            name="color"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option value="white" [selected]="item.color === 'white'">
-              Blanco
-            </option>
-            <option value="black" [selected]="item.color === 'black'">
-              Negro
-            </option>
-            <option value="brown" [selected]="item.color === 'brown'">
-              Marrón
-            </option>
-            <option value="green" [selected]="item.color === 'green'">
-              Verde
-            </option>
-            <option value="pink" [selected]="item.color === 'pink'">
-              Rosa
-            </option>
-            <option value="purple" [selected]="item.color === 'purple'">
-              Púrpura
-            </option>
-            <option value="red" [selected]="item.color === 'red'">Rojo</option>
-            <option value="white" [selected]="item.color === 'white'">
-              Blanco
-            </option>
-            <option value="yellow" [selected]="item.color === 'yellow'">
-              Amarillo
-            </option>
-            <option value="blue" [selected]="item.color === 'blue'">
-              Azul
-            </option>
-          </select>
-          <div class="flex flex-row justify-between">
-            <img
-              src="{{ item.url }}"
-              class="w-44 h-44 mx-auto border rounded-xl mt-5 shadow-lg"
-              alt="{{ this.form.value.productname }}"
-            />
-            <div
-              class="mt-5 -translate-x-32 translate-y-2 md:-translate-x-5 md:translate-y-2 lg:-translate-x-14 lg:translate-y-2"
-            >
-              <button
-                type="button"
-                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-1 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zM7 6h10v13H7zm2 2v9h2V8zm4 0v9h2V8z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        }
-      </div>
-      <div
-        class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
-      >
-        @for (item of selectedColors2; track $index) {
-        <div class="flex flex-col">
-          <label
-            for="color"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Color</label
-          >
-          <select
-            formControlName="color"
-            id="color"
-            name="color"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            <option selected>Selecione un color</option>
-            <option value="white">Blanco</option>
-            <option value="black">Negro</option>
-            <option value="brown">Marrón</option>
-            <option value="green">Verde</option>
-            <option value="pink">Rosa</option>
-            <option value="purple">Púrpura</option>
-            <option value="red">Rojo</option>
-            <option value="white">Blanco</option>
-            <option value="yellow">Amarillo</option>
-            <option value="blue">Azul</option>
-          </select>
-
-          <div class="flex items-center justify-center w-full mt-5">
-            <label
-              for="dropzone-file"
-              class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-            >
-              <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                <svg
-                  class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 16"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                  />
-                </svg>
-                <p
-                  class="mx-5 mb-2 text-sm text-center text-gray-500 dark:text-gray-400"
-                >
-                  <span class="font-semibold">Da click para subir</span> o
-                  sujeta y suelta un archivo
-                </p>
-                <p class="text-xs text-gray-500 dark:text-gray-400">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p>
-              </div>
-              <input
-                id="dropzone-file"
-                formControlName="url"
-                type="file"
-                class="hidden"
-              />
-            </label>
-          </div>
-        </div>
-        }
-      </div>
-      <div class="flex flex-row gap-x-5">
-        <button
-          (click)="addImages()"
-          type="button"
-          class="flex flex-row focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-900"
-        >
-          <svg
-            class="w-5 h-5 me-2 text-white dark:text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-          </svg>
-          Agregar Color
-        </button>
-        <button
-          (click)="remove()"
-          type="button"
-          class="flex flex-row focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
-        >
-          <svg
-            class="w-5 h-5 me-2 text-white dark:text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path
-              fill="currentColor"
-              d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zm0 5h2v9H9zm4 0h2v9h-2z"
-            />
-          </svg>
-          Borrar
-        </button>
-      </div>
-      <div class="mb-4">
-        <label
-          for="descripcion"
-          class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-          >Descripción</label
-        >
-        <textarea
-          formControlName="description"
-          id="descripcion"
-          name="descripcion"
-          rows="5"
-          class="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
-        ></textarea>
-      </div>
-
-      <div class="flex items-center justify-between mt-4">
+<div class="md:ml-64">
+  <div class="mt-20">
+    <div class="flex flex-col mt-12 mx-5">
+      <div class="mb-5">
         <button
           (click)="setWindow('product')"
-          type="button"
-          class="px-4 py-2 rounded-md bg-gray-300 text-gray-600 font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring focus:ring-gray-300 dark:focus:ring-gray-700 focus:ring-opacity-50 dark:focus:ring-opacity-50"
         >
-          Cancelar
-        </button>
-        <button
-          type="submit"
-          class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Guardar producto
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 me-2 text-gray-700 dark:text-gray-200"
+            viewBox="0 0 24 24"
+          >
+            <path fill="#0284c7" d="m14 17l-5-5l5-5z" />
+          </svg>
+          Volver
         </button>
       </div>
-    </form>
+      <h1 class="text-3xl font-bold text-start">Editar producto</h1>
+      <form
+        [formGroup]="form"
+        class="flex flex-col sm:w-full md:w-10/12 md:mx-auto mt-10 gap-4"
+      >
+        <div class="md:flex md:flex-row mb-4 md:w-3/6 md:gap-x-5">
+          <div class="md:flex md:flex-col md:w-full">
+            <label
+              for="id"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >ID</label
+            >
+            <input
+              formControlName="id"
+              id="id"
+              name="id"
+              type="number"
+              class="mb-6 select-none bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            <p
+              class="block text-sm font-medium text-gray-500 dark:text-gray-300 -translate-y-5"
+            >
+              El ID se generará automáticamente.
+            </p>
+          </div>
+  
+          <div class="md:flex md:flex-col md:w-full">
+            <label
+              for="reference"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Referencia</label
+            >
+            <input
+              formControlName="reference"
+              id="reference"
+              name="reference"
+              type="text"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+        </div>
+  
+        <div class="md:w-3/4">
+          <label
+            for="productName"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+            >Nombre del producto</label
+          >
+          <input
+            formControlName="productname"
+            id="productName"
+            name="productName"
+            type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          />
+        </div>
+        <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
+          <div class="flex flex-col md:w-6/12">
+            <label
+              for="quantity"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Cantidad</label
+            >
+            <input
+              formControlName="quantity"
+              id="quantity"
+              name="quantity"
+              type="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="type"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Tipo de unidad</label
+            >
+            <select
+              formControlName="type"
+              id="type"
+              name="type"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option
+                value="UNIDAD"
+                [selected]="this.form.value.type === 'UNIDAD'"
+              >
+                Unidad
+              </option>
+              <option
+                value="PAQUETE"
+                [selected]="this.form.value.type === 'PAQUETE'"
+              >
+                Paquete
+              </option>
+              <option value="CAJA" [selected]="this.form.value.type === 'CAJA'">
+                Caja
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="flex flex-col md:w-9/12 md:flex-row md:gap-x-5 gap-y-5">
+          <div class="flex flex-col w-full">
+            <label
+              for="costWithoutVAT"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Costo sin IVA</label
+            >
+            <input
+              formControlName="costwithoutvat"
+              id="costWithoutVAT"
+              name="costWithoutVAT"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '$ ',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="costWithVAT"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Costo con IVA</label
+            >
+            <input
+              formControlName="costwithvat"
+              id="costWithVAT"
+              name="costWithVAT"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '$ ',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="vat"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >IVA</label
+            >
+            <input
+              formControlName="vat"
+              id="vat"
+              name="vat"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '',
+                suffix: ' %',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              [defaultValue]="19"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="totalCost"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Costo total</label
+            >
+            <input
+              formControlName="totalcost"
+              id="totalCost"
+              name="totalCost"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '$ ',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="flex flex-col md:w-3/6 md:flex-row md:gap-x-5 gap-y-5">
+          <div class="flex flex-col w-full">
+            <label
+              for="homePrice"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Precio de venta</label
+            >
+            <input
+              formControlName="homepricevalue"
+              id="homePrice"
+              name="homePrice"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '$ ',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+            @if(isNegative){
+            <p
+              class="block text-sm font-medium text-red-500 "
+            > El precio de venta no puede ser menor al precio total.</p>
+            }
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="homepriceutilitypercentage"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Porcentaje de utilidad</label
+            >
+            <input
+              formControlName="homepriceutilitypercentage"
+              id="homepriceutilitypercentage"
+              name="homepriceutilitypercentage"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '',
+                suffix: ' %',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: true,
+                allowZero: true,
+                precision: 0
+              }"
+              [defaultValue]="30"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              readonly
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="homepriceutility"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Utilidad</label
+            >
+            <input
+              formControlName="homepriceutilityvalue"
+              id="homepriceutility"
+              name="homepriceutility"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '$ ',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: true,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
+          <div class="flex flex-col w-full">
+            <label
+              for="stock"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Stock</label
+            >
+            <input
+              formControlName="stock"
+              id="stock"
+              name="stock"
+              type="text"
+              currencyMask
+              [options]="{
+                prefix: '',
+                thousands: ',',
+                decimal: '.',
+                align: 'left',
+                allowNegative: false,
+                allowZero: true,
+                precision: 0
+              }"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          <div class="flex flex-col w-full">
+            <label
+              for="category"
+              class="block text-sm font-medium text-gray-900 dark:text-white"
+              >Categoría</label
+            >
+            <select
+              formControlName="category"
+              id="category"
+              name="category"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option
+                value="Alimentación"
+                [selected]="this.form.value.classification === 'Alimentación'"
+              >
+                Alimentación
+              </option>
+              <option
+                value="Aseo"
+                [selected]="this.form.value.classification === 'Aseo'"
+              >
+                Aseo
+              </option>
+              <option
+                value="Para Dormir"
+                [selected]="this.form.value.classification === 'Para Dormir'"
+              >
+                Para dormir
+              </option>
+              <option
+                value="Jugueteria"
+                [selected]="this.form.value.classification === 'Jugueteria'"
+              >
+                Jugueteria
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="flex flex-row">
+          <div class="flex flex-col w-full">
+            <label
+              for="provider" class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Proveedor</label
+            >
+            <select
+              formControlName="provider"
+              id="provider"
+              name="provider"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+            @for (item of providerList; track $index) {
+              <option
+                value="{{ item.id}}"
+                [selected]="this.form.value.supplier === item.id"
+              >
+                {{ item.businessname }}
+              </option>
+            }
+            </select>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+        >
+          @for (item of selectedColors; track $index) {
+          <div class="flex flex-col">
+            <label
+              for="color"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Color</label
+            >
+            <select
+              id="color"
+              name="color"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option value="white" [selected]="item.color === 'white'">
+                Blanco
+              </option>
+              <option value="black" [selected]="item.color === 'black'">
+                Negro
+              </option>
+              <option value="brown" [selected]="item.color === 'brown'">
+                Marrón
+              </option>
+              <option value="green" [selected]="item.color === 'green'">
+                Verde
+              </option>
+              <option value="pink" [selected]="item.color === 'pink'">
+                Rosa
+              </option>
+              <option value="purple" [selected]="item.color === 'purple'">
+                Púrpura
+              </option>
+              <option value="red" [selected]="item.color === 'red'">Rojo</option>
+              <option value="white" [selected]="item.color === 'white'">
+                Blanco
+              </option>
+              <option value="yellow" [selected]="item.color === 'yellow'">
+                Amarillo
+              </option>
+              <option value="blue" [selected]="item.color === 'blue'">
+                Azul
+              </option>
+            </select>
+            <div class="flex flex-row justify-between">
+              <img
+                src="{{ item.url }}"
+                class="w-44 h-44 mx-auto border rounded-xl mt-5 shadow-lg"
+                alt="{{ this.form.value.productname }}"
+              />
+              <div
+                class="mt-5 -translate-x-32 translate-y-2 md:-translate-x-5 md:translate-y-2 lg:-translate-x-14 lg:translate-y-2"
+              >
+                <button
+                  type="button"
+                  class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-1 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zM7 6h10v13H7zm2 2v9h2V8zm4 0v9h2V8z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          }
+        </div>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+        >
+          @for (item of selectedColors2; track $index) {
+          <div class="flex flex-col">
+            <label
+              for="color"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              >Color</label
+            >
+            <select
+              formControlName="color"
+              id="color"
+              name="color"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected>Selecione un color</option>
+              <option value="white">Blanco</option>
+              <option value="black">Negro</option>
+              <option value="brown">Marrón</option>
+              <option value="green">Verde</option>
+              <option value="pink">Rosa</option>
+              <option value="purple">Púrpura</option>
+              <option value="red">Rojo</option>
+              <option value="white">Blanco</option>
+              <option value="yellow">Amarillo</option>
+              <option value="blue">Azul</option>
+            </select>
+  
+            <div class="flex items-center justify-center w-full mt-5">
+              <label
+                for="dropzone-file"
+                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+              >
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                  <svg
+                    class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 20 16"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                    />
+                  </svg>
+                  <p
+                    class="mx-5 mb-2 text-sm text-center text-gray-500 dark:text-gray-400"
+                  >
+                    <span class="font-semibold">Da click para subir</span> o
+                    sujeta y suelta un archivo
+                  </p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400">
+                    SVG, PNG, JPG or GIF (MAX. 800x400px)
+                  </p>
+                </div>
+                <input
+                  id="dropzone-file"
+                  formControlName="url"
+                  type="file"
+                  class="hidden"
+                />
+              </label>
+            </div>
+          </div>
+          }
+        </div>
+        <div class="flex flex-row gap-x-5">
+          <button
+            (click)="addImages()"
+            type="button"
+            class="flex flex-row focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-900"
+          >
+            <svg
+              class="w-5 h-5 me-2 text-white dark:text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+            </svg>
+            Agregar Color
+          </button>
+          <button
+            (click)="remove()"
+            type="button"
+            class="flex flex-row focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          >
+            <svg
+              class="w-5 h-5 me-2 text-white dark:text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M9 3v1H4v2h1v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1V4h-5V3zm0 5h2v9H9zm4 0h2v9h-2z"
+              />
+            </svg>
+            Borrar
+          </button>
+        </div>
+        <div class="mb-4">
+          <label
+            for="descripcion"
+            class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+            >Descripción</label
+          >
+          <textarea
+            formControlName="description"
+            id="descripcion"
+            name="descripcion"
+            rows="5"
+            class="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
+          ></textarea>
+        </div>
+  
+        <div class="flex items-center justify-between mt-4">
+          <button
+            (click)="setWindow('product')"
+            type="button"
+            class="px-4 py-2 rounded-md bg-gray-300 text-gray-600 font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            Guardar producto
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
+  
 </div>

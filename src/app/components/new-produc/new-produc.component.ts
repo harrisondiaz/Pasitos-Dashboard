@@ -4,6 +4,7 @@ import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } fr
 import { HttpClient } from '@angular/common/http';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -103,11 +104,10 @@ export class NewProducComponent {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService, private router: Router) { }
 
   ngOnInit(): void {
     this.productService.getProviders().subscribe((providers: any) => {

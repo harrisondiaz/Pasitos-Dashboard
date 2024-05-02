@@ -5,6 +5,7 @@ import { ViewProviderComponent } from '../view-provider/view-provider.component'
 import { ColombiaService } from '../../services/colombia.service';
 import { FormControl } from '@angular/forms';
 import { PdfService } from '../../services/pdf.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -198,23 +199,20 @@ export class ProviderComponent {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
   setEdit(pasare: string, provider: Provider) {
-    localStorage.setItem('window', pasare);
     localStorage.setItem('provider', JSON.stringify(provider.id));
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
   setView(pasare: string, provider: Provider) {
-    localStorage.setItem('window', pasare);
     localStorage.setItem('provider', JSON.stringify(provider.id));
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
-  constructor(private providerService: ProviderService, private pdfService: PdfService) {}
+  constructor(private providerService: ProviderService, private pdfService: PdfService, private router: Router) {}
 
   ngOnInit() {
     this.getProviders();

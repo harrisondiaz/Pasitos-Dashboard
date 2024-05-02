@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { SupabaseClient, User, createClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment.development';
 import { BehaviorSubject } from 'rxjs';
@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private supabase!: SupabaseClient;
-  user = new BehaviorSubject<User | null >(null);
+  user = new BehaviorSubject<User | null>(null);
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private ngZone: NgZone) {
     this.supabase = createClient(
       environment.supabase.url,
       environment.supabase.key
@@ -20,21 +20,27 @@ export class AuthService {
     this.supabase.auth.onAuthStateChange((event, session) => {
       console.log('event', event);
       console.log('session', session);
-      if(event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN') {
         console.log('User signed in');
         this.user.next(session!.user);
-        this.router.navigate(['/dashboard']);
-      } else if(event === 'SIGNED_OUT') {
+        this.ngZone.run(() => {
+          this.router.navigate(['/dashboard/home']);
+        });
+      } else if (event === 'SIGNED_OUT') {
         console.log('User signed out');
         this.user.next(null);
-        this.router.navigate(['/']);
+        this.ngZone.run(() => {
+          this.router.navigate(['/']);
+        });
       }
-      
     });
   }
 
   async signIn(email: string, password: string) {
-    const {data, error} = await this.supabase.auth.signInWithPassword ({ email, password });
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     data && this.user.next(data.user);
   }
 
@@ -42,8 +48,7 @@ export class AuthService {
     await this.supabase.auth.signOut();
   }
 
-
-  getCurrentUser(){
+  getCurrentUser() {
     return this.user.asObservable();
   }
 }

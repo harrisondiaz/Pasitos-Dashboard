@@ -1,6 +1,8 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Provider } from '../../interfaces/provider.interface';
 import { ProviderService } from '../../services/provider.service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-provider',
@@ -14,7 +16,7 @@ export class ViewProviderComponent {
   providers: Provider[] = [];
   provider: Provider = {} as Provider;
 
-  constructor(private providerService: ProviderService) {}
+  constructor(private providerService: ProviderService, private router: Router, private location: Location) {}
 
   ngOnInit() {
     this.providerService.searchById(this.id).subscribe({
@@ -165,14 +167,12 @@ export class ViewProviderComponent {
   }
 
   setEdit() {
-    localStorage.setItem('window', 'edit-provider');
     localStorage.setItem('provider', JSON.stringify(this.provider.id));
-    window.location.reload();
+    this.router.navigate(['/dashboard/edit-provider']);
   }
 
   setWindow() {
-    localStorage.setItem('window', 'provider');
     localStorage.removeItem('provider');
-    window.location.reload();
+    this.router.navigate(['/dashboard', 'provider']);
   }
 }

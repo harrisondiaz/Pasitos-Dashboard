@@ -9,6 +9,8 @@ import { ColombiaService } from '../../services/colombia.service';
 import { ColombiaData } from '../../interfaces/colombia.interface'; // Import the ColombiaData type from the appropriate file
 import { ProviderService } from '../../services/provider.service';
 import { Provider } from '../../interfaces/provider.interface';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-new-provider',
@@ -80,8 +82,11 @@ export class NewProviderComponent {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   submit() {
@@ -110,7 +115,9 @@ export class NewProviderComponent {
 
   constructor(
     private colombiaService: ColombiaService,
-    private providerService: ProviderService
+    private providerService: ProviderService,
+    private location: Location,
+    private router: Router  
   ) {
     this.getColombia();
   }

@@ -1,220 +1,232 @@
-<div class="mt-20">
-  <div class="group2 visible mx-5 md:invisible -mb-20">
-    <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-      <g>
-        <path
-          d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-        ></path>
-      </g>
-    </svg>
-    <input (input)="searchClient($event)" placeholder="Busqueda" type="search" class="input" />
-  </div>
-  <div class="flex items-center justify-between p-4 md:-mt-20 md:p-5 md:mb-2">
-    <div
-      class="flex invisible md:visible flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"
-    >
-      <div class="group">
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
-          <g>
-            <path
-              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-            ></path>
-          </g>
-        </svg>
-        <input (input)="searchClient($event)" placeholder="Busqueda" type="search" class="input" />
-      </div>
-      <div class="flex felx-row gap-5">
-        <button
-          (click)="setWindow('')"
-          type="button"
-          class="flex text-white bg-lime-500 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-          </svg>
-          <p>Agregar nuevo cliente</p>
-        </button>
-        <button
-          class="cursor-pointer group relative flex gap-1.5 px-8 py-2 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            height="24px"
-            width="24px"
-          >
-            <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-            <g
-              stroke-linejoin="round"
-              stroke-linecap="round"
-              id="SVGRepo_tracerCarrier"
-            ></g>
-            <g id="SVGRepo_iconCarrier">
-              <g id="Interface / Download">
-                <path
-                  stroke-linejoin="round"
-                  stroke-linecap="round"
-                  stroke-width="2"
-                  stroke="#f1f1f1"
-                  d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
-                  id="Vector"
-                ></path>
-              </g>
+<div class="md:ml-64">
+  <div class="mt-20">
+    <div class="group2 visible mx-5 md:invisible -mb-20">
+      <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+        <g>
+          <path
+            d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+          ></path>
+        </g>
+      </svg>
+      <input
+        (input)="searchClient($event)"
+        placeholder="Busqueda"
+        type="search"
+        class="input"
+      />
+    </div>
+    <div class="flex items-center justify-between p-4 md:-mt-20 md:p-5 md:mb-2">
+      <div
+        class="flex invisible md:visible flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"
+      >
+        <div class="group">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+            <g>
+              <path
+                d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+              ></path>
             </g>
           </svg>
-          Descargar
-          <div
-            class="absolute opacity-0 -bottom-full rounded-md py-2 px-2 bg-black bg-opacity-70 left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg"
+          <input
+            (input)="searchClient($event)"
+            placeholder="Busqueda"
+            type="search"
+            class="input"
+          />
+        </div>
+        <div class="flex felx-row gap-5">
+          <button
+            (click)="setWindow('')"
+            type="button"
+            class="flex text-white bg-lime-500 hover:bg-lime-800 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5"
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+            </svg>
+            <p>Agregar nuevo cliente</p>
+          </button>
+          <button
+            class="cursor-pointer group relative flex gap-1.5 px-8 py-2 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              height="24px"
+              width="24px"
+            >
+              <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+              <g
+                stroke-linejoin="round"
+                stroke-linecap="round"
+                id="SVGRepo_tracerCarrier"
+              ></g>
+              <g id="SVGRepo_iconCarrier">
+                <g id="Interface / Download">
+                  <path
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    stroke="#f1f1f1"
+                    d="M6 21H18M12 3V17M12 17L17 12M12 17L7 12"
+                    id="Vector"
+                  ></path>
+                </g>
+              </g>
+            </svg>
             Descargar
-          </div>
-        </button>
+            <div
+              class="absolute opacity-0 -bottom-full rounded-md py-2 px-2 bg-black bg-opacity-70 left-1/2 -translate-x-1/2 group-hover:opacity-100 transition-opacity shadow-lg"
+            >
+              Descargar
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-10">
-  <table
-    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-  >
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-10">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
     >
-      <tr>
-        <th scope="col" class="px-6 py-3">Nombre</th>
-        <th scope="col" class="px-6 py-3">Whatsapp</th>
-        <th scope="col" class="px-6 py-3">Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      @if(isLoading){
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
         <tr>
-            <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 h-10 w-10">
-                <div class="animate-pulse bg-gray-300 rounded-full h-10 w-10"></div>
-                </div>
-                <div class="ml-4">
-                <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
-                </div>
-            </div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-            <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
-            </td>
-            <td class="px-6 py-4 whitespace-nowrap">
-            <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
-            </td>
+          <th scope="col" class="px-6 py-3">Nombre</th>
+          <th scope="col" class="px-6 py-3">Whatsapp</th>
+          <th scope="col" class="px-6 py-3">Email</th>
         </tr>
-    }@else {
-        @for (item of clients; track $index) {
-            <tr
-              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-            >
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+      </thead>
+      <tbody>
+        @if(isLoading){
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="flex items-center">
+              <div class="flex-shrink-0 h-10 w-10">
+                <div
+                  class="animate-pulse bg-gray-300 rounded-full h-10 w-10"
+                ></div>
+              </div>
+              <div class="ml-4">
+                <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
+              </div>
+            </div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
+          </td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <div class="animate-pulse bg-gray-300 h-4 w-24 rounded"></div>
+          </td>
+        </tr>
+        }@else { @for (item of clients; track $index) {
+        <tr
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        >
+          <th
+            scope="row"
+            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          >
+            {{ item.name }}
+          </th>
+          <td class="px-6 py-4">
+            <a
+              [href]="'https://wa.me/57' + item.whatsapp"
+              target="_blank"
+              class="flex flex-row cursor-pointer hover:font-bold"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 256 258"
               >
-                {{ item.name }}
-              </th>
-              <td class="px-6 py-4">
-                <a
-                  [href]="'https://wa.me/57' + item.whatsapp"
-                  target="_blank"
-                  class="flex flex-row cursor-pointer hover:font-bold"
-                  ><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 256 258"
+                <defs>
+                  <linearGradient
+                    id="IconifyId18f1877ca35d08c2a6"
+                    x1="50%"
+                    x2="50%"
+                    y1="100%"
+                    y2="0%"
                   >
-                    <defs>
-                      <linearGradient
-                        id="IconifyId18f1877ca35d08c2a6"
-                        x1="50%"
-                        x2="50%"
-                        y1="100%"
-                        y2="0%"
-                      >
-                        <stop offset="0%" stop-color="#1FAF38" />
-                        <stop offset="100%" stop-color="#60D669" />
-                      </linearGradient>
-                      <linearGradient
-                        id="IconifyId18f1877ca35d08c2a7"
-                        x1="50%"
-                        x2="50%"
-                        y1="100%"
-                        y2="0%"
-                      >
-                        <stop offset="0%" stop-color="#F9F9F9" />
-                        <stop offset="100%" stop-color="#FFF" />
-                      </linearGradient>
-                    </defs>
-                    <path
-                      fill="url(#IconifyId18f1877ca35d08c2a6)"
-                      d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a122.994 122.994 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"
-                    />
-                    <path
-                      fill="url(#IconifyId18f1877ca35d08c2a7)"
-                      d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z"
-                    />
-                    <path
-                      fill="#FFF"
-                      d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561c0 15.67 11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716c-3.186-1.593-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"
-                    />
-                  </svg>
-                  {{ item.whatsapp }}</a
-                >
-              </td>
-              <td class="px-6 py-4">
-                <a
-                  [href]="
-                    'https://mail.google.com/mail/?view=cm&fs=1&to=' + item.email
-                  "
-                  target="_blank"
-                  class="flex flex-row cursor-pointer hover:font-semibold"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    viewBox="0 0 256 256"
+                    <stop offset="0%" stop-color="#1FAF38" />
+                    <stop offset="100%" stop-color="#60D669" />
+                  </linearGradient>
+                  <linearGradient
+                    id="IconifyId18f1877ca35d08c2a7"
+                    x1="50%"
+                    x2="50%"
+                    y1="100%"
+                    y2="0%"
                   >
-                    <g fill="none">
-                      <rect width="256" height="256" fill="#F4F2ED" rx="60" />
-                      <path
-                        fill="#4285F4"
-                        d="M41.636 203.039h31.818v-77.273L28 91.676v97.727c0 7.545 6.114 13.636 13.636 13.636"
-                      />
-                      <path
-                        fill="#34A853"
-                        d="M182.545 203.039h31.819c7.545 0 13.636-6.114 13.636-13.636V91.675l-45.455 34.091"
-                      />
-                      <path
-                        fill="#FBBC04"
-                        d="M182.545 66.675v59.091L228 91.676V73.492c0-16.863-19.25-26.477-32.727-16.363"
-                      />
-                      <path
-                        fill="#EA4335"
-                        d="M73.455 125.766v-59.09L128 107.583l54.545-40.909v59.091L128 166.675"
-                      />
-                      <path
-                        fill="#C5221F"
-                        d="M28 73.493v18.182l45.454 34.091v-59.09L60.727 57.13C47.227 47.016 28 56.63 28 73.493"
-                      />
-                    </g>
-                  </svg>
-                  {{ item.email }}
-                </a>
-              </td>
-            </tr>
-            }
-    }
-    </tbody>
-  </table>
+                    <stop offset="0%" stop-color="#F9F9F9" />
+                    <stop offset="100%" stop-color="#FFF" />
+                  </linearGradient>
+                </defs>
+                <path
+                  fill="url(#IconifyId18f1877ca35d08c2a6)"
+                  d="M5.463 127.456c-.006 21.677 5.658 42.843 16.428 61.499L4.433 252.697l65.232-17.104a122.994 122.994 0 0 0 58.8 14.97h.054c67.815 0 123.018-55.183 123.047-123.01c.013-32.867-12.775-63.773-36.009-87.025c-23.23-23.25-54.125-36.061-87.043-36.076c-67.823 0-123.022 55.18-123.05 123.004"
+                />
+                <path
+                  fill="url(#IconifyId18f1877ca35d08c2a7)"
+                  d="M1.07 127.416c-.007 22.457 5.86 44.38 17.014 63.704L0 257.147l67.571-17.717c18.618 10.151 39.58 15.503 60.91 15.511h.055c70.248 0 127.434-57.168 127.464-127.423c.012-34.048-13.236-66.065-37.3-90.15C194.633 13.286 162.633.014 128.536 0C58.276 0 1.099 57.16 1.071 127.416m40.24 60.376l-2.523-4.005c-10.606-16.864-16.204-36.352-16.196-56.363C22.614 69.029 70.138 21.52 128.576 21.52c28.3.012 54.896 11.044 74.9 31.06c20.003 20.018 31.01 46.628 31.003 74.93c-.026 58.395-47.551 105.91-105.943 105.91h-.042c-19.013-.01-37.66-5.116-53.922-14.765l-3.87-2.295l-40.098 10.513z"
+                />
+                <path
+                  fill="#FFF"
+                  d="M96.678 74.148c-2.386-5.303-4.897-5.41-7.166-5.503c-1.858-.08-3.982-.074-6.104-.074c-2.124 0-5.575.799-8.492 3.984c-2.92 3.188-11.148 10.892-11.148 26.561c0 15.67 11.413 30.813 13.004 32.94c1.593 2.123 22.033 35.307 54.405 48.073c26.904 10.609 32.379 8.499 38.218 7.967c5.84-.53 18.844-7.702 21.497-15.139c2.655-7.436 2.655-13.81 1.859-15.142c-.796-1.327-2.92-2.124-6.105-3.716c-3.186-1.593-18.844-9.298-21.763-10.361c-2.92-1.062-5.043-1.592-7.167 1.597c-2.124 3.184-8.223 10.356-10.082 12.48c-1.857 2.129-3.716 2.394-6.9.801c-3.187-1.598-13.444-4.957-25.613-15.806c-9.468-8.442-15.86-18.867-17.718-22.056c-1.858-3.184-.199-4.91 1.398-6.497c1.431-1.427 3.186-3.719 4.78-5.578c1.588-1.86 2.118-3.187 3.18-5.311c1.063-2.126.531-3.986-.264-5.579c-.798-1.593-6.987-17.343-9.819-23.64"
+                />
+              </svg>
+              {{ item.whatsapp }}</a
+            >
+          </td>
+          <td class="px-6 py-4">
+            <a
+              [href]="
+                'https://mail.google.com/mail/?view=cm&fs=1&to=' + item.email
+              "
+              target="_blank"
+              class="flex flex-row cursor-pointer hover:font-semibold"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 256 256"
+              >
+                <g fill="none">
+                  <rect width="256" height="256" fill="#F4F2ED" rx="60" />
+                  <path
+                    fill="#4285F4"
+                    d="M41.636 203.039h31.818v-77.273L28 91.676v97.727c0 7.545 6.114 13.636 13.636 13.636"
+                  />
+                  <path
+                    fill="#34A853"
+                    d="M182.545 203.039h31.819c7.545 0 13.636-6.114 13.636-13.636V91.675l-45.455 34.091"
+                  />
+                  <path
+                    fill="#FBBC04"
+                    d="M182.545 66.675v59.091L228 91.676V73.492c0-16.863-19.25-26.477-32.727-16.363"
+                  />
+                  <path
+                    fill="#EA4335"
+                    d="M73.455 125.766v-59.09L128 107.583l54.545-40.909v59.091L128 166.675"
+                  />
+                  <path
+                    fill="#C5221F"
+                    d="M28 73.493v18.182l45.454 34.091v-59.09L60.727 57.13C47.227 47.016 28 56.63 28 73.493"
+                  />
+                </g>
+              </svg>
+              {{ item.email }}
+            </a>
+          </td>
+        </tr>
+        } }
+      </tbody>
+    </table>
+  </div>
 </div>

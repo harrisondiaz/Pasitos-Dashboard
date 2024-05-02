@@ -10,6 +10,7 @@ import {
 import { Photo, Product } from '../../interfaces/product.interface';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-edit',
@@ -87,8 +88,7 @@ export class ProductEditComponent {
   }
 
   setWindow(pasare: string) {
-    localStorage.setItem('window', pasare);
-    window.location.reload();
+    this.router.navigate(['/dashboard', pasare]);
   }
 
   getProduct() {
@@ -107,7 +107,8 @@ export class ProductEditComponent {
 
   constructor(
     private productService: ProductService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
