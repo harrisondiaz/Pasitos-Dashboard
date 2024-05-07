@@ -12,8 +12,9 @@ import { Provider } from '../../interfaces/provider.interface';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { switchMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-edit-provider',
@@ -28,9 +29,7 @@ import { Location } from '@angular/common';
   styleUrl: './edit-provider.component.scss',
 })
 export class EditProviderComponent {
-  id: number = localStorage.getItem('provider')
-    ? JSON.parse(localStorage.getItem('provider') as string)
-    : 0;
+  id: number =  0;
   provider: Provider = {} as Provider;
   aux: Provider = {} as Provider;
 
@@ -55,9 +54,9 @@ export class EditProviderComponent {
     city: new FormControl(this.provider.city, Validators.required),
     address: new FormControl(this.provider.address, Validators.required),
     neighborhood: new FormControl(this.provider.neighborhood),
-    phone: new FormControl(this.provider.phone, Validators.required),
+    phone: new FormControl(this.provider.phone, [Validators.required, Validators.pattern('^[0-9]*$')]),
     zone: new FormControl(this.provider.zone),
-    email: new FormControl(this.provider.email),
+    email: new FormControl(this.provider.email,Validators.email),
   });
 
   colombia: ColombiaData[] = [];
@@ -87,11 +86,11 @@ export class EditProviderComponent {
     this.department = Array.from(departments).sort();
   }
 
-  getCitiesByDepartment(event: any) {
-    const department = event.target.value;
+  getCitiesByDepartment(depatament: string) {
+    const department2 = depatament;
     this.cities = [];
     this.colombia.forEach((colombia) => {
-      if (colombia.DEPARTAMENTO === department) {
+      if (colombia.DEPARTAMENTO === department2) {
         this.cities.push(colombia.MUNICIPIO);
       }
     });
@@ -141,9 +140,20 @@ export class EditProviderComponent {
     private colombiaService: ColombiaService,
     private providerService: ProviderService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {
-    this.getColombia();
+    this.form.controls['department'].valueChanges.subscribe((event) => {
+      this.getCitiesByDepartment(event!);
+    });
+  }
+
+  getMunicipalityForDepartment(department: string): string {
+    const colombia = this.colombia.find(c => c.DEPARTAMENTO === department);
+    if (colombia) {
+      return colombia.MUNICIPIO;
+    }
+    return '';
   }
 
   //validations the form is differents the provider
@@ -153,20 +163,35 @@ export class EditProviderComponent {
   }
 
   getProvider() {
-    this.providerService.searchById(this.id).subscribe({
-      next: (res: any) => {
-        this.provider = res[0];
-        this.aux = this.provider;
-        this.form.patchValue(this.provider);
-        console.log(this.form.value);
-      },
-      error: (error) => {
-        console.error(error);
-      },
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        return of(parseInt(params.get('id') || '0'));
+      })
+    ).subscribe((id: number) => {
+      this.id = id;
+      console.log(this.id);
+      this.providerService.searchById(this.id).subscribe({
+        next: (res: any) => {
+          this.provider = res[0];
+          console.log(this.provider);
+          this.form.patchValue(this.provider);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
     });
   }
 
   ngOnInit() {
-    this.getProvider();
+  this.getProvider();
+  this.getColombia();
+  this.aux = this.form.value as Provider;
+  const currentDepartment = this.form.get('department')?.value;
+
+  if (currentDepartment) {
+    this.getCitiesByDepartment(currentDepartment);
+    this.form.get('department')?.setValue(currentDepartment);
   }
+}
 }

@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   productList: Product[] = [];
+  products: Product[] = [];
   groupedPhotosByColor: Record<string, Photo[]> = {};
   colorOrder: string[] = [];
   isLoading: boolean = true;
@@ -25,6 +26,7 @@ export class ProductComponent implements OnInit {
         this.productList = products;
         console.log(this.productList);
         this.isLoading = false;
+        this.products = this.productList;
         this.setCurrentColor();
       },
       error: (error) => {
@@ -33,9 +35,38 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  searchProduct(event: any) {
+    let term = '';
+    if(event){
+      term = event.target.value.toLowerCase();
+      console.log(term);
+    } 
+    if(term === '') {
+      this.products = this.productList;
+    }else{
+      this.products = this.productList.filter((product) => {
+      const condition =
+          term !== '' &&
+          (product.productname.toLowerCase().includes(term)||
+          product.classification.toLowerCase().includes(term)|| 
+          product.reference.toLowerCase().includes(term) ||
+          product.homeprice.value.toString().includes(term));
+          console.log(condition);
+        return condition;
+            
+          });
+    }
+  }
+
+  hasColor(product: Product): boolean {
+    product.hasColor = product.photos.some((photo) => photo.color !== "");
+    return product.hasColor;
+  }
+
   setColor(product: Product,color: string) {
     this.productList.forEach((element) => {
       if (element.id === product.id) {
+        console.log(element.productname, color);
         element.currentColor = color;
       }
     });
@@ -44,7 +75,7 @@ export class ProductComponent implements OnInit {
   getColor(product: Product): string[] {
     if (product && product.photos) {
       this.groupedPhotosByColor = this.groupPhotosByColor(product.photos);
-      this.colorOrder = Object.keys(this.groupedPhotosByColor); // Capture color order
+      this.colorOrder = Object.keys(this.groupedPhotosByColor); 
       return this.colorOrder;
     }
     return []; // Add a default return value
@@ -74,12 +105,17 @@ export class ProductComponent implements OnInit {
 
   formatColors(product: Product): [string, string[]][] {
     const colors = this.getColor(product);
-    return colors.map((color) => {
-      const photoUrls = this.groupedPhotosByColor[color].map(
-        (photo) => photo.url
-      );
-      return [color, photoUrls];
-    });
+  
+    // Set hasColor property
+    product.hasColor = colors.some(color => color !== "");
+  
+    return colors
+      .map((color) => {
+        const photoUrls = this.groupedPhotosByColor[color].map(
+          (photo) => photo.url
+        );
+        return [color, photoUrls];
+      });
   }
 
   print(text: string) {
@@ -87,10 +123,12 @@ export class ProductComponent implements OnInit {
   }
 
   getPDF(){
-    this.pdfService.exportProducts(this.productList).subscribe({
-      next: (pdf) => {
-        const url = window.URL.createObjectURL(pdf);
-        window.open(url);
+    this.pdfService.exportProducts(this.products).subscribe({
+      next: (response) => {
+        console.log(response);
+        const blob = new Blob([response], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url, '_blank');
       },
       error: (error) => {
         console.error(error);

@@ -3,32 +3,47 @@ import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment.development';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ImageService {
-
-  private supabase!: SupabaseClient;
-
+  private supabase: SupabaseClient ;
 
   constructor() {
-    this.supabase = createClient(environment.supabase.url, environment.supabase.key);
-   }
+    this.supabase = createClient(
+      environment.supabase.url,
+      environment.supabase.key
+    );
+  }
 
-   async uploadImage(file: File) {
-    const { data, error } = await this.supabase.storage.from('Products').upload(file.name, file);
+  async uploadImageAndGetUrl(file: File): Promise<string> {
+    const { data, error } = await this.supabase.storage
+      .from('Products')
+      .upload(file.name, file);
     if (error) {
       throw error;
     }
-    return data;
+    const url = await this.supabase.storage.from('Products').createSignedUrl(file.name,7305); 
+    console.log(url.data?.signedUrl);
+    return url.data!.signedUrl;
   }
 
   async downloadImage(name: string) {
-    const { data, error } = await this.supabase.storage.from('Products').download(name);
+    const { data, error } = await this.supabase.storage
+      .from('Products')
+      .download(name);
     if (error) {
       throw error;
     }
     return data;
   }
 
-  
+  async deleteImage(name: string) {
+    const { data, error } = await this.supabase.storage
+      .from('Products')
+      .remove([name]);
+    if (error) {
+      throw error;
+    }
+    return data;
+  }
 }

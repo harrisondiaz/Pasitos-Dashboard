@@ -1,9 +1,10 @@
 import { Component, EventEmitter } from '@angular/core';
 import { Provider } from '../../interfaces/provider.interface';
 import { ProviderService } from '../../services/provider.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { switchMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 @Component({
   selector: 'app-view-provider',
   standalone: true,
@@ -12,21 +13,28 @@ import { Location } from '@angular/common';
   styleUrl: './view-provider.component.scss',
 })
 export class ViewProviderComponent {
-  id: number = localStorage.getItem('provider') ? JSON.parse(localStorage.getItem('provider') as string) : 0;
+  id: number = 0;
   providers: Provider[] = [];
   provider: Provider = {} as Provider;
 
-  constructor(private providerService: ProviderService, private router: Router, private location: Location) {}
+  constructor(private providerService: ProviderService, private router: Router, private location: Location,private route: ActivatedRoute,) {}
 
   ngOnInit() {
-    this.providerService.searchById(this.id).subscribe({
-      next: (res: any) => {
-        this.provider = res[0];
-        console.log(this.provider);
-      },
-      error: (error) => {
-        console.error(error);
-      },
+    this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        return of(parseInt(params.get('id') || '0'));
+      })
+    ).subscribe((id: number) => {
+      this.id = id;
+      this.providerService.searchById(this.id).subscribe({
+        next: (res: any) => {
+          this.provider = res[0];
+          console.log(this.provider);
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
     });
   }
 
@@ -168,11 +176,15 @@ export class ViewProviderComponent {
 
   setEdit() {
     localStorage.setItem('provider', JSON.stringify(this.provider.id));
-    this.router.navigate(['/dashboard/edit-provider']);
+    this.router.navigate(['/dashboard/edit-provider', this.provider.id]);
   }
 
   setWindow() {
     localStorage.removeItem('provider');
-    this.router.navigate(['/dashboard', 'provider']);
+    this.router.navigate(['/dashboard', 'provider', 'provider']);
+  }
+
+  goBack() {
+    this.location.back();
   }
 }

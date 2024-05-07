@@ -1,26 +1,31 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-
   name: string = '';
-  username : any;
+  username: any;
 
   logout() {
     this.authService.signOut();
+    this.router.navigate(['/']);
+  }
+
+  setHome() {
+    console.log('home');
+    this.router.navigate(['dashboard']);
   }
 
   setWindow(parsedWindow: any) {
-    this.router.navigate(['/dashboard', parsedWindow]);
+    this.router.navigate(['dashboard', parsedWindow]);
   }
 
   ngOnInit(): void {
@@ -30,13 +35,29 @@ export class HeaderComponent {
   }
 
   getName() {
-    const email = JSON.parse(localStorage.getItem('sb-ggbralugqoodmaklkses-auth-token') || '{}');
+    const email = JSON.parse(
+      localStorage.getItem('sb-ggbralugqoodmaklkses-auth-token') || '{}'
+    );
     this.userService.getName(email.user.email).subscribe((data: any) => {
       this.username = data.name;
     });
   }
-  
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
+  modeDark() {
+    if (
+      localStorage.getItem('color-theme') === 'dark' ||
+      (!('color-theme' in localStorage) &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }
 
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
 }

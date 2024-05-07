@@ -17,7 +17,7 @@ export class PdfService {
   }
 
   exportProducts(productList: Product[]) {
-    return this._http.post(this.apiUrl + '/pdf/product', productList, { responseType: 'blob' });
+    return this._http.post(this.apiUrl + '/pdf/products', productList, { responseType: 'blob' });
   }
 
 

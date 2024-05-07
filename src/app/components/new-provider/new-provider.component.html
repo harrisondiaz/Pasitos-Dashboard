@@ -47,57 +47,54 @@
     
     <div class="mt-10 mx-5 md:ml-56 lg:ml-80 flex flex-col justify-center">
       <form [formGroup]="this.form" (ngSubmit)="submit()">
-        <label for="nature" class="mt-5 text-xl">Naturaleza</label>
+        <label for="nature" class="mt-5 text-xl">Naturaleza<strong class="text-red-500">*</strong></label>
         <div class="flex flex-wrap mt-2">
           <div class="flex items-center me-4">
             <input
               formControlName="nature"
-              id="nature"
+              id="natureNatural"
               type="radio"
               value="Natural"
-              name="nature-radio"
+              name="nature"
               class="w-4 h-4 text-pink-600 bg-gray-100 border-gray-300 focus:ring-pink-500 dark:focus:ring-pink-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
-              for="nature"
+              for="natureNatural"
               class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Natural</label
-            >
+            >Natural</label>
           </div>
           <div class="flex items-center me-4">
             <input
               formControlName="nature"
-              id="nature"
+              id="natureJuridica"
               type="radio"
               value="Jurídica"
-              name="nature-radio"
+              name="nature"
               class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
-              for="nature"
+              for="natureJuridica"
               class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Jurídica</label
-            >
+            >Jurídica</label>
           </div>
           <div class="flex items-center me-4">
             <input
               formControlName="nature"
-              id="nature"
+              id="natureGranContribuyente"
               type="radio"
               value="Gran Contribuyente"
-              name="nature-radio"
+              name="nature"
               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
             />
             <label
-              for="nature"
+              for="natureGranContribuyente"
               class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Gran Contribuyente</label
-            >
+            >Gran Contribuyente</label>
           </div>
         </div>
     
         <div class="mt-10">
-          <label for="taxregime" class="mt-5 text-xl">Régimen de Impuestos</label>
+          <label for="taxregime" class="mt-5 text-xl">Régimen de Impuestos<strong class="text-red-500">*</strong></label>
         </div>
         <div class="flex flex-wrap mt-4">
           <div class="flex items-center me-4">
@@ -135,7 +132,7 @@
           <label
             for="documenttype"
             class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-            >Tipo de Documento</label
+            >Tipo de Documento<strong class="text-red-500">*</strong></label
           >
           <select
             formControlName="documenttype"
@@ -153,7 +150,7 @@
             <label
               for="document"
               class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Documento</label
+              >Documento<strong class="text-red-500">*</strong></label
             >
             <input
               formControlName="document"
@@ -250,7 +247,7 @@
             <label
               for="Departamento"
               class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Departamento</label
+              >Departamento<strong class="text-red-500">*</strong></label
             >
             <select
               formControlName="department"
@@ -268,7 +265,7 @@
             <label
               for="city"
               class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Municipio</label
+              >Municipio<strong class="text-red-500">*</strong></label
             >
             <select
               formControlName="city"
@@ -287,7 +284,7 @@
             <label
               for="address"
               class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Dirección</label
+              >Dirección<strong class="text-red-500">*</strong></label
             >
             <input
               formControlName="address"
@@ -331,7 +328,7 @@
             <label
               for="phone"
               class="mt-5 block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Teléfono</label
+              >Teléfono<strong class="text-red-500">*</strong></label
             >
             <input
               formControlName="phone"
@@ -339,6 +336,9 @@
               type="text"
               class="border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
             />
+            @if(this.form.controls.phone.invalid){
+            <p class="text-red-500 text-sm font-semibold">¡Teléfono no válido!</p>
+            }
           </div>
           <div class="flex flex-col w-full">
             <label
@@ -352,8 +352,14 @@
               type="email"
               class="border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600"
             />
+            @if(this.form.controls.email.invalid){
+            <p class="text-red-500 text-sm font-semibold">¡Correo no válido!</p>
+            }
           </div>
         </div>
+        
+          <p class="mt-5 text-sm font-semibold text-red-500">* Campos obligatorios</p>
+        
         <div class="flex flex-row justify-between mt-10 md:w-3/4">
           <!--Button cancel-->
           <button
@@ -365,7 +371,7 @@
           </button>
           <!--Button post provider-->
           <button
-            (click)="submit()"
+            type="submit"
             class="bg-lime-500 hover:bg-lime-700 text-white font-bold py-2 px-4 rounded"
           >
             Guardar
@@ -395,3 +401,4 @@
     }
     
 </div>
+

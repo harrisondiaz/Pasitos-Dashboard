@@ -11,13 +11,15 @@ import { ProviderService } from '../../services/provider.service';
 import { Provider } from '../../interfaces/provider.interface';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ToastComponent } from '../toast/toast.component';
+
 
 @Component({
-  selector: 'app-new-provider',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './new-provider.component.html',
-  styleUrl: './new-provider.component.scss',
+    selector: 'app-new-provider',
+    standalone: true,
+    templateUrl: './new-provider.component.html',
+    styleUrl: './new-provider.component.scss',
+    imports: [ReactiveFormsModule, ToastComponent]
 })
 export class NewProviderComponent {
   form = new FormGroup({
@@ -30,14 +32,14 @@ export class NewProviderComponent {
     othernames: new FormControl(''),
     lastname: new FormControl(''),
     secondlastname: new FormControl(''),
-    businessname: new FormControl('', Validators.required),
+    businessname: new FormControl('',),
     department: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     neighborhood: new FormControl(''),
-    phone: new FormControl(0, Validators.required),
+    phone: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$')]),
     zone: new FormControl(''),
-    email: new FormControl(''),
+    email: new FormControl('', Validators.email),
   });
 
   colombia: ColombiaData[] = [];
@@ -45,6 +47,7 @@ export class NewProviderComponent {
   isLoaded: boolean = true;
   department: string[] = [];
   isIncomplete: boolean = false;
+  
 
   getColombia() {
     this.colombiaService.getAll().subscribe((colombiaData: ColombiaData[]) => {

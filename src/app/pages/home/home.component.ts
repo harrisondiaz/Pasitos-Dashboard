@@ -14,6 +14,7 @@ import { NewProviderComponent } from "../../components/new-provider/new-provider
 import { EditProviderComponent } from "../../components/edit-provider/edit-provider.component";
 import { AuthService } from '../../services/auth.service';
 import { UserComponent } from "../../components/user/user.component";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-home',
@@ -73,6 +74,7 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('window');
     localStorage.removeItem('toast');
     this.authService.signOut();
+    this.router.navigate(['/']);
    
   }
 
@@ -83,7 +85,7 @@ export class HomeComponent implements OnInit {
     window.location.reload();
   }
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
   ngOnInit() {
     const currentUser =  this.authService.getCurrentUser().subscribe((user) => {
       this.name = user?.email ?? '';

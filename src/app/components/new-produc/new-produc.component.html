@@ -29,7 +29,6 @@
               >ID</label
             >
             <input
-              formControlName="id"
               id="id"
               name="id"
               type="number"
@@ -252,7 +251,7 @@
             <label
               for="homepriceutilitypercentage"
               class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Porcentaje de utilidad</label
+              >% utilidad</label
             >
             <input
               formControlName="homepriceutilitypercentage"
@@ -333,7 +332,7 @@
               >Categoría</label
             >
             <select
-              formControlName="category"
+              formControlName="classification"
               id="category"
               name="category"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -369,7 +368,7 @@
               >Proveedor</label
             >
             <select
-              formControlName="provider"
+              formControlName="supplier"
               id="provider"
               name="provider"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -386,7 +385,7 @@
             </select>
           </div>
         </div>
-        <div
+        <div 
           class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
         >
           @for (item of selectedColors; track $index) {
@@ -459,10 +458,10 @@
           </div>
           }
         </div>
-        <div
+        <div 
           class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
         >
-          @for (item of selectedColors2; track $index) {
+        
           <div class="flex flex-col">
             <label
               for="color"
@@ -470,7 +469,6 @@
               >Color</label
             >
             <select
-              formControlName="color"
               id="color"
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -524,11 +522,17 @@
                   formControlName="url"
                   type="file"
                   class="hidden"
+                  (change)="fileChanged($event)"
                 />
               </label>
             </div>
+            @if(isSeleted){
+            <p
+              class="block text-sm font-medium text-lime-500 "
+            > Se ha selecionado una imagen </p>
+            }
           </div>
-          }
+          
         </div>
         <div class="flex flex-row gap-x-5">
           <button
@@ -536,14 +540,20 @@
             type="button"
             class="flex flex-row focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-900"
           >
+           
+          @if(isSeleted){
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 me-2 text-white dark:text-gray-400" viewBox="0 0 24 24"><path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z"/></svg>
+            Subir imagen
+          }@else {
             <svg
-              class="w-5 h-5 me-2 text-white dark:text-gray-400"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-            >
-              <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-            </svg>
-            Agregar Color
+            class="w-5 h-5 me-2 text-white dark:text-gray-400"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+          </svg>
+          Agregar Imagen
+          }
           </button>
           <button
             (click)="remove()"
@@ -587,6 +597,7 @@
             Cancelar
           </button>
           <button
+          (click)="postProduct()"
             type="submit"
             class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -598,3 +609,8 @@
   </div>
   
 </div>
+
+@if(isCorrect){
+  <app-toast [message]="message" [type]="type"></app-toast>
+  
+}

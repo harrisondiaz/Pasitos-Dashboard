@@ -8,6 +8,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AuthService } from './services/auth.service';
 import { HeaderComponent } from './components/header/header.component';
 import { filter } from 'rxjs';
+import { RouteStateService } from './services/route-state.service';
+import { AuthGuard } from './guards/route.guard';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +21,7 @@ import { filter } from 'rxjs';
     ReactiveFormsModule,
     FooterComponent,
     HeaderComponent,
-  ],
+  ]
 })
 export class AppComponent implements OnInit {
   title = 'Pasitos-Dashboard';
@@ -29,8 +31,10 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     this.authService.getCurrentUser().subscribe((user) => {
+      
       this.name = user?.email ?? '';
     });
+    
   }
 
   shouldShowHeader(): boolean {
@@ -38,7 +42,7 @@ export class AppComponent implements OnInit {
   }
   
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, private routeStateService: RouteStateService) {
     
   }
 }

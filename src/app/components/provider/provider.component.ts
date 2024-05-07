@@ -204,12 +204,12 @@ export class ProviderComponent {
 
   setEdit(pasare: string, provider: Provider) {
     localStorage.setItem('provider', JSON.stringify(provider.id));
-    this.router.navigate(['/dashboard', pasare]);
+    this.router.navigate(['/dashboard', pasare, provider.id]);
   }
 
   setView(pasare: string, provider: Provider) {
     localStorage.setItem('provider', JSON.stringify(provider.id));
-    this.router.navigate(['/dashboard', pasare]);
+    this.router.navigate(['/dashboard', pasare, provider.id]);
   }
 
   constructor(private providerService: ProviderService, private pdfService: PdfService, private router: Router) {}
@@ -253,7 +253,8 @@ export class ProviderComponent {
       next: (response) => {
         const blob = new Blob([response], { type: 'application/pdf' });
         const url = window.URL.createObjectURL(blob);
-        window.open(url);
+        this.router.navigate(['/dashboard/provider']);
+        window.open(url, '_blank');
       }});
   }
 }

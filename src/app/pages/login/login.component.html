@@ -33,6 +33,9 @@
                 class="bg-white/50 hover:bg-white md:bg-white placeholder:text-sky-500 placeholder:text-sm text-sky-500 py-3 px-5 focus:text-sky-500 focus:outline focus:outline-offset-1 focus:outline-sky-500 rounded-md"
                 placeholder="¡Ingresa tu Correo!"
               />
+              @if (noEmail) {
+              <p class="text-red-500 text-sm font-semibold">¡Correo no válido!</p>
+              }
             </div>
             <div class="flex flex-col">
               <label for="password" class="text-sky-500 text-sm font-semibold">
@@ -50,16 +53,21 @@
 
             <button
               type="submit"
-              class="px-6 py-2 mx-10 bg-lime-500 rounded hover:bg-white hover:text-lime-700 font-semibold transition-all text-white hover:scale-110"
+              class="px-6 py-2 mx-10 bg-lime-500 rounded hover:bg-white hover:border-2 hover:border-lime-500 hover:text-lime-700 font-semibold transition-all text-white hover:scale-110"
             >
               Iniciar sesión
             </button>
           </div>
         </div>
       </form>
+      @if(isValid){
+      
+      }
     </div>
   </div>
 </div>
+
+
 
 @if (novisible) {
 <div
