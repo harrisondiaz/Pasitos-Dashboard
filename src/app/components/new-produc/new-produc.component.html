@@ -396,6 +396,7 @@
               >Color</label
             >
             <select
+              (change)="changeColorIndex($event, $index)"
               id="color"
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -428,6 +429,9 @@
               <option value="blue" [selected]="item.color === 'blue'">
                 Azul
               </option>
+              <option value="" [selected]="item.color ===''">
+                Sin color
+              </option>
             </select>
             <div class="flex flex-row justify-between">
               <img
@@ -439,6 +443,7 @@
                 class="mt-5 -translate-x-32 translate-y-2 md:-translate-x-5 md:translate-y-2 lg:-translate-x-14 lg:translate-y-2"
               >
                 <button
+                (click)="removebyIndex($index)"
                   type="button"
                   class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-1 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 >
@@ -469,11 +474,11 @@
               >Color</label
             >
             <select
+            (change)="changeColor($event)"
               id="color"
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option selected>Selecione un color</option>
               <option value="white">Blanco</option>
               <option value="black">Negro</option>
               <option value="brown">Marrón</option>
@@ -484,6 +489,7 @@
               <option value="white">Blanco</option>
               <option value="yellow">Amarillo</option>
               <option value="blue">Azul</option>
+              <option value="">Sin Color</option>
             </select>
   
             <div class="flex items-center justify-center w-full mt-5">
@@ -514,12 +520,13 @@
                     sujeta y suelta un archivo
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
-                    SVG, PNG, JPG or GIF (MAX. 800x400px)
+                    SVG, PNG, JPG or GIF 
                   </p>
                 </div>
                 <input
                   id="dropzone-file"
                   formControlName="url"
+                  accept="image/*"
                   type="file"
                   class="hidden"
                   (change)="fileChanged($event)"

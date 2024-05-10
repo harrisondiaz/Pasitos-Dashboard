@@ -9,7 +9,7 @@ export interface Product {
     totalcost:      number;
     stock:          number;
     classification: string;
-    supplier:       string;
+    supplier:       number;
     homeprice:      HomePrice;
     photos:         Photo[];
     description:    string;

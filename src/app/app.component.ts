@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     this.authService.getCurrentUser().subscribe((user) => {
-      
       this.name = user?.email ?? '';
     });
     

@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit {
     localStorage.setItem('window', parse);
     localStorage.setItem('toast', 'true');
     this.window = parse;
-    window.location.reload();
+    this.router.navigate(['dashboard', parse]);
   }
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
       this.name = user?.email ?? '';
     });
     localStorage.setItem('toast', 'false');
-    this.window = localStorage.getItem('window') ?? 'home';
+    this.window = localStorage.getItem('window') ?? '';
     this.isSession();
   }
 }

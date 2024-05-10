@@ -57,7 +57,12 @@ export class AuthService {
     }
     if(data && data.session){
       this.user.next(data.session.user);
-      this.router.navigate(['dashboard']);
+      const returnUrl = localStorage.getItem('window');
+      if(returnUrl !== ''){
+        this.router.navigate(['dashboard', returnUrl]);
+      }else{
+        this.router.navigate(['dashboard', 'home']);
+      }
     }else{
       this.user.next(null);
       this.router.navigate(['']);

@@ -85,6 +85,7 @@ export class NewProviderComponent {
   }
 
   setWindow(pasare: string) {
+    localStorage.setItem('window', pasare);
     this.router.navigate(['/dashboard', pasare]);
   }
 

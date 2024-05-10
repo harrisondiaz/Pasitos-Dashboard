@@ -5,20 +5,26 @@ import { Photo, Product } from '../../interfaces/product.interface';
 import { elementAt } from 'rxjs';
 import { PdfService } from '../../services/pdf.service';
 import { Router } from '@angular/router';
+import { ToastComponent } from "../toast/toast.component";
 
 @Component({
-  selector: 'app-product',
-  standalone: true,
-  imports: [],
-  templateUrl: './product.component.html',
-  styleUrl: './product.component.scss',
+    selector: 'app-product',
+    standalone: true,
+    templateUrl: './product.component.html',
+    styleUrl: './product.component.scss',
+    imports: [ToastComponent]
 })
 export class ProductComponent implements OnInit {
   productList: Product[] = [];
   products: Product[] = [];
   groupedPhotosByColor: Record<string, Photo[]> = {};
   colorOrder: string[] = [];
+  product: Product = {} as Product;
   isLoading: boolean = true;
+  isDeleted: boolean = false;
+  IsCorrectlyDeleted: string = '';
+  message: string = '';
+  type: string = '';
 
   getProducts() {
     this.productService.getAll().subscribe({
@@ -95,12 +101,12 @@ export class ProductComponent implements OnInit {
   }
 
   setWindow(pasare: string) {
+    localStorage.setItem('window', pasare);
     this.router.navigate(['/dashboard', pasare]);
   }
   
   setEdit(pasare: string, product: Product) {
-    localStorage.setItem('id', product.id.toString()); // Convert product.id to string
-    this.router.navigate(['/dashboard', pasare]);
+    this.router.navigate(['dashboard', pasare, product.id]);
   }
 
   formatColors(product: Product): [string, string[]][] {
@@ -110,12 +116,21 @@ export class ProductComponent implements OnInit {
     product.hasColor = colors.some(color => color !== "");
   
     return colors
+      .filter((color) => color !== "")
       .map((color) => {
         const photoUrls = this.groupedPhotosByColor[color].map(
           (photo) => photo.url
         );
         return [color, photoUrls];
       });
+  }
+
+  getFormatter(value: number) {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      maximumFractionDigits: 0,
+    }).format(value);
   }
 
   print(text: string) {
@@ -139,6 +154,44 @@ export class ProductComponent implements OnInit {
   setCurrentColor(){
     this.productList.forEach((element) => {
       element.currentColor = element.photos[0].color;
+    });
+  }
+
+  closeDelete(){
+    this.isDeleted = false;
+  }
+
+  toggleDelete(product: Product) {
+    this.product = product;
+    this.isDeleted = true;
+  }
+
+  deleteProduct(){
+    this.productService.delete(this.product.id).subscribe({
+      next: (response) => {
+        console.log(response);
+        this.IsCorrectlyDeleted = 'true';
+        this.message = 'Producto eliminado correctamente';
+        this.type = 'success';
+        setTimeout(() => {
+          this.message = '';
+          this.IsCorrectlyDeleted = '';
+          this.type = '';
+        }, 5000);
+        this.getProducts();
+        this.isDeleted = false;
+      },
+      error: (error) => {
+        this.IsCorrectlyDeleted = 'false';
+        this.message = 'Error al eliminar el producto';
+        this.type = 'error';
+        setTimeout(() => {
+          this.message = '';
+          this.IsCorrectlyDeleted = '';
+          this.type = '';
+        }, 5000);
+        console.error(error);
+      },
     });
   }
 

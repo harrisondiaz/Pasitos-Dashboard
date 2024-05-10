@@ -21,10 +21,11 @@ export class HeaderComponent {
 
   setHome() {
     console.log('home');
-    this.router.navigate(['dashboard']);
+    this.router.navigate(['dashboard', 'home']);
   }
 
   setWindow(parsedWindow: any) {
+    localStorage.setItem('window', parsedWindow)
     this.router.navigate(['dashboard', parsedWindow]);
   }
 

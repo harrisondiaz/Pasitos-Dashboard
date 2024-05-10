@@ -22,7 +22,7 @@ export class ImageService {
     if (error) {
       throw error;
     }
-    const url = await this.supabase.storage.from('Products').createSignedUrl(file.name,7305); 
+    const url = await this.supabase.storage.from('Products').createSignedUrl(file.name,631152000); 
     console.log(url.data?.signedUrl);
     return url.data!.signedUrl;
   }

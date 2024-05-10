@@ -18,7 +18,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     children: [
-      { path: '', component: HomeComponent, title: 'Inicio' },
+      { path: 'home', component: HomeComponent, title: 'Inicio' },
       { path: 'provider', component: ProviderComponent, title: 'Proveedores' },
       {
         path: 'new-provider',
@@ -35,9 +35,10 @@ export const routes: Routes = [
       },
       { path: 'product', component: ProductComponent, title: 'Productos' },
       { path: 'new-product', component: NewProducComponent, title: 'Nuevo Producto'},
-      { path: 'edit-product', component: ProductEditComponent, title: 'Editar Producto'},
+      { path: 'edit-product/:id', component: ProductEditComponent, title: 'Editar Producto'},
       { path: 'client', component: ClientComponent, title: 'Clientes' },
-      { path: 'report', component: ReportComponent, title: 'Reportes'}
+      { path: 'report', component: ReportComponent, title: 'Reportes'},
+      { path: '', redirectTo: 'home', pathMatch: 'full'}
     ],
   },
   { path: '**', component: NotFoundComponent },

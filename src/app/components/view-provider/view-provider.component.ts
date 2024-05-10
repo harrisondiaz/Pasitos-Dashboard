@@ -175,13 +175,14 @@ export class ViewProviderComponent {
   }
 
   setEdit() {
-    localStorage.setItem('provider', JSON.stringify(this.provider.id));
+    localStorage.setItem('window', 'provider/'+this.provider.id);
     this.router.navigate(['/dashboard/edit-provider', this.provider.id]);
   }
 
   setWindow() {
+    localStorage.setItem('window', 'provider');
     localStorage.removeItem('provider');
-    this.router.navigate(['/dashboard', 'provider', 'provider']);
+    this.router.navigate(['/dashboard', 'provider']);
   }
 
   goBack() {

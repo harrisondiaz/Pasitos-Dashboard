@@ -40,6 +40,7 @@ export class NewProducComponent {
     description: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
   });
+  
 
   isNegative = false;
   selectedColors: any[] = [];
@@ -51,6 +52,7 @@ export class NewProducComponent {
   type: string = '';
   selectedFile: File | null = null;
   isSeleted: boolean = false;
+  color: string = '';
   setValues() {
     this.form.valueChanges.subscribe((values) => {
       /**
@@ -89,8 +91,6 @@ export class NewProducComponent {
     });
   }
 
-  
-
   fileChanged(event: Event) {
     const target = event.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
@@ -98,45 +98,63 @@ export class NewProducComponent {
     this.isSeleted = true;
   }
 
-  async addImages() {
-    try {
-      this.message = 'Subiendo imagen...';
-      this.type = 'load';
-      this.isCorrect = true;
-      const photos = File;
-      const color = this.form.get('color')?.value;
+  changeColor(event: any) {
+    this.color = event.target.value;
+  }
 
-      if (this.selectedFile) {
-        const url = await this.imageService.uploadImageAndGetUrl(
-          this.selectedFile
-        );
-        if (url) {
-          this.isCorrect =false;
-          this.message = 'Imagen subida correctamente';
-          this.type = 'success';
-          this.isCorrect = true;
-          setTimeout(() => {
-            this.message = '';
-            this.type = '';
+  async addImages() {
+    if (this.selectedFile) {
+      try {
+        this.message = 'Subiendo imagen...';
+        this.type = 'load';
+        this.isCorrect = true;
+        const color = this.color;
+        console.log(color);
+
+        if (this.selectedFile) {
+          const url = await this.imageService.uploadImageAndGetUrl(
+            this.selectedFile
+          );
+          this.selectedFile = null;
+          if (url) {
             this.isCorrect = false;
-          }, 5000);
-          this.isSeleted = false;
-          this.selectedColors.push({ color: color || "", url });
-        } else {
-          this.message = 'Error al subir la imagen';
-          this.type = 'error';
-          this.isCorrect = false;
-          setTimeout(() => {
-            this.message = '';
-            this.type = '';
+            this.message = 'Imagen subida correctamente';
+            this.type = 'success';
+            this.isCorrect = true;
+            setTimeout(() => {
+              this.message = '';
+              this.type = '';
+              this.isCorrect = false;
+            }, 5000);
+            this.selectedColors.push({ color: color || '', url });
+            this.isSeleted = false;
+            this.color = '';
+          } else {
+            this.message = 'Error al subir la imagen';
+            this.type = 'error';
             this.isCorrect = false;
-          }, 5000);
+            setTimeout(() => {
+              this.message = '';
+              this.type = '';
+              this.isCorrect = false;
+              
+            }, 5000);
+          }
         }
+      } catch (error) {
+        this.message = 'Error al subir la imagen';
+        this.type = 'error';
+        this.isCorrect = false;
+        setTimeout(() => {
+          this.message = '';
+          this.type = '';
+          this.isCorrect = false;
+        }, 5000);
       }
-    } catch (error) {
-      this.message = 'Error al subir la imagen';
-      this.type = 'error';
-      this.isCorrect = false;
+    } else {
+      this.message = 'No hay imagen seleccionada';
+      this.type = 'warning';
+      this.isCorrect = true;
       setTimeout(() => {
         this.message = '';
         this.type = '';
@@ -145,12 +163,51 @@ export class NewProducComponent {
     }
   }
 
-  remove() {
-    if (this.selectedColors.length > 0) {
-      this.imageService.deleteImage(this.selectedColors[this.selectedColors.length - 1].url);
-      this.selectedColors.pop();
+  changeColorIndex(event: any, index: number) {
+    this.selectedColors[index].color = event.target.value;
+  }
 
-      this.currentImageIndex = this.selectedColors.length - 1;
+  removebyIndex(index: number) {
+    const url = this.selectedColors[index].url;
+    console.log(url);
+
+    // Create a URL object
+    const urlObj = new URL(url);
+
+    // Split the pathname into segments
+    const pathSegments = urlObj.pathname.split('/');
+
+    // The file name is the last segment
+    const fileName = pathSegments[pathSegments.length - 1];
+
+    this.imageService.deleteImage(fileName).then(() => {
+      this.selectedColors.splice(index, 1);
+      this.message = 'Imagen eliminada correctamente';
+      this.type = 'success';
+      this.isCorrect = true;
+      setTimeout(() => {
+        this.message = '';
+        this.type = '';
+        this.isCorrect = false;
+      }, 5000);
+    });
+
+    //this.selectedColors.splice(index, 1);
+  }
+
+  remove() {
+    if (this.selectedFile) {
+      this.selectedFile = null;
+      this.isSeleted = false;
+    } else {
+      this.message = 'No hay imagen seleccionada';
+      this.type = 'warning';
+      this.isCorrect = true;
+      setTimeout(() => {
+        this.message = '';
+        this.type = '';
+        this.isCorrect = false;
+      }, 5000);
     }
   }
 
@@ -164,13 +221,19 @@ export class NewProducComponent {
           this.message = 'Producto creado correctamente';
           this.type = 'success';
           this.isCorrect = true;
+
           setTimeout(() => {
             this.message = '';
             this.type = '';
             this.isCorrect = false;
-          }, 5000);
+          }, 1000);
+          this.message =
+            ' Te vamos a redirigir a la lista de productos en 5 segundos';
+          this.type = 'load';
+          this.isCorrect = true;
           setTimeout(() => {
             this.router.navigate(['dashboard', 'product']);
+            this.isCorrect = false;
           }, 5000);
         },
         error: (error) => {
@@ -198,6 +261,7 @@ export class NewProducComponent {
   }
 
   setWindow(pasare: string) {
+    localStorage.setItem('window', pasare);
     this.router.navigate(['/dashboard', pasare]);
   }
 

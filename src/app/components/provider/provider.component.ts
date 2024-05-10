@@ -199,17 +199,16 @@ export class ProviderComponent {
   }
 
   setWindow(pasare: string) {
+    localStorage.setItem('window', pasare);
     this.router.navigate(['/dashboard', pasare]);
   }
 
   setEdit(pasare: string, provider: Provider) {
-    localStorage.setItem('provider', JSON.stringify(provider.id));
     this.router.navigate(['/dashboard', pasare, provider.id]);
   }
 
   setView(pasare: string, provider: Provider) {
-    localStorage.setItem('provider', JSON.stringify(provider.id));
-    this.router.navigate(['/dashboard', pasare, provider.id]);
+    this.router.navigate(['dashboard', pasare, provider.id]);
   }
 
   constructor(private providerService: ProviderService, private pdfService: PdfService, private router: Router) {}
