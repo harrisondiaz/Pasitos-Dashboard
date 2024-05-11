@@ -6,7 +6,7 @@ import { BodyComponent } from '../../components/body/body.component';
 import { ProductComponent } from '../../components/product/product.component';
 import { ClientComponent } from '../../components/client/client.component';
 import { ProviderComponent } from '../../components/provider/provider.component';
-import { ReportComponent } from '../../components/report/report.component';
+import { ReportComponent } from '../report/report.component';
 import { NewProducComponent } from '../../components/new-produc/new-produc.component';
 import { ProductEditComponent } from '../../components/product-edit/product-edit.component';
 import { ViewProviderComponent } from "../../components/view-provider/view-provider.component";

@@ -1,0 +1,635 @@
+<div class="md:ml-64 mt-20">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-x-24 gap-y-10 mx-5 md:mx-10">
+    <div
+      class="flex flex-col justify-around max-w md:h-4/5 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5
+        class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+      >
+        Registro de gasto, venta y diario de caja
+      </h5>
+
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        En esta sección podrás registrar tus ventas, diario de caja y gastos
+        para llevar un control de tus ingresos y egresos.
+      </p>
+
+      <div data-dial-init class="block flex invisible md:visible group -mt-2">
+        <div
+          id="speed-dial-menu-horizontal"
+          class="flex items-center hidden me-4 space-x-2 rtl:space-x-reverse"
+        >
+          <button
+            type="button"
+            data-modal-target="crud-modal"
+            data-modal-toggle="crud-modal"
+            data-tooltip-target="tooltip-share"
+            data-tooltip-placement="top"
+            class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6v2H5v14h14v-6h2v6q0 .825-.587 1.413T19 21zm11-10V8h-3V6h3V3h2v3h3v2h-3v3z"
+              />
+            </svg>
+
+            <span class="sr-only">Añadir registro</span>
+          </button>
+          <div
+            id="tooltip-share"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Añadir registro
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <button
+            type="button"
+            data-tooltip-target="tooltip-print"
+            data-tooltip-placement="top"
+            class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+              />
+            </svg>
+
+            <span class="sr-only">Busqueda avanzada</span>
+          </button>
+          <div
+            id="tooltip-print"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Busqueda avanzada
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <button
+            (click)="setWindow('spent')"
+            type="button"
+            data-tooltip-target="tooltip-download"
+            data-tooltip-placement="top"
+            class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M11.25 7.847c-.936.256-1.5.975-1.5 1.653s.564 1.397 1.5 1.652zm1.5 5.001v3.304c.936-.255 1.5-.974 1.5-1.652c0-.678-.564-1.397-1.5-1.652"
+              />
+              <path
+                fill="currentColor"
+                fill-rule="evenodd"
+                d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10M12 5.25a.75.75 0 0 1 .75.75v.317c1.63.292 3 1.517 3 3.183a.75.75 0 0 1-1.5 0c0-.678-.564-1.397-1.5-1.653v3.47c1.63.292 3 1.517 3 3.183s-1.37 2.891-3 3.183V18a.75.75 0 0 1-1.5 0v-.317c-1.63-.292-3-1.517-3-3.183a.75.75 0 0 1 1.5 0c0 .678.564 1.397 1.5 1.652v-3.469c-1.63-.292-3-1.517-3-3.183s1.37-2.891 3-3.183V6a.75.75 0 0 1 .75-.75"
+                clip-rule="evenodd"
+              />
+            </svg>
+
+            <span class="sr-only">Añadir gastos</span>
+          </button>
+          <div
+            id="tooltip-download"
+            role="tooltip"
+            class="absolute z-10 invisible inline-block w-auto px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700"
+          >
+            Añadir gastos
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
+        <button
+          type="button"
+          data-dial-toggle="speed-dial-menu-horizontal"
+          aria-controls="speed-dial-menu-horizontal"
+          aria-expanded="false"
+          class="flex items-center justify-center text-white bg-pink-700 rounded-full w-14 h-14 hover:bg-pink-800 dark:bg-fuchsia-600 dark:hover:bg-fuchsia-700 focus:ring-4 focus:ring-pink-300 focus:outline-none dark:focus:ring-fuchsia-800"
+        >
+          <svg
+            class="w-5 h-5 transition-transform group-hover:rotate-45"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 18 18"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 1v16M1 9h16"
+            />
+          </svg>
+          <span class="sr-only">Open actions menu</span>
+        </button>
+      </div>
+      <div
+        class="flex visible md:hidden -translate-y-5 flex-col gap-3 md:gap-y-10"
+      >
+        <button
+          data-modal-target="crud-modal"
+          data-modal-toggle="crud-modal"
+          class="flex md:text-base text-sm px-5 py-2 bg-lime-500 gap-x-3 text-white font-semibold rounded-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6v2H5v14h14v-6h2v6q0 .825-.587 1.413T19 21zm11-10V8h-3V6h3V3h2v3h3v2h-3v3z"
+            />
+          </svg>
+          Añadir registro
+        </button>
+        <a
+          href="#"
+          class="inline-flex text-sm md:text-base gap-x-4 font-semibold items-center px-5 py-2 text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-white dark:focus:ring-white dark:text-white"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+            />
+          </svg>
+          Busqueda avanzada
+        </a>
+        <button
+          class="flex text-sm md:text-base px-5 py-2 bg-blue-500 gap-x-3 text-white font-semibold rounded-lg"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="currentColor"
+              d="M11.25 7.847c-.936.256-1.5.975-1.5 1.653s.564 1.397 1.5 1.652zm1.5 5.001v3.304c.936-.255 1.5-.974 1.5-1.652c0-.678-.564-1.397-1.5-1.652"
+            />
+            <path
+              fill="currentColor"
+              fill-rule="evenodd"
+              d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10M12 5.25a.75.75 0 0 1 .75.75v.317c1.63.292 3 1.517 3 3.183a.75.75 0 0 1-1.5 0c0-.678-.564-1.397-1.5-1.653v3.47c1.63.292 3 1.517 3 3.183s-1.37 2.891-3 3.183V18a.75.75 0 0 1-1.5 0v-.317c-1.63-.292-3-1.517-3-3.183a.75.75 0 0 1 1.5 0c0 .678.564 1.397 1.5 1.652v-3.469c-1.63-.292-3-1.517-3-3.183s1.37-2.891 3-3.183V6a.75.75 0 0 1 .75-.75"
+              clip-rule="evenodd"
+            />
+          </svg>
+          Añadir gastos
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="max-w p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <a href="#">
+        <h5
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          Productos que pueden estar con poco stock
+        </h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        En esta sección podrás visualizar los productos que pueden estar con
+        poco stock para que puedas realizar un pedido a tus proveedores.
+      </p>
+      <ul class="list-disc flex flex-col md:flex-row  justify-around gap-16 ml-5">
+        @for (item of items; track $index) {
+        <li class="gap-5 mb-2 text-gray-700 dark:text-gray-400">
+          <div>
+            <img
+              src="{{ item.url }}"
+              alt="{{ item.name }}"
+              class="w-16 h-16 rounded-lg"
+            />
+            <p class="">{{ item.name }}</p>
+          </div>
+
+          <button
+            class="flex gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
+          >
+            Ir<svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+              />
+            </svg>
+          </button>
+        </li>
+        }
+      </ul>
+    </div>
+
+    <div
+      class="max-w md:-translate-y-[22%] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <a href="#">
+        <h5
+          class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+        >
+          Prodcuto más visitado
+        </h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+        {{ product.name }} es el producto más visitado en tu tienda.
+      </p>
+
+      <div class="flex items-center mb-5">
+        <p
+          class="bg-blue-100 text-blue-800 text-sm font-semibold inline-flex items-center p-1.5 rounded dark:bg-blue-200 dark:text-blue-800"
+        >
+          8.7
+        </p>
+        <p class="ms-2 font-medium text-gray-900 dark:text-white">Excellent</p>
+        <span
+          class="w-1 h-1 mx-2 bg-gray-900 rounded-full dark:bg-gray-500"
+        ></span>
+        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">
+          376 reviews
+        </p>
+        <a
+          href="#"
+          class="ms-auto text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+          >Read all reviews</a
+        >
+      </div>
+      <div class="gap-8 sm:grid sm:grid-cols-2">
+        <div>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Staff
+            </dt>
+            <dd class="flex items-center mb-3">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 88%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >8.8</span
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Comfort
+            </dt>
+            <dd class="flex items-center mb-3">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 89%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >8.9</span
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Free WiFi
+            </dt>
+            <dd class="flex items-center mb-3">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 88%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >8.8</span
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Facilities
+            </dt>
+            <dd class="flex items-center">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 54%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >5.4</span
+              >
+            </dd>
+          </dl>
+        </div>
+        <div>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Value for money
+            </dt>
+            <dd class="flex items-center mb-3">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 89%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >8.9</span
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Cleanliness
+            </dt>
+            <dd class="flex items-center mb-3">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 70%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >7.0</span
+              >
+            </dd>
+          </dl>
+          <dl>
+            <dt class="text-sm font-medium text-gray-500 dark:text-gray-400">
+              Location
+            </dt>
+            <dd class="flex items-center">
+              <div
+                class="w-full bg-gray-200 rounded h-2.5 dark:bg-gray-700 me-2"
+              >
+                <div
+                  class="bg-blue-600 h-2.5 rounded dark:bg-blue-500"
+                  style="width: 89%"
+                ></div>
+              </div>
+              <span class="text-sm font-medium text-gray-500 dark:text-gray-400"
+                >8.9</span
+              >
+            </dd>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal toggle -->
+
+<!-- Main modal -->
+<div
+  id="crud-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-xl max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Crear nuevo registro diario
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-toggle="crud-modal"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <form [formGroup]="this.form" (ngSubmit)="onSubmit()" class="p-4 md:p-5">
+        <div class="gap-4 mb-4">
+          <div class="col-span-2 mb-5">
+            <div class="flex flex-row justify-around gap-5">
+              <label
+                for="date"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Fecha inicial</label
+              >
+
+              <label
+                for="date"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Fecha final</label
+              >
+            </div>
+            <div class="flex flex-row justify-around gap-5">
+              <input
+                [min]="minDate"
+                [max]="maxDate"
+                formControlName="dateinitial"
+                type="date"
+                name="date"
+                id="dateinitial"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required=""
+              />
+
+              <p class="my-5">-</p>
+
+              <input
+                [min]="form.controls.dateinitial.value"
+                [max]="maxDate"
+                formControlName="datefinal"
+                type="date"
+                name="date"
+                id="datefinal"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required=""
+              />
+            </div>
+          </div>
+          <div class="flex items-center me-4 my-5">
+            <input
+              (change)="isTodayDate($event)"
+              id="orange-checkbox"
+              type="checkbox"
+              class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+            />
+            <label
+              for="orange-checkbox"
+              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              >¿Es hoy?</label
+            >
+          </div>
+          <div class="flex w-full flex-col md:flex-row gap-5 my-5">
+            <div class="col-span-3 sm:col-span-1">
+              <label for="value"> Almacén </label>
+              <input
+                formControlName="valuestore"
+                type="text"
+                name="value"
+                id="value"
+                currencyMask
+                [options]="{
+                  prefix: '$ ',
+                  thousands: ',',
+                  decimal: '.',
+                  align: 'left',
+                  allowNegative: true,
+                  allowZero: true,
+                  precision: 0
+                }"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$"
+                required=""
+              />
+            </div>
+            <div class="col-span-3 sm:col-span-1">
+              <label for="valuestore"> Mary </label>
+              <input
+                formControlName="valuemary"
+                type="text"
+                name="valuestore"
+                id="valuestore"
+                currencyMask
+                [options]="{
+                  prefix: '$ ',
+                  thousands: ',',
+                  decimal: '.',
+                  align: 'left',
+                  allowNegative: true,
+                  allowZero: true,
+                  precision: 0,
+
+                }"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$"
+                required=""
+              />
+            </div>
+            <div class="col-span-3 sm:col-span-1">
+              <label for="valuestore"> Carros y pañales </label>
+              <input
+                formControlName="valuecars"
+                type="text"
+                name="valuestore"
+                currencyMask
+                [options]="{
+                  prefix: '$ ',
+                  thousands: ',',
+                  decimal: '.',
+                  align: 'left',
+                  allowNegative: true,
+                  allowZero: true,
+                  precision: 0
+                }"
+                id="valuestore"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="$"
+                required=""
+              />
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-around md:flex-row gap-10 gap-y-5 flex-col">
+          <button
+            data-modal-toggle="crud-modal"
+            type="submit"
+            class="text-white inline-flex items-center bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:outline-none focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-800"
+          >
+            <svg
+              class="me-1 -ms-1 w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Añadir registro
+          </button>
+          <button
+            type="button"
+            class="flex gap-x-3 text-white bg-blue-500 hover:bg-blue-600 rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="crud-modal"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M11.25 7.847c-.936.256-1.5.975-1.5 1.653s.564 1.397 1.5 1.652zm1.5 5.001v3.304c.936-.255 1.5-.974 1.5-1.652c0-.678-.564-1.397-1.5-1.652"
+              />
+              <path
+                fill="currentColor"
+                fill-rule="evenodd"
+                d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10M12 5.25a.75.75 0 0 1 .75.75v.317c1.63.292 3 1.517 3 3.183a.75.75 0 0 1-1.5 0c0-.678-.564-1.397-1.5-1.653v3.47c1.63.292 3 1.517 3 3.183s-1.37 2.891-3 3.183V18a.75.75 0 0 1-1.5 0v-.317c-1.63-.292-3-1.517-3-3.183a.75.75 0 0 1 1.5 0c0 .678.564 1.397 1.5 1.652v-3.469c-1.63-.292-3-1.517-3-3.183s1.37-2.891 3-3.183V6a.75.75 0 0 1 .75-.75"
+                clip-rule="evenodd"
+              />
+            </svg>
+            Añadir gastos
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@if(isCorrect){
+<app-toast [message]="message" [type]="type"></app-toast>
+}

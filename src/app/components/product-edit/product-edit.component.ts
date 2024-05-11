@@ -58,6 +58,8 @@ export class ProductEditComponent {
   selectedFile: File | null = null;
   isSeleted: boolean = false;
   color: string = '';
+  isDeleted: boolean = false;
+  index :number = 0;
 
   fileChanged(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -68,6 +70,15 @@ export class ProductEditComponent {
 
   changeColor(event: any) {
     this.color = event.target.value;
+  }
+
+  toogleDelete(index: number) {
+    this.index = index;
+    this.isDeleted = !this.isDeleted;
+  }
+
+  close(){
+    this.isDeleted = false;
   }
 
   async addImages() {
@@ -134,8 +145,8 @@ export class ProductEditComponent {
     this.selectedColors[index].color = event.target.value;
   }
 
-  removebyIndex(index: number) {
-    const url = this.selectedColors[index].url;
+  removebyIndex() {
+    const url = this.selectedColors[this.index].url;
     console.log(url);
 
     // Create a URL object
@@ -148,7 +159,7 @@ export class ProductEditComponent {
     const fileName = pathSegments[pathSegments.length - 1];
 
     this.imageService.deleteImage(fileName).then(() => {
-      this.selectedColors.splice(index, 1);
+      this.selectedColors.splice(this.index, 1);
       this.message = 'Imagen eliminada correctamente';
       this.type = 'success';
       this.isCorrect = true;
@@ -207,6 +218,9 @@ export class ProductEditComponent {
       } );
     } else {
       this.message = 'No hay cambios que guardar';
+      console.log("formulario",this.form.value);
+      console.log("producto",this.product);
+      console.log("diferente",this.isDifferent(this.product));
       this.type = 'warning';
       this.isCorrect = true;
       setTimeout(() => {
@@ -225,24 +239,24 @@ export class ProductEditComponent {
     }
 
     return (
-      this.form.value.id !== product.id ||
-      this.form.value.reference !== product.reference ||
-      this.form.value.productname !== product.productname ||
-      this.form.value.quantity !== product.quantity ||
-      this.form.value.costwithoutvat !== product.costwithoutvat ||
-      this.form.value.costwithvat !== product.costwithvat ||
-      this.form.value.vat!.toFixed(2) !== productVatString ||
-      this.form.value.totalcost !== product.totalcost ||
-      this.form.value.stock !== product.stock ||
-      this.form.value.classification !== product.classification ||
-      this.form.value.supplier !== product.supplier ||
-      this.form.value.homepricevalue !== product.homeprice.value ||
-      this.form.value.homepriceutilitypercentage!.toFixed(2) !==
+      this.form.value.id === product.id ||
+      this.form.value.reference === product.reference ||
+      this.form.value.productname === product.productname ||
+      this.form.value.quantity === product.quantity ||
+      this.form.value.costwithoutvat === product.costwithoutvat ||
+      this.form.value.costwithvat === product.costwithvat ||
+      this.form.value.vat!.toFixed(2) === productVatString ||
+      this.form.value.totalcost === product.totalcost ||
+      this.form.value.stock === product.stock ||
+      this.form.value.classification === product.classification ||
+      this.form.value.supplier === product.supplier ||
+      this.form.value.homepricevalue === product.homeprice.value ||
+      this.form.value.homepriceutilitypercentage!.toFixed(2) ===
         product.homeprice.utilitypercentage.toFixed(2) ||
-      this.form.value.homepriceutilityvalue !==
+      this.form.value.homepriceutilityvalue ===
         product.homeprice.utilityvalue ||
-      this.form.value.description !== product.description ||
-      this.form.value.type !== product.type
+      this.form.value.description === product.description ||
+      this.form.value.type === product.type
     );
   }
 

@@ -25,6 +25,7 @@ export class HeaderComponent {
   }
 
   setWindow(parsedWindow: any) {
+    window.location.reload();
     localStorage.setItem('window', parsedWindow)
     this.router.navigate(['dashboard', parsedWindow]);
   }

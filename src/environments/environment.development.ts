@@ -7,5 +7,6 @@ export const environment = {
     },
     backend: { 
         url: 'https://gateo-simple.onrender.com'
+        //url: 'http://localhost:3000'
     }
 };

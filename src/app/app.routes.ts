@@ -10,8 +10,9 @@ import { EditProviderComponent } from './components/edit-provider/edit-provider.
 import { NewProducComponent } from './components/new-produc/new-produc.component';
 import { ProductEditComponent } from './components/product-edit/product-edit.component';
 import { ViewProviderComponent } from './components/view-provider/view-provider.component';
-import { ReportComponent } from './components/report/report.component';
+import { ReportComponent } from './pages/report/report.component';
 import { AuthGuard } from './guards/route.guard';
+import { SpentComponent } from './components/spent/spent.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent, pathMatch: 'full', title: 'Inicio de sesión'},
@@ -38,6 +39,7 @@ export const routes: Routes = [
       { path: 'edit-product/:id', component: ProductEditComponent, title: 'Editar Producto'},
       { path: 'client', component: ClientComponent, title: 'Clientes' },
       { path: 'report', component: ReportComponent, title: 'Reportes'},
+      { path: 'spent', component: SpentComponent, title: 'Gastos'},
       { path: '', redirectTo: 'home', pathMatch: 'full'}
     ],
   },

@@ -111,7 +111,7 @@
   </div>
 
   <div
-    class="grid sm:grid-cols-none md:grid-cols-2 lg:grid-cols-4 gap-4 justify-center md:mx-24"
+    class="grid sm:grid-cols-none md:grid-cols-2 lg:grid-cols-4 gap-5 justify-center mx-5"
   >
     @if (isLoading) {
     <div
@@ -154,7 +154,7 @@
     } @else { @for (item of products ; track item.id) {
 
     <div
-      class="w-full max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-stretch"
+      class="w-full justify-between max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-stretch"
     >
       @if(!hasColor(item)){
       <img

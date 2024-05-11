@@ -42,7 +42,9 @@ export class LoginComponent {
   async signUpWithRetry(email: string, password: string, retryCount = 0) {
   try {
     await this.authService.signIn(email, password).then(() => {
+      localStorage.setItem('window', 'home')
       this.router.navigate(['dashboard']);
+      window.location.reload();
     });
 
   } catch (error: any) {
