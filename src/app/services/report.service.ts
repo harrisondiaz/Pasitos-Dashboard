@@ -19,6 +19,14 @@ export class ReportService {
     return this._http.get<Report[]>(this.url + '/reports').pipe(res => res);
   }
 
+  createSpent(spent: any[]) {
+    return this._http.post(this.url + '/spent', spent).pipe(res => res);
+  }
+
+  getPDF() {
+    return this._http.get(this.url + '/pdf/spent', { responseType: 'blob' }).pipe(res => res);
+  }
+
 
   constructor() { }
 }

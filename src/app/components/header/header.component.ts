@@ -20,14 +20,14 @@ export class HeaderComponent {
   }
 
   setHome() {
-    console.log('home');
+    localStorage.setItem('window', 'home');
     this.router.navigate(['dashboard', 'home']);
   }
 
   setWindow(parsedWindow: any) {
-    window.location.reload();
+    //window.location.reload();
     localStorage.setItem('window', parsedWindow)
-    this.router.navigate(['dashboard', parsedWindow]);
+    //this.router.navigate(['dashboard', parsedWindow]);
   }
 
   ngOnInit(): void {

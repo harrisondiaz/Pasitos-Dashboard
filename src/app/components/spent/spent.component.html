@@ -1,3 +1,119 @@
 <div class="md:ml-64 mt-20">
-   
+  <a href="/dashboard/report" (click)="setWindow('report')" class=" mx-5 inline-flex px-5 py-2 border-pink-400 border rounded-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pink-400" viewBox="0 0 24 24"><path fill="currentColor" d="m14 17l-5-5l5-5z"/></svg>
+    Volver</a>
+  <div class="">
+    <p class="text-xl md:text-4xl text-center font-bold">Control de gastos</p>
+  </div>
+  <div
+    class="flex justify-around flex-col gap-y-5 md:flex-row rounded-lg md:bg-gray-300 max-w py-5 mx-5 md:m-10"
+  >
+    <button
+      (click)="spent = 1"
+      class="font-medium rounded-lg text-sm px-5 py-2 text-center inline-flex items-center text-white bg-lime-500"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mx-1"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h6v2H5v14h14v-6h2v6q0 .825-.587 1.413T19 21zm11-10V8h-3V6h3V3h2v3h3v2h-3v3z"
+        />
+      </svg>
+      Registar gastos
+    </button>
+
+    <button
+      (click)="spent = 2"
+      class="font-medium text-white rounded-lg text-sm px-5 py-2 text-center inline-flex items-center bg-black"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-5 h-5 mx-1"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          d="M10 16q2.5 0 4.25-1.75T16 10t-1.75-4.25T10 4T5.75 5.75T4 10t1.75 4.25T10 16m-1-3V6h2v7zm-3.5 0V8h2v5zm7 0V9h2v4zm8.1 9l-5.675-5.675q-1.025.8-2.275 1.238T10 18q-3.35 0-5.675-2.325T2 10t2.325-5.675T10 2t5.675 2.325T18 10q0 1.4-.437 2.65t-1.238 2.275L22 20.6z"
+        />
+      </svg>
+      Busqueda avanzada
+    </button>
+
+    <button
+      id="dropdownHoverButton"
+      data-dropdown-toggle="dropdownHover"
+      data-dropdown-trigger="hover"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      type="button"
+    >
+      Descargar PDF
+      <svg
+        class="w-2.5 h-2.5 ms-3"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 10 6"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m1 1 4 4 4-4"
+        />
+      </svg>
+    </button>
+
+    <!-- Dropdown menu -->
+    <div
+      id="dropdownHover"
+      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+    >
+      <ul
+        class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownHoverButton"
+      >
+        <li>
+          <a
+          (click)="getPDF()"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Descargar todos los gastos</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Descargar del ultimo año</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Descargar del ultimo mes</a
+          >
+        </li>
+        <li>
+          <a
+            href="#"
+            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            >Descargar la ultima semana</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  @switch (spent) { @case (0) {
+  <div class="flex justify-center">
+    <p class="text-center text-xl font-bold">
+      Aquí podrás gestionar, descargar, cargar y visualizar tus gastos
+    </p>
+  </div>
+  } @case (1) {
+  <app-add-spent />
+  } @case (2) { } }
 </div>

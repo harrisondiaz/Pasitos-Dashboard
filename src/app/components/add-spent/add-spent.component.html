@@ -1,0 +1,121 @@
+<div class="relative overflow-x-auto mx-10">
+  <div class="hidden lg:block">
+    <div class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <div class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400 grid grid-cols-3">
+        <div class="px-6 py-3 rounded-s-lg">Día</div>
+        <div class="px-6 py-3">Costo</div>
+        <div class="px-6 py-3 rounded-e-lg">Descripción</div>
+      </div>
+      @for (item of spent; track $index) {
+        <div class="bg-white dark:bg-gray-800 grid grid-cols-3">
+          <div class="-translate-y-0 w-full px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            
+            <div class="relative mb-6">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M12 14q-.425 0-.712-.288T11 13t.288-.712T12 12t.713.288T13 13t-.288.713T12 14m-4 0q-.425 0-.712-.288T7 13t.288-.712T8 12t.713.288T9 13t-.288.713T8 14m8 0q-.425 0-.712-.288T15 13t.288-.712T16 12t.713.288T17 13t-.288.713T16 14m-4 4q-.425 0-.712-.288T11 17t.288-.712T12 16t.713.288T13 17t-.288.713T12 18m-4 0q-.425 0-.712-.288T7 17t.288-.712T8 16t.713.288T9 17t-.288.713T8 18m8 0q-.425 0-.712-.288T15 17t.288-.712T16 16t.713.288T17 17t-.288.713T16 18M5 22q-.825 0-1.412-.587T3 20V6q0-.825.588-1.412T5 4h1V2h2v2h8V2h2v2h1q.825 0 1.413.588T21 6v14q0 .825-.587 1.413T19 22zm0-2h14V10H5z"/>
+                </svg>
+              </div>
+              <input (input)="setDate($event, $index)" min="2001-01-01" [max]="today" type="date" [id]="'inputDate'+$index" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" />
+            </div>
+            <div class="flex items-center me-4 my-5">
+              <input (change)="isTodayDate($event, $index)" type="checkbox"  [id]="'checkbox'+$index" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+              <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Es hoy?</label>
+            </div>
+          </div>
+          <div class="w-full px-6 py-4">
+            <div class="relative mb-6">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" viewBox="0 0 256 256">
+                  <path fill="currentColor" d="M128 88a40 40 0 1 0 40 40a40 40 0 0 0-40-40m0 64a24 24 0 1 1 24-24a24 24 0 0 1-24 24m112-96H16a8 8 0 0 0-8 8v128a8 8 0 0 0 8 8h224a8 8 0 0 0 8-8V64a8 8 0 0 0-8-8m-46.35 128H62.35A56.78 56.78 0 0 0 24 145.65v-35.3A56.78 56.78 0 0 0 62.35 72h131.3A56.78 56.78 0 0 0 232 110.35v35.3A56.78 56.78 0 0 0 193.65 184M232 93.37A40.81 40.81 0 0 1 210.63 72H232ZM45.37 72A40.81 40.81 0 0 1 24 93.37V72ZM24 162.63A40.81 40.81 0 0 1 45.37 184H24ZM210.63 184A40.81 40.81 0 0 1 232 162.63V184Z"/>
+                </svg>
+              </div>
+              <input (input)="setAmount($event, $index)" type="number" [id]="'inputAmount'+$index" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="$  0" />
+            </div>
+          </div>
+          <div class="w-2/3 px-6 py-4">
+            <textarea (input)="setDescription($event, $index)" rows="4" [id]="'inputDescription'+$index" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Aquí tu descripción"></textarea>
+          </div>
+          <div class="px-6 py-4">
+            <button (click)="removeSpent($index)" class="p-3 bg-red-500 rounded-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 24 24">
+                <path fill="currentColor" fill-rule="evenodd" d="M5.117 7.752a.75.75 0 0 1 .798.698l.46 6.9c.09 1.347.154 2.285.294 2.99c.137.685.327 1.047.6 1.303c.274.256.648.422 1.34.512c.714.093 1.654.095 3.004.095h.774c1.35 0 2.29-.002 3.004-.095c.692-.09 1.066-.256 1.34-.512c.273-.256.463-.618.6-1.302c.14-.706.204-1.644.294-2.992l.46-6.899a.75.75 0 1 1 1.497.1l-.464 6.952c-.085 1.282-.154 2.319-.316 3.132c-.169.845-.455 1.551-1.047 2.104c-.591.554-1.315.793-2.17.904c-.822.108-1.86.108-3.145.108h-.88c-1.285 0-2.323 0-3.145-.108c-.855-.111-1.579-.35-2.17-.904c-.592-.553-.878-1.26-1.047-2.104c-.162-.814-.23-1.85-.316-3.132L4.418 8.55a.75.75 0 0 1 .699-.798m5.238-5.502h-.046c-.216 0-.405 0-.583.028a2.25 2.25 0 0 0-1.64 1.183c-.084.16-.143.339-.211.544l-.015.044l-.097.29a1.25 1.25 0 0 1-1.263.91h-3a.75.75 0 1 0 0 1.501h17.001a.75.75 0 0 0 0-1.5H17.41a1.25 1.25 0 0 1-1.173-.91l-.097-.291l-.014-.044c-.069-.205-.128-.384-.211-.544a2.25 2.25 0 0 0-1.641-1.183a3.733 3.733 0 0 0-.583-.028h-.046zm-1.21 2.685c-.04.109-.085.214-.137.315h5.984a2.764 2.764 0 0 1-.136-.314l-.04-.114l-.099-.3a3.114 3.114 0 0 0-.133-.368a.75.75 0 0 0-.547-.395a3.114 3.114 0 0 0-.392-.009h-3.29c-.288 0-.348.002-.392.01a.75.75 0 0 0-.547.394c-.02.04-.042.095-.133.369l-.1.3z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+  <div class="lg:hidden">
+    @for (item of spent; track $index) {
+      <div class="mb-4 p-4 border rounded-lg bg-white dark:bg-gray-800">
+        <div class="flex items-center mb-4">
+          <input (change)="isTodayDate($event, $index)" type="checkbox" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 rounded focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+          <label class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">¿Es hoy?</label>
+        </div>
+        <input (input)="setDate($event, $index)" type="date" [id]="'movilDate'+$index" class="mb-4 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <input (input)="setAmount($event, $index)" type="number" class="mb-4 w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="$  0"/>
+        <textarea (input)="setDescription($event, $index)" rows="4" class="mb-4 block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Aquí tu descripción"></textarea>
+        <button (click)="removeSpent($index)" class="p-3 bg-red-500 rounded-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-white" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M5.117 7.752a.75.75 0 0 1 .798.698l.46 6.9c.09 1.347.154 2.285.294 2.99c.137.685.327 1.047.6 1.303c.274.256.648.422 1.34.512c.714.093 1.654.095 3.004.095h.774c1.35 0 2.29-.002 3.004-.095c.692-.09 1.066-.256 1.34-.512c.273-.256.463-.618.6-1.302c.14-.706.204-1.644.294-2.992l.46-6.899a.75.75 0 1 1 1.497.1l-.464 6.952c-.085 1.282-.154 2.319-.316 3.132c-.169.845-.455 1.551-1.047 2.104c-.591.554-1.315.793-2.17.904c-.822.108-1.86.108-3.145.108h-.88c-1.285 0-2.323 0-3.145-.108c-.855-.111-1.579-.35-2.17-.904c-.592-.553-.878-1.26-1.047-2.104c-.162-.814-.23-1.85-.316-3.132L4.418 8.55a.75.75 0 0 1 .699-.798m5.238-5.502h-.046c-.216 0-.405 0-.583.028a2.25 2.25 0 0 0-1.64 1.183c-.084.16-.143.339-.211.544l-.015.044l-.097.29a1.25 1.25 0 0 1-1.263.91h-3a.75.75 0 1 0 0 1.501h17.001a.75.75 0 0 0 0-1.5H17.41a1.25 1.25 0 0 1-1.173-.91l-.097-.291l-.014-.044c-.069-.205-.128-.384-.211-.544a2.25 2.25 0 0 0-1.641-1.183a3.733 3.733 0 0 0-.583-.028h-.046zm-1.21 2.685c-.04.109-.085.214-.137.315h5.984a2.764 2.764 0 0 1-.136-.314l-.04-.114l-.099-.3a3.114 3.114 0 0 0-.133-.368a.75.75 0 0 0-.547-.395a3.114 3.114 0 0 0-.392-.009h-3.29c-.288 0-.348.002-.392.01a.75.75 0 0 0-.547.394c-.02.04-.042.095-.133.369l-.1.3z"/>
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+</div>
+<div class="grid grid-cols-3">
+  <div class="font-semibold text-gray-900 dark:text-white col-span-2">
+    <div scope="row" class="px-6 py-3 text-base">Total de tus gastos ingresados</div>
+    <div class="px-6 py-3">{{ getTotalAmount() }}</div>
+  </div>
+  <div class="font-semibold text-gray-900 dark:text-white col-span-1">
+    <div class="px-6 py-3">{{ getDays() }}</div>
+  </div>
+</div>
+<div class="flex flex-col md:flex-row gap-y-2 md:gap-5 justify-around mx-20">
+  <button
+    (click)="clearSpent()"
+    class="ustify-center px-5 py-2 bg-red-500 inline-flex text-white font-medium rounded-lg"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5"
+      viewBox="0 0 256 256"
+    >
+      <g fill="currentColor">
+        <path
+          d="m160 168l-48 48H66.75l-30.06-30.06a16 16 0 0 1 0-22.63L96 104Z"
+          opacity=".2"
+        />
+        <path
+          d="M225 80.4L183.6 39a24 24 0 0 0-33.94 0L31 157.66a24 24 0 0 0 0 33.94l30.06 30.06a8 8 0 0 0 5.68 2.34H216a8 8 0 0 0 0-16h-84.7l93.7-93.66a24 24 0 0 0 0-33.94M108.68 208H70.05l-27.72-27.72a8 8 0 0 1 0-11.31L96 115.31L148.69 168Zm105-105L160 156.69L107.31 104L161 50.34a8 8 0 0 1 11.32 0l41.38 41.38a8 8 0 0 1 0 11.31Z"
+        />
+      </g>
+    </svg>
+    Limpiar
+  </button>
+
+  <button
+    class=" justify-around px-5 py-2 bg-lime-500 inline-flex text-white font-medium rounded-lg"
+    (click)="addSpent()"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M20 14h-6v6h-4v-6H4v-4h6V4h4v6h6z" />
+    </svg>
+    Gasto
+  </button>
+  <button
+    class="justify-center px-5 py-2 bg-blue-500 inline-flex text-white font-medium rounded-lg"
+    (click)="submit()"
+  >
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"><path fill="currentColor" d="M21 7v12q0 .825-.587 1.413T19 21H5q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h12zm-9 11q1.25 0 2.125-.875T15 15t-.875-2.125T12 12t-2.125.875T9 15t.875 2.125T12 18m-6-8h9V6H6z"/></svg>
+    Guardar
+  </button>
+</div>
+
+@if(isCompleted){
+<app-toast [message]="message" [type]="type"></app-toast>
+}
