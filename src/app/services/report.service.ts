@@ -24,7 +24,27 @@ export class ReportService {
   }
 
   getPDF() {
-    return this._http.get(this.url + '/pdf/spent', { responseType: 'blob' }).pipe(res => res);
+    return this._http.get(this.url + '/pdf/spents', { responseType: 'blob' }).pipe(res => res);
+  }
+
+  getLastYear() { 
+    return this._http.get(this.url + '/pdf/spents/lastyear', { responseType: 'blob'}).pipe(res => res);
+  }
+
+  getLastMonth() {
+    return this._http.get(this.url + '/pdf/spents/lastmonth', { responseType: 'blob'}).pipe(res => res);
+  }
+
+  getLasWeek() {
+    return this._http.get(this.url + '/pdf/spents/lastweek', { responseType: 'blob'}).pipe(res => res);
+  }
+
+  getSpentbyDate(date: string, date2: string) {
+    return this._http.get(this.url+"/spent/"+date+"/"+date2).pipe(res => res);
+  }
+
+  getSpentPDFbyDate(date: string, date2: string) {
+    return this._http.get(this.url+"/pdf/spents/filters/"+date+"/"+date2, { responseType: 'blob'}).pipe(res => res);
   }
 
 

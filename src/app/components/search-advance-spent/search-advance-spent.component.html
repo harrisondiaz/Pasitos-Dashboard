@@ -1,0 +1,120 @@
+<div class="flex justify-around mx-5 md:mx-20">
+  <div class="px-5 py-5">
+    <div class="flex justify-center">
+      <h1 class="text-2xl font-bold">Filtros de búsqueda</h1>
+    </div>
+    <div class="flex justify-center mt-5">
+      <div class="flex flex-col">
+        <label for="initday" class="text-lg font-semibold">Fecha inical</label>
+        <input type="date" class="border rounded-lg p-1" id="initday" />
+      </div>
+      <div class="flex flex-col ms-5">
+        <label for="finaldate" class="text-lg font-semibold">Fecha final</label>
+        <input type="date" class="border rounded-lg p-1" id="finaldate" />
+      </div>
+    </div>
+    <div class="flex justify-start my-5">
+      <div class="flex items-center me-4">
+        <input
+          (change)="setToday($event)"
+          id="yellow-checkbox"
+          type="checkbox"
+          value=""
+          class="w-4 h-4 text-yellow-400 bg-gray-100 border-gray-300 rounded focus:ring-yellow-500 dark:focus:ring-yellow-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="yellow-checkbox"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >¿Es hoy?</label
+        >
+      </div>
+    </div>
+    <div class="flex justify-around mt-5">
+      <button
+      (click)="searchSpent()"
+        class="bg-blue-500 text-white font-semibold inline-flex rounded-lg px-5 py-2"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"
+          />
+        </svg>
+        Buscar
+      </button>
+      <button
+      (click)="getPDF()"
+        class="inline-flex px-5 py-2 bg-lime-400 text-white font-semibold rounded-lg"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-2"
+          viewBox="0 0 15 15"
+        >
+          <path
+            fill="currentColor"
+            d="M3.5 8H3V7h.5a.5.5 0 0 1 0 1M7 10V7h.5a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5z"
+          />
+          <path
+            fill="currentColor"
+            fill-rule="evenodd"
+            d="M1 1.5A1.5 1.5 0 0 1 2.5 0h8.207L14 3.293V13.5a1.5 1.5 0 0 1-1.5 1.5h-10A1.5 1.5 0 0 1 1 13.5zM3.5 6H2v5h1V9h.5a1.5 1.5 0 1 0 0-3m4 0H6v5h1.5A1.5 1.5 0 0 0 9 9.5v-2A1.5 1.5 0 0 0 7.5 6m2.5 5V6h3v1h-2v1h1v1h-1v2z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        Descargar PDF
+      </button>
+    </div>
+  </div>
+</div>
+@if(spent.length > 0 && isTable){
+    
+
+<div class="mx-5 md:mx-20 relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Día
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Valor
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Descripción
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (item of spent; track $index) {
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{item.date}}
+                    </th>
+                    <td class="px-6 py-4">
+                        {{item.value}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{item.desription}}
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+}@else if(spent.length <= 0 && isTable==true){
+    <div class="flex justify-center mt-5">
+        <h1 class="text-2xl font-bold">No hay gastos</h1>
+    </div>
+
+}
+
+@if(isToast){
+    <app-toast [message]="message" [type]="type"/>
+}

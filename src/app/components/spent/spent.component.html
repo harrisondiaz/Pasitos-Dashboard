@@ -79,28 +79,28 @@
         <li>
           <a
           (click)="getPDF()"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >Descargar todos los gastos</a
           >
         </li>
         <li>
           <a
-            href="#"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="getLastYear()"
+            class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >Descargar del ultimo año</a
           >
         </li>
         <li>
           <a
-            href="#"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="getLastMonth()"
+            class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >Descargar del ultimo mes</a
           >
         </li>
         <li>
           <a
-            href="#"
-            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+            (click)="getLastWeek()"
+            class="block c px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
             >Descargar la ultima semana</a
           >
         </li>
@@ -115,5 +115,11 @@
   </div>
   } @case (1) {
   <app-add-spent />
-  } @case (2) { } }
+  } @case (2) { 
+    <app-search-advance-spent/>
+  } }
 </div>
+
+@if(isToast){
+<app-toast [message]="message" [type]="type"/>
+}
