@@ -13,7 +13,7 @@ import { ViewProviderComponent } from "../../components/view-provider/view-provi
 import { NewProviderComponent } from "../../components/new-provider/new-provider.component";
 import { EditProviderComponent } from "../../components/edit-provider/edit-provider.component";
 import { AuthService } from '../../services/auth.service';
-import { UserComponent } from "../../components/user/user.component";
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -33,7 +33,6 @@ import { Router } from '@angular/router';
         ViewProviderComponent,
         NewProviderComponent,
         EditProviderComponent,
-        UserComponent
     ]
 })
 export class HomeComponent implements OnInit {

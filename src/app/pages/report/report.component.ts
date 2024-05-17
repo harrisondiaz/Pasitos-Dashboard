@@ -5,6 +5,7 @@ import { ToastComponent } from '../../components/toast/toast.component';
 import { ReportService } from '../../services/report.service';
 import { Report } from '../../interfaces/report.interface';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'app-report',
   standalone: true,
@@ -14,26 +15,7 @@ import { Router } from '@angular/router';
 })
 export class ReportComponent {
   
-  items = [
-    {
-      id: 1,
-      name: 'Item 1',
-      description: 'Description 1',
-      url: 'https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/Products/155782-800-auto.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJQcm9kdWN0cy8xNTU3ODItODAwLWF1dG8ud2VicCIsImlhdCI6MTcxNTQ0ODAxMSwiZXhwIjoyMzQ2NjAwMDExfQ.X92MUGgvw6YTDsUiQ5j38Yl6ja7F5VXSxTIAJLXBF0Q&t=2024-05-11T17%3A20%3A10.860Z',
-    },
-    {
-      id: 2,
-      name: 'Item 2',
-      description: 'Description 2',
-      url: 'https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/Products/155785-1200-auto.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJQcm9kdWN0cy8xNTU3ODUtMTIwMC1hdXRvLndlYnAiLCJpYXQiOjE3MTU0NDgwNzcsImV4cCI6MjM0NjYwMDA3N30.yUf9g2k4ZNW6lFayF0FGYyaKZr7k9T1u2ESxhnFCNg4&t=2024-05-11T17%3A21%3A17.118Z',
-    },
-    {
-      id: 3,
-      name: 'Item 3',
-      description: 'Description 3',
-      url: 'https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/Products/D_NQ_NP_862036-MCO54270310719_032023-O.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJQcm9kdWN0cy9EX05RX05QXzg2MjAzNi1NQ081NDI3MDMxMDcxOV8wMzIwMjMtTy53ZWJwIiwiaWF0IjoxNzE1NDQ4MDQ0LCJleHAiOjIzNDY2MDAwNDR9.XaIWmMee84g6ujptMTE2O9yzRMrAqZA6zSsKpC7seQ8&t=2024-05-11T17%3A20%3A43.342Z',
-    },
-  ];
+  items : any[] = [];
 
   product = {
     id: 1,
@@ -72,7 +54,31 @@ export class ReportComponent {
     }
   }
 
-  constructor(private reportService: ReportService, private router: Router) {
+  setEdit(pasare: string, id: number) {
+    localStorage.setItem('window', pasare);
+    this.router.navigate(["dashboard",pasare, id]);
+
+  }
+
+  ngOnInit() {
+    this.productService.lessStock().subscribe({
+      next: (products:any) => {
+        this.items = products;
+      },
+      error: (error) => {
+        this.message = 'Error al cargar los productos';
+        this.type = 'error';
+        this.isCorrect = true;
+        setTimeout(() => {
+          this.message = '';
+          this.type = '';
+          this.isCorrect = false;
+        }, 5000);
+      },
+    });
+  }
+
+  constructor(private reportService: ReportService, private router: Router, private productService: ProductService) {
 
   }
 

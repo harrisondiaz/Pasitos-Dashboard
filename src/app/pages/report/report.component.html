@@ -215,17 +215,20 @@
       <ul class="list-disc flex flex-col md:flex-row  justify-around gap-16 ml-5">
         @for (item of items; track $index) {
         <li class="gap-5 mb-2 text-gray-700 dark:text-gray-400">
-          <div>
+          <div class="flex flex-col justify-center">
             <img
               src="{{ item.url }}"
-              alt="{{ item.name }}"
-              class="w-16 h-16 rounded-lg"
+              alt="{{ item.productname }}"
+              class="w-20 h-20 rounded-lg"
             />
-            <p class="">{{ item.name }}</p>
+            <p class="">{{ item.productname }}</p>
           </div>
 
-          <button
-            class="flex gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
+          <div class="inline-flex mx-10">
+            <a
+            
+            (click)="setEdit('edit-product', item.id)"
+            class="flex justify-center gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
           >
             Ir<svg
               xmlns="http://www.w3.org/2000/svg"
@@ -241,14 +244,15 @@
                 d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
               />
             </svg>
-          </button>
+          </a>
+          </div>
         </li>
         }
       </ul>
     </div>
 
     <div
-      class="max-w md:-translate-y-[22%] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      class="max-w md:-translate-y-[20%] p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <a href="#">
         <h5

@@ -6,6 +6,7 @@ import { elementAt } from 'rxjs';
 import { PdfService } from '../../services/pdf.service';
 import { Router } from '@angular/router';
 import { ToastComponent } from "../toast/toast.component";
+import { ImageService } from '../../services/image.service';
 
 @Component({
     selector: 'app-product',
@@ -167,9 +168,12 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(){
+    const product = this.product;
     this.productService.delete(this.product.id).subscribe({
       next: (response) => {
-        console.log(response);
+        for (let i = 0; i < product.photos.length; i++) {
+          this.imageService.deleteImage(product.photos[i].url);
+        }
         this.IsCorrectlyDeleted = 'true';
         this.message = 'Producto eliminado correctamente';
         this.type = 'success';
@@ -195,7 +199,7 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  constructor(private productService: ProductService, private pdfService: PdfService, private router: Router) {}
+  constructor(private productService: ProductService, private pdfService: PdfService, private router: Router, private imageService:ImageService) {}
 
   ngOnInit() {
     this.getProducts();

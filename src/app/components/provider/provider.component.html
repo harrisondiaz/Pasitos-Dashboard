@@ -16,6 +16,24 @@
         class="input"
       />
     </div>
+    <div class="visible md:hidden mx-5 mt-24 -mb-20">
+      <button
+        (click)="exportProviders()"
+        class="flex flex-row justify-around w-full bg-black text-white px-24 py-2 rounded-xl"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-5 h-5"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="currentColor"
+            d="m12 16l-5-5l1.4-1.45l2.6 2.6V4h2v8.15l2.6-2.6L17 11zm-6 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z"
+          />
+        </svg>
+        Descargar PDF
+      </button>
+    </div>
     <div class="flex items-center justify-between p-4 md:-mt-20 md:p-5 md:mb-2">
       <div
         class="flex invisible md:visible flex-row w-full bg-gray-200 rounded-lg py-2 justify-between items-center px-4 md:px-6 dark:bg-gray-700"

@@ -44,5 +44,9 @@ export class ProductService {
       .pipe((res) => res);
   }
 
+  lessStock(){
+    return this._http.get(this.apiUrl + '/product/lessstock').pipe((res) => res);
+  }
+
   constructor() {}
 }
