@@ -472,6 +472,7 @@
               <label for="initaldate">Fecha inicial</label>
               <input
               (change)="setMinDate()"
+              [max]="maxDate"
                 type="date"
                 name="initaldate"
                 id="initaldate"
