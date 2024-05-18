@@ -160,6 +160,9 @@ export class ReportComponent {
                     this.type = '';
                     this.isCorrect = false;
                   }, 5000);
+                  dateinitial.value = '';
+                  datefinal.value = '';
+                  
                   const blob = new Blob([response], { type: 'application/pdf' });
                   const url = window.URL.createObjectURL(blob);
                   window.open(url);
