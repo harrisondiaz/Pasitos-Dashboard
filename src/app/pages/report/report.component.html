@@ -48,8 +48,10 @@
             Añadir registro
             <div class="tooltip-arrow" data-popper-arrow></div>
           </div>
-          <a
+          <button
             type="button"
+            data-modal-target="search-modal"
+            data-modal-toggle="search-modal"
             data-tooltip-target="tooltip-print"
             data-tooltip-placement="top"
             class="flex justify-center items-center w-[52px] h-[52px] text-gray-500 hover:text-gray-900 bg-white rounded-full border border-gray-200 dark:border-gray-600 shadow-sm dark:hover:text-white dark:text-gray-400 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 focus:outline-none dark:focus:ring-gray-400"
@@ -66,7 +68,7 @@
             </svg>
 
             <span class="sr-only">Busqueda avanzada</span>
-          </a>
+          </button>
           <div
             id="tooltip-print"
             role="tooltip"
@@ -157,7 +159,8 @@
           Añadir registro
         </button>
         <a
-          href="#"
+          data-modal-target="search-modall"
+          data-modal-toggle="search-modal"
           class="inline-flex text-sm md:text-base gap-x-4 font-semibold items-center px-5 py-2 text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-white dark:focus:ring-white dark:text-white"
         >
           <svg
@@ -212,7 +215,9 @@
         En esta sección podrás visualizar los productos que pueden estar con
         poco stock para que puedas realizar un pedido a tus proveedores.
       </p>
-      <ul class="list-disc flex flex-col md:flex-row  justify-around gap-16 ml-5">
+      <ul
+        class="list-disc flex flex-col md:flex-row justify-around gap-16 ml-5"
+      >
         @for (item of items; track $index) {
         <li class="gap-5 mb-2 text-gray-700 dark:text-gray-400">
           <div class="flex flex-col justify-center">
@@ -226,25 +231,24 @@
 
           <div class="inline-flex mx-10">
             <a
-            
-            (click)="setEdit('edit-product', item.id)"
-            class="flex justify-center gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
-          >
-            Ir<svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="w-5 h-5"
-              viewBox="0 0 24 24"
+              (click)="setEdit('edit-product', item.id)"
+              class="flex justify-center gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
             >
-              <path
-                fill="none"
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
-              />
-            </svg>
-          </a>
+              Ir<svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+                />
+              </svg>
+            </a>
           </div>
         </li>
         }
@@ -420,7 +424,97 @@
   </div>
 </div>
 
-<!-- Modal toggle -->
+<!--Modal GET PDF-->
+<div
+  id="search-modal"
+  tabindex="-1"
+  aria-hidden="true"
+  class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+>
+  <div class="relative p-4 w-full max-w-md max-h-full">
+    <!-- Modal content -->
+    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+      <!-- Modal header -->
+      <div
+        class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      >
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+          Busqueda avanzada
+        </h3>
+        <button
+          type="button"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          data-modal-toggle="search-modal"
+        >
+          <svg
+            class="w-3 h-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+          <span class="sr-only">Close modal</span>
+        </button>
+      </div>
+      <!-- Modal body -->
+      <form class="p-4 md:p-5" [formGroup]="this.form">
+        <div class="flex w-full gap-4 mb-4">
+          <div class="flex justify-between gap-5 mb-5">
+            <div>
+              <label for="initaldate">Fecha inicial</label>
+              <input
+              (change)="setMinDate()"
+                type="date"
+                name="initaldate"
+                id="initaldate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required=""
+              />
+            </div>
+            <div class="col-span-2 mb-5">
+              <label for="finaldate">Fecha final</label>
+              <input
+                [max]="maxDate"
+                type="date"
+                name="finaldate"
+                id="finaldate"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                required=""
+              />
+            </div>
+          </div>
+        </div>
+        <button
+        (click)="getPDF()"
+          type="button"
+          class="text-white inline-flex items-center bg-black focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="me-1 -ms-1 w-5 h-5"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              d="M4.998 9V1H19.5L23 4.5V23H4M18 1v5h5M3 12h1.5c2 0 2.25 1.25 2.25 2s-.25 2-2.25 2H3.25v2H3zm6.5 6v-6h1.705c1.137 0 2.295.5 2.295 3s-1.158 3-2.295 3zm7 1v-7h4m-4 3.5h3"
+            />
+          </svg>
+          Descargar PDF
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 
 <!-- Main modal -->
 <div

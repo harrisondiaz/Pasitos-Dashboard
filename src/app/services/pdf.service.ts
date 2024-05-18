@@ -20,6 +20,8 @@ export class PdfService {
     return this._http.post(this.apiUrl + '/pdf/products', productList, { responseType: 'blob' });
   }
 
+  
+
 
 
   constructor() { }

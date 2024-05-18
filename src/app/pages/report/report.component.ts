@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { ToastComponent } from '../../components/toast/toast.component';
 import { ReportService } from '../../services/report.service';
@@ -14,8 +20,7 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './report.component.scss',
 })
 export class ReportComponent {
-  
-  items : any[] = [];
+  items: any[] = [];
 
   product = {
     id: 1,
@@ -25,14 +30,21 @@ export class ReportComponent {
   };
   isSale = true;
   isCorrect = false;
+  report: any[] = [];
 
-  form = new FormGroup({
-    dateinitial: new FormControl('', Validators.required),
-    datefinal: new FormControl('', Validators.required),
-    valuestore: new FormControl('', Validators.required),
-    valuemary: new FormControl('', Validators.required),
-    valuecars: new FormControl('', Validators.required),
-  }, { validators: (group: AbstractControl<any, any>) => this.dateLessThan('dateinitial', 'datefinal')});
+  form = new FormGroup(
+    {
+      dateinitial: new FormControl('', Validators.required),
+      datefinal: new FormControl('', Validators.required),
+      valuestore: new FormControl('', Validators.required),
+      valuemary: new FormControl('', Validators.required),
+      valuecars: new FormControl('', Validators.required),
+    },
+    {
+      validators: (group: AbstractControl<any, any>) =>
+        this.dateLessThan('dateinitial', 'datefinal'),
+    }
+  );
 
   isToday = false;
   message = '';
@@ -40,29 +52,27 @@ export class ReportComponent {
   minDate = '2001-01-01';
   maxDate = new Date().toISOString().split('T')[0];
 
-
   dateLessThan(from: string, to: string) {
-    return (group: FormGroup): {[key: string]: any} => {
+    return (group: FormGroup): { [key: string]: any } => {
       let f = group.controls[from];
       let t = group.controls[to];
       if (f.value > t.value) {
         return {
-          dates: "La fecha inicial no puede ser mayor que la fecha final"
+          dates: 'La fecha inicial no puede ser mayor que la fecha final',
         };
       }
       return {};
-    }
+    };
   }
 
   setEdit(pasare: string, id: number) {
-    localStorage.setItem('window', pasare);
-    this.router.navigate(["dashboard",pasare, id]);
-
+    //localStorage.setItem('window', pasare);
+    this.router.navigate(['dashboard', pasare, id]);
   }
 
   ngOnInit() {
     this.productService.lessStock().subscribe({
-      next: (products:any) => {
+      next: (products: any) => {
         this.items = products;
       },
       error: (error) => {
@@ -78,9 +88,11 @@ export class ReportComponent {
     });
   }
 
-  constructor(private reportService: ReportService, private router: Router, private productService: ProductService) {
-
-  }
+  constructor(
+    private reportService: ReportService,
+    private router: Router,
+    private productService: ProductService
+  ) {}
 
   isTodayDate(event: any) {
     const today = new Date();
@@ -101,10 +113,93 @@ export class ReportComponent {
     }
   }
 
+  setMinDate() {
+    let initial = document.querySelector('#initaldate') as HTMLInputElement;
+    let final = document.querySelector('#finaldate') as HTMLInputElement;
+    if (initial && final) {
+      final.min = initial.value;
+    }
+  }
+
+  getPDF() {
+    let dateinitial = document.querySelector(
+      '#initaldate'
+    ) as HTMLInputElement;
+    let datefinal = document.querySelector('#finaldate') as HTMLInputElement;
+
+    if (dateinitial && datefinal) {
+      if (dateinitial.value === '' || datefinal.value === '') {
+        this.message = 'Por favor, llene todos los campos';
+        this.type = 'warning';
+        this.isCorrect = true;
+        setTimeout(() => {
+          this.message = '';
+          this.type = '';
+          this.isCorrect = false;
+        }, 5000);
+      } else {
+        this.message = 'Descargando PDF';
+        this.type = 'load';
+        this.isCorrect = true;
+        setTimeout(() => {
+          this.message = '';
+          this.type = '';
+          this.isCorrect = false;
+        }, 5000);
+        this.reportService.getSalesBtwDates(dateinitial.value, datefinal.value).subscribe({
+          next: (response:any) => {
+            this.report = response;
+            if(this.report.length > 0){
+              this.reportService.exportSalesBtwDates(dateinitial.value, datefinal.value).subscribe({
+                next: (response) => {
+                  this.message = 'PDF descargado correctamente';
+                  this.type = 'success';
+                  this.isCorrect = true;
+                  setTimeout(() => {
+                    this.message = '';
+                    this.type = '';
+                    this.isCorrect = false;
+                  }, 5000);
+                  const blob = new Blob([response], { type: 'application/pdf' });
+                  const url = window.URL.createObjectURL(blob);
+                  window.open(url);
+                },
+                error: (error) => {
+                  console.error(error);
+                },
+              });
+            } else {
+              this.message = 'No hay ventas en ese rango de fechas';
+              this.type = 'warning';
+              this.isCorrect = true;
+              setTimeout(() => {
+                this.message = '';
+                this.type = '';
+                this.isCorrect = false;
+              }, 5000);
+            }
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      }
+    } else {
+      this.message = 'Por favor, llene todos los campos';
+      this.type = 'warning';
+      this.isCorrect = true;
+      setTimeout(() => {
+        this.message = '';
+        this.type = '';
+        this.isCorrect = false;
+      }, 5000);
+    }
+  }
+
   onSubmit() {
     this.form.get('dateinitial')?.enable();
     this.form.get('datefinal')?.enable();
-    if(this.form.valid) {
+    if (this.form.valid) {
       const report = this.form.value as unknown as Report;
       console.log(report);
       this.reportService.createReport(report).subscribe({
@@ -134,7 +229,7 @@ export class ReportComponent {
       }, 5000);
       this.form.markAllAsTouched();
     }
-    if(this.isToday) {
+    if (this.isToday) {
       this.form.get('dateinitial')?.disable();
       this.form.get('datefinal')?.disable();
     }
@@ -142,7 +237,6 @@ export class ReportComponent {
 
   setWindow(pasare: string) {
     localStorage.setItem('window', pasare);
-    this.router.navigate(["dashboard",pasare]);
-  
+    this.router.navigate(['dashboard', pasare]);
   }
 }

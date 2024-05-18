@@ -47,6 +47,14 @@ export class ReportService {
     return this._http.get(this.url+"/pdf/spents/filters/"+date+"/"+date2, { responseType: 'blob'}).pipe(res => res);
   }
 
+  exportSalesBtwDates(dateinitial: string, datefinal: string) {
+    return this._http.get(this.url + '/pdf/reports/'+dateinitial+'/'+datefinal, {responseType: 'blob' }).pipe(res => res);
+  }
+
+  getSalesBtwDates(dateinitial: string, datefinal: string) {
+    return this._http.get(this.url + '/reports/'+dateinitial+'/'+datefinal).pipe(res => res);
+  }
+
 
   constructor() { }
 }
