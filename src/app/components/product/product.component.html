@@ -111,7 +111,9 @@
   </div>
   @if (isLoading) {
   <div class="flex md:items-center justify-center sm:top-0 mx-10">
-    <div class="text-lg md:text-3xl flex justify-around gap-x-10 font-bold rounded-lg border shadow-lg p-10">
+    <div
+      class="text-lg md:text-3xl flex justify-around gap-x-10 font-bold rounded-lg border shadow-lg p-10"
+    >
       <div role="status">
         <svg
           aria-hidden="true"
@@ -161,7 +163,7 @@
     @for (item of products ; track item.id) {
 
     <div
-      class="w-full justify-between max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-stretch"
+      class="w-full justify-around max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-stretch"
     >
       @if(!hasColor(item)){
       <img
