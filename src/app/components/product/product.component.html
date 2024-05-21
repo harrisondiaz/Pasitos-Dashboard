@@ -174,13 +174,13 @@
       }@else { @for (color of formatColors(item); track $index) { @if
       (item.currentColor === color[0]) {
       <img
-        src="{{ color[1] }}"
+        src="{{ item.currentPhoto }}"
         alt="{{ item.productname }}"
         class="w-full h-96 object-contain rounded-lg shadow-lg"
       />
       } @else{
       <img
-        src="{{ color[1] }}"
+        src="{{ item.currentPhoto }}"
         alt="{{ item.productname }}"
         class="w-full h-96 object-contain rounded-lg shadow-lg hidden"
       />

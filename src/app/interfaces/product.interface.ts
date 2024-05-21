@@ -16,6 +16,7 @@ export interface Product {
     type:           string;
     currentColor:   string;
     hasColor:       boolean;
+    currentPhoto:   string;
 }
 
 export interface HomePrice {

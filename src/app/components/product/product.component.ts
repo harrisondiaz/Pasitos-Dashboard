@@ -31,10 +31,10 @@ export class ProductComponent implements OnInit {
     this.productService.getAll().subscribe({
       next: (products) => {
         this.productList = products;
-        console.log(this.productList);
         this.isLoading = false;
         this.products = this.productList;
         this.setCurrentColor();
+        
       },
       error: (error) => {
         console.error(error);
@@ -75,6 +75,7 @@ export class ProductComponent implements OnInit {
       if (element.id === product.id) {
         console.log(element.productname, color);
         element.currentColor = color;
+        element.currentPhoto = element.photos.find((photo) => photo.color === color)!.url;
       }
     });
   }
@@ -115,6 +116,20 @@ export class ProductComponent implements OnInit {
   
     // Set hasColor property
     product.hasColor = colors.some(color => color !== "");
+
+    if(product.id === 13){
+      console.log(colors
+        .map((color) => {
+          const photoUrls = this.groupedPhotosByColor[color].map(
+            (photo) => photo.url
+          );
+          return [color, photoUrls];
+        }));
+    }
+
+    if(!product.hasColor) {
+      return [[product.photos[0].color, product.photos.map(photo => photo.url)]];
+    }
   
     return colors
       .filter((color) => color !== "")
@@ -155,6 +170,7 @@ export class ProductComponent implements OnInit {
   setCurrentColor(){
     this.productList.forEach((element) => {
       element.currentColor = element.photos[0].color;
+      element.currentPhoto = element.photos[0].url;
     });
   }
 
@@ -169,11 +185,12 @@ export class ProductComponent implements OnInit {
 
   deleteProduct(){
     const product = this.product;
+    for (let i = 0; i < product.photos.length; i++) {
+      this.imageService.deleteImage(product.photos[i].url);
+    }
     this.productService.delete(this.product.id).subscribe({
       next: (response) => {
-        for (let i = 0; i < product.photos.length; i++) {
-          this.imageService.deleteImage(product.photos[i].url);
-        }
+        
         this.IsCorrectlyDeleted = 'true';
         this.message = 'Producto eliminado correctamente';
         this.type = 'success';
