@@ -123,7 +123,7 @@ export class ProviderComponent {
   getbusinessname(provider: Provider) {
     if (provider.businessname !== '') {
       return provider.businessname;
-    } else {
+    } else if(provider.firstname === '' || provider.othernames === '' || provider.lastname === '' || provider.secondlastname) {
       return (
         provider.firstname +
         ' ' +
@@ -133,8 +133,10 @@ export class ProviderComponent {
         ' ' +
         provider.secondlastname
       );
+    }else{
+      return 'No tiene nombre de empresa registrado';
     }
-  }
+  } 
 
   getCities(provider: Provider) {
     if (provider.city !== '') {
