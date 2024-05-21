@@ -212,7 +212,7 @@ export class NewProducComponent {
   }
 
   postProduct() {
-    if (this.form.valid) {
+    if (this.form.valid && this.selectedColors.length > 0) {
       const product = this.form.value as unknown as Product;
       product.photos = this.selectedColors;
       console.log(product);
@@ -248,8 +248,7 @@ export class NewProducComponent {
         },
       });
     } else {
-      console.log('Por favor, llene todos los campos');
-      this.message = 'Por favor, llene todos los campos';
+      this.message = 'Por favor, llene todos los campos o agregue una imagen';
       this.type = 'warning';
       this.isCorrect = true;
       setTimeout(() => {

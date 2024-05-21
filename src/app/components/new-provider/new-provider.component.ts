@@ -13,13 +13,12 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ToastComponent } from '../toast/toast.component';
 
-
 @Component({
-    selector: 'app-new-provider',
-    standalone: true,
-    templateUrl: './new-provider.component.html',
-    styleUrl: './new-provider.component.scss',
-    imports: [ReactiveFormsModule, ToastComponent]
+  selector: 'app-new-provider',
+  standalone: true,
+  templateUrl: './new-provider.component.html',
+  styleUrl: './new-provider.component.scss',
+  imports: [ReactiveFormsModule, ToastComponent],
 })
 export class NewProviderComponent {
   form = new FormGroup({
@@ -32,12 +31,15 @@ export class NewProviderComponent {
     othernames: new FormControl(''),
     lastname: new FormControl(''),
     secondlastname: new FormControl(''),
-    businessname: new FormControl('',),
+    businessname: new FormControl(''),
     department: new FormControl('', Validators.required),
     city: new FormControl('', Validators.required),
     address: new FormControl('', Validators.required),
     neighborhood: new FormControl(''),
-    phone: new FormControl(0, [Validators.required, Validators.pattern('^[0-9]*$')]),
+    phone: new FormControl(0, [
+      Validators.required,
+      Validators.pattern('^[0-9]*$'),
+    ]),
     zone: new FormControl(''),
     email: new FormControl('', Validators.email),
   });
@@ -47,7 +49,6 @@ export class NewProviderComponent {
   isLoaded: boolean = true;
   department: string[] = [];
   isIncomplete: boolean = false;
-  
 
   getColombia() {
     this.colombiaService.getAll().subscribe((colombiaData: ColombiaData[]) => {
@@ -94,17 +95,27 @@ export class NewProviderComponent {
   }
 
   submit() {
-    console.log(this.form.valid);
     if (this.form.valid) {
-      this.providerService.create(this.form.value as Provider).subscribe({
-        next: (response) => {
-          console.log(response);
-          this.setWindow('provider');
-        },
-        error: (error) => {
-          console.error(error);
-        },
-      });
+      if (
+        this.form.controls.firstname.value === '' ||
+        this.form.controls.lastname.value === '' ||
+        this.form.controls.businessname.value === '' ||
+        this.form.controls.othernames.value === '' ||
+        this.form.controls.secondlastname.value === ''
+      ) {
+        alert('Debe tener nombres y apellidos o razón social');
+        return;
+      } else {
+        this.providerService.create(this.form.value as Provider).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.setWindow('provider');
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        });
+      }
     } else {
       this.isIncomplete = true;
       setInterval(() => {
@@ -121,7 +132,7 @@ export class NewProviderComponent {
     private colombiaService: ColombiaService,
     private providerService: ProviderService,
     private location: Location,
-    private router: Router  
+    private router: Router
   ) {
     this.getColombia();
   }
