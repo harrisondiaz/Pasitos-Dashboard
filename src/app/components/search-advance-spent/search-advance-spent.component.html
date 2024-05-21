@@ -6,11 +6,11 @@
     <div class="flex justify-center mt-5">
       <div class="flex flex-col">
         <label for="initday" class="text-lg font-semibold">Fecha inical</label>
-        <input type="date" class="border rounded-lg p-1" id="initday" />
+        <input (change)="setDate($event)"  [max]="today" type="date" class="border rounded-lg p-1" id="initday" />
       </div>
       <div class="flex flex-col ms-5">
         <label for="finaldate" class="text-lg font-semibold">Fecha final</label>
-        <input type="date" class="border rounded-lg p-1" id="finaldate" />
+        <input [min]="initDate" [max]="today" type="date" class="border rounded-lg p-1" id="finaldate" />
       </div>
     </div>
     <div class="flex justify-start my-5">
@@ -93,7 +93,7 @@
             @for (item of spent; track $index) {
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {{item.date}}
+                        {{item.date.split('T')[0]}}
                     </th>
                     <td class="px-6 py-4">
                         {{item.value}}

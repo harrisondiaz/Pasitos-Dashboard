@@ -15,10 +15,21 @@ export class SearchAdvanceSpentComponent {
   isToast = false;
   message = '';
   type = '';
+  today = new Date().toISOString().split('T')[0];
+  initDate = '';
+  minDate = '2001-01-01';
 
   constructor(private spentService: ReportService) {}
 
   ngOnInit() {}
+
+  setDate(event: any) {
+    let initDate = document.querySelector('#initday') as HTMLInputElement;
+
+    if (initDate) {
+      this.initDate = initDate.value;
+    }
+  }
 
   setToday(event: any) {
     let input = document.querySelector('#initday') as HTMLInputElement;
