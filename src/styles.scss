@@ -1,10 +1,10 @@
+@layer reset, primeng;
 /* You can add global styles to this file, and also import other style files */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @import "primeicons/primeicons.css";
-@layer reset, primeng;
 
 @font-face {
   font-family: "Poppins";
