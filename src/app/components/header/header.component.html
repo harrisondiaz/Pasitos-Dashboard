@@ -1,3 +1,4 @@
+
 <nav
   class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700"
 >
@@ -213,3 +214,34 @@
     </ul>
   </div>
 </aside>
+
+<div class=" p-8 rounded-lg flex justify-center">
+  <p-toast />
+  <p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+      <div class="flex flex-col items-center p-5 rounded bg-white">
+        <div class="rounded-full bg-blue-500 flex justify-center items-center h-24 w-24">
+          <i class="pi pi-question text-5xl text-white"></i>
+        </div>
+        <span class="font-bold text-2xl block mb-2 mt-4">
+          {{ message.header }}
+        </span>
+        <p class="mb-0">{{ message.message }}</p>
+        <div class="flex items-center gap-2 mt-4">
+          <button
+            (click)="cd.accept()"
+            class="w-32 bg-blue-500 text-white rounded py-2 px-4"
+          >
+            Aceptar
+          </button>
+          <button
+            (click)="cd.reject()"
+            class="w-32 border border-blue-500 text-blue-500 rounded py-2 px-4"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </p-confirmDialog>
+</div>

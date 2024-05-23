@@ -24,21 +24,17 @@ export class AuthService {
     );
 
     /*this.supabase.auth.onAuthStateChange((event, session) => {
-      console.log('event', event);
-      console.log('session', session);
-      if (event === 'SIGNED_IN') {
+                  if (event === 'SIGNED_IN') {
         this.user.next(session!.user);
         this.ngZone.run(() => {
-          console.log(this.returnUrl);
-          if (this.returnUrl) {
+                    if (this.returnUrl) {
             this.router.navigateByUrl(this.returnUrl);
           }
           
           this.returnUrl = null;
         });
       } else if (event === 'SIGNED_OUT') {
-        console.log('User signed out');
-        this.user.next(null);
+                this.user.next(null);
         this.ngZone.run(() => {
           this.returnUrl = this.router.url;
           this.router.navigate(['/']);

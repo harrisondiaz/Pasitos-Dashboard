@@ -3,6 +3,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "primeicons/primeicons.css";
+@layer reset, primeng;
+
 @font-face {
   font-family: "Poppins";
   src: url("assets/fonts/Poppins/Poppins-Thin.ttf") format("truetype");

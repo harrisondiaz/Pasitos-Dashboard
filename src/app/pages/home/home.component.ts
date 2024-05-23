@@ -14,7 +14,8 @@ import { NewProviderComponent } from "../../components/new-provider/new-provider
 import { EditProviderComponent } from "../../components/edit-provider/edit-provider.component";
 import { AuthService } from '../../services/auth.service';
 
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -42,31 +43,7 @@ export class HomeComponent implements OnInit {
   nav: String = '';
   window = '';
 
-  isSession() {
-    if (
-      localStorage.getItem('sessionBefore') === 'true' &&
-      localStorage.getItem('toast') === 'true'
-    ) {
-      this.waitingToast = !this.waitingToast;
-      this.phrase = '¡Inicio de sesión exitoso!';
-      setTimeout(() => {
-        this.waitingToast = !this.waitingToast;
-      }, 3000);
-      localStorage.setItem('toast', 'false');
-      window.location.reload();
-    } else {
-      if (localStorage.getItem('toast') === 'false') {
-        
-      } else {
-        this.waitingToast = !this.waitingToast;
-        this.phrase = '¡Hola!, Bienvenido de nuevo ' + this.name;
-        setTimeout(() => {
-          this.waitingToast = !this.waitingToast;
-        }, 3000);
-        localStorage.setItem('toast', 'true');
-      }
-    }
-  }
+  
 
   logout() {
     localStorage.setItem('sessionBefore', 'true');
@@ -89,8 +66,11 @@ export class HomeComponent implements OnInit {
     const currentUser =  this.authService.getCurrentUser().subscribe((user) => {
       this.name = user?.email ?? '';
     });
-    localStorage.setItem('toast', 'false');
     this.window = localStorage.getItem('window') ?? '';
-    this.isSession();
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof NavigationStart && event.url === 'dashboard')
+      )
+      .subscribe(() => window.location.reload());
   }
 }

@@ -1,29 +1,27 @@
 import { Component } from '@angular/core';
 import { Client } from '../../interfaces/client.interface';
 import { ClientService } from '../../services/client.service';
-import { ToastComponent } from '../toast/toast.component';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-client',
   standalone: true,
   templateUrl: './client.component.html',
   styleUrl: './client.component.scss',
-  imports: [ToastComponent, ReactiveFormsModule],
+  imports: [ToastModule, ReactiveFormsModule],
 })
 export class ClientComponent {
   clients: Client[] = [];
   isLoading: boolean = true;
   client: Client[] = [];
   aux: any = {};
-  isToast: boolean = false;
-  message: string = '';
-  type: string = '';
   form = new FormGroup({
     name: new FormControl('', Validators.required),
     email: new FormControl("", [Validators.required, Validators.email]),
@@ -31,7 +29,7 @@ export class ClientComponent {
   });
   
 
-  constructor(private clientService: ClientService) {
+  constructor(private clientService: ClientService, private messageService: MessageService) {
     
   }
 
@@ -51,68 +49,33 @@ export class ClientComponent {
   createClient() {
     if (this.form.valid) {
       this.aux = this.form.value;
-      this.message = 'Creando cliente...';
-      this.type = 'load';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'info', summary: 'Creando cliente...' });
       this.clientService.createClient(this.aux).subscribe({
         next: (response: any) => {
           this.getClients();
-          this.message = 'Cliente creado correctamente';
-          this.type = 'success';
-          this.isToast = true;
-          setTimeout(() => {
-            this.isToast = false;
-          }, 3000);
+          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente creado correctamente' });
           this.form.reset();
         },
         error: (error) => {
           console.error(error);
-          this.message = 'Error al crear el cliente';
-          this.type = 'error';
-          this.isToast = true;
-          setTimeout(() => {
-            this.isToast = false;
-          }, 3000);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear el cliente' });
         },
       });
     }else if (this.form.invalid){
-      this.message = 'Debe llenar todos los campos';
-      this.type = 'warning';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Por favor, ingresa los datos correctamente' });
     }
   }
 
   deleteClient(id: number) {
-    this.message = 'Eliminando cliente...';
-    this.type = 'load';
-    this.isToast = true;
-    setTimeout(() => {
-      this.isToast = false;
-    }, 3000);
+   this.messageService.add({ severity: 'info', summary: 'Eliminando cliente...' });
     this.clientService.deleteClient(id).subscribe({
       next: (response: any) => {
         this.getClients();
-        this.message = 'Cliente eliminado correctamente';
-        this.type = 'success';
-        this.isToast = true;
-        setTimeout(() => {
-          this.isToast = false;
-        }, 3000);
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Cliente eliminado correctamente' });
       },
       error: (error) => {
         console.error(error);
-        this.message = 'Error al eliminar el cliente';
-        this.type = 'error';
-        this.isToast = true;
-        setTimeout(() => {
-          this.isToast = false;
-        }, 3000);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el cliente' });
       },
     });
   }

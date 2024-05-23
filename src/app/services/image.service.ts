@@ -23,8 +23,7 @@ export class ImageService {
       throw error;
     }
     const url = await this.supabase.storage.from('Products').createSignedUrl(file.name,631152000); 
-    console.log(url.data?.signedUrl);
-    return url.data!.signedUrl;
+        return url.data!.signedUrl;
   }
 
   async downloadImage(name: string) {

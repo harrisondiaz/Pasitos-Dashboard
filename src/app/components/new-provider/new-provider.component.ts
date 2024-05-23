@@ -11,14 +11,15 @@ import { ProviderService } from '../../services/provider.service';
 import { Provider } from '../../interfaces/provider.interface';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { ToastComponent } from '../toast/toast.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-provider',
   standalone: true,
   templateUrl: './new-provider.component.html',
   styleUrl: './new-provider.component.scss',
-  imports: [ReactiveFormsModule, ToastComponent],
+  imports: [ReactiveFormsModule, ToastModule],
 })
 export class NewProviderComponent {
   form = new FormGroup({
@@ -48,7 +49,6 @@ export class NewProviderComponent {
   cities: string[] = [];
   isLoaded: boolean = true;
   department: string[] = [];
-  isIncomplete: boolean = false;
 
   getColombia() {
     this.colombiaService.getAll().subscribe((colombiaData: ColombiaData[]) => {
@@ -64,12 +64,10 @@ export class NewProviderComponent {
     const departments = new Set(
       this.colombia.map((colombia) => {
         count++;
-        console.log(`Mapeando departamento ${count} de ${total}`);
         return colombia.DEPARTAMENTO;
       })
     );
 
-    console.log(departments);
     this.isLoaded = false;
     this.department = Array.from(departments);
   }
@@ -108,31 +106,27 @@ export class NewProviderComponent {
       } else {
         this.providerService.create(this.form.value as Provider).subscribe({
           next: (response) => {
-            console.log(response);
+            this.messageService.add({ severity: 'success', summary: 'Proveedor creado', detail: 'Proveedor creado correctamente', life: 5000 });
             this.setWindow('provider');
           },
           error: (error) => {
-            console.error(error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear el proveedor', life: 5000});
           },
         });
       }
     } else {
-      this.isIncomplete = true;
-      setInterval(() => {
-        this.isIncomplete = false;
-      }, 5000);
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, llene todos los campos', life: 5000 });
     }
   }
 
-  close() {
-    this.isIncomplete = false;
-  }
+ 
 
   constructor(
     private colombiaService: ColombiaService,
     private providerService: ProviderService,
     private location: Location,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.getColombia();
   }

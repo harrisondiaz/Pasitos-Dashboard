@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProviderComponent } from './components/provider/provider.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ProductComponent } from './components/product/product.component';
 import { ClientComponent } from './components/client/client.component';
 import { NewProviderComponent } from './components/new-provider/new-provider.component';
@@ -43,5 +42,5 @@ export const routes: Routes = [
       { path: '', redirectTo: 'home', pathMatch: 'full'}
     ],
   },
-  { path: '**', component: NotFoundComponent },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

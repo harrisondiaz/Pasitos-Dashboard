@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
-import { ToastComponent } from '../toast/toast.component';
+import { ToastModule } from 'primeng/toast';
 import { ReportService } from '../../services/report.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-search-advance-spent',
   standalone: true,
   templateUrl: './search-advance-spent.component.html',
   styleUrl: './search-advance-spent.component.scss',
-  imports: [ToastComponent],
+  imports: [ToastModule],
 })
 export class SearchAdvanceSpentComponent {
   isTable = false;
   spent: any[] = [];
-  isToast = false;
-  message = '';
-  type = '';
+  
   today = new Date().toISOString().split('T')[0];
   initDate = '';
   minDate = '2001-01-01';
 
-  constructor(private spentService: ReportService) {}
+  constructor(private spentService: ReportService, private messageService: MessageService) {}
 
   ngOnInit() {}
 
@@ -60,42 +59,20 @@ export class SearchAdvanceSpentComponent {
       .value;
 
     if (initday !== '' && finaldate !== '') {
-      this.message = 'Buscando gastos...';
-      this.type = 'load';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'info', summary: 'Buscando gastos', detail: 'Por favor, espere un momento' });
       this.spentService
         .getSpentbyDate(initday, finaldate)
         .subscribe((data: any) => {
           this.spent = data;
           if (this.spent.length === 0) {
-            this.message =
-              'No se encontraron gastos en el rango de fechas seleccionado';
-            this.type = 'warning';
-            this.isToast = true;
-            setTimeout(() => {
-              this.isToast = false;
-            }, 3000);
+            this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No se encontraron gastos en el rango de fechas seleccionado' });
           } else {
             this.isTable = true;
-            this.message = 'Gastos encontrados';
-            this.type = 'success';
-            this.isToast = true;
-            setTimeout(() => {
-              this.isToast = false;
-            }, 3000);
+            this.messageService.add({ severity: 'success', summary: 'Gastos encontrados', detail: 'Gastos encontrados correctamente' });
           }
         });
     } else {
-      this.message =
-        '!Por favor, seleccione una fecha de inicio y una fecha final!';
-      this.type = 'warning';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, seleccione una fecha de inicio y una fecha final' });
     }
   }
 
@@ -106,28 +83,18 @@ export class SearchAdvanceSpentComponent {
       .value;
 
     if (initday !== '' && finaldate !== '') {
-      this.message = 'Generando PDF...';
-      this.type = 'load';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'info', summary: 'Generando PDF', detail: 'Por favor, espere un momento' });
       this.spentService
         .getSpentbyDate(initday, finaldate)
         .subscribe((data: any) => {
           this.spent = data;
           if (this.spent.length === 0) {
-            this.message =
-              'No se encontraron gastos en el rango de fechas seleccionado';
-            this.type = 'warning';
-            this.isToast = true;
-            setTimeout(() => {
-              this.isToast = false;
-            }, 3000);
+            this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No se encontraron gastos en el rango de fechas seleccionado' });
           } else {
             this.spentService
               .getSpentPDFbyDate(initday, finaldate)
               .subscribe((data) => {
+                this.messageService.add({ severity: 'success', summary: 'PDF generado', detail: 'PDF generado correctamente' });
                 const blob = new Blob([data], { type: 'application/pdf' });
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
@@ -135,13 +102,7 @@ export class SearchAdvanceSpentComponent {
           }
         });
     } else {
-      this.message =
-        '!Por favor, seleccione una fecha de inicio y una fecha final!';
-      this.type = 'warning';
-      this.isToast = true;
-      setTimeout(() => {
-        this.isToast = false;
-      }, 3000);
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, seleccione una fecha de inicio y una fecha final' });
     }
   }
 }

@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import {  Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, ConfirmDialogModule, ToastModule, ButtonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -15,8 +19,37 @@ export class HeaderComponent {
   username: any;
 
   logout() {
-    this.authService.signOut();
-    this.router.navigate(['/']);
+    this.confirmService.confirm({
+      header: '¿Estás seguro de que deseas cerrar sesión?',
+      message: 'Una vez cerrada la sesión, deberás iniciarla de nuevo.',
+      accept: () => {
+        this.authService.signOut().then(() => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sesión cerrada',
+            detail: '¡Hasta luego!',
+            life: 4000,
+            });
+        }).catch(() => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo cerrar la sesión',
+            life: 4000,
+            });
+        });
+        this.router.navigate(['/']);
+      },
+      reject: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Información',
+          detail: 'Sesión no cerrada',
+          life: 4000,
+        });
+      },
+    });
+    
   }
 
   setHome() {
@@ -25,9 +58,7 @@ export class HeaderComponent {
   }
 
   setWindow(parsedWindow: any) {
-    //window.location.reload();
     localStorage.setItem('window', parsedWindow)
-    //this.router.navigate(['dashboard', parsedWindow]);
   }
 
   ngOnInit(): void {
@@ -60,6 +91,8 @@ export class HeaderComponent {
   constructor(
     private authService: AuthService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService,
+    private confirmService: ConfirmationService
   ) {}
 }

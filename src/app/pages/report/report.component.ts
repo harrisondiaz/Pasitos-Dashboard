@@ -7,15 +7,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { ToastComponent } from '../../components/toast/toast.component';
 import { ReportService } from '../../services/report.service';
 import { Report } from '../../interfaces/report.interface';
 import { Router } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-report',
   standalone: true,
-  imports: [NgxCurrencyDirective, ReactiveFormsModule, ToastComponent],
+  imports: [NgxCurrencyDirective, ReactiveFormsModule, ToastModule],
   templateUrl: './report.component.html',
   styleUrl: './report.component.scss',
 })
@@ -29,7 +30,6 @@ export class ReportComponent {
     url: 'https://ggbralugqoodmaklkses.supabase.co/storage/v1/object/sign/Products/155782-800-auto.webp?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJQcm9kdWN0cy8xNTU3ODItODAwLWF1dG8ud2VicCIsImlhdCI6MTcxNTQ0ODAxMSwiZXhwIjoyMzQ2NjAwMDExfQ.X92MUGgvw6YTDsUiQ5j38Yl6ja7F5VXSxTIAJLXBF0Q&t=2024-05-11T17%3A20%3A10.860Z',
   };
   isSale = true;
-  isCorrect = false;
   report: any[] = [];
 
   form = new FormGroup(
@@ -47,8 +47,7 @@ export class ReportComponent {
   );
 
   isToday = false;
-  message = '';
-  type = '';
+  
   minDate = '2001-01-01';
   maxDate = new Date().toISOString().split('T')[0];
 
@@ -76,14 +75,7 @@ export class ReportComponent {
         this.items = products;
       },
       error: (error) => {
-        this.message = 'Error al cargar los productos';
-        this.type = 'error';
-        this.isCorrect = true;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.isCorrect = false;
-        }, 5000);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar los productos' });
       },
     });
   }
@@ -91,7 +83,8 @@ export class ReportComponent {
   constructor(
     private reportService: ReportService,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private messageService: MessageService
   ) {}
 
   isTodayDate(event: any) {
@@ -129,37 +122,16 @@ export class ReportComponent {
 
     if (dateinitial && datefinal) {
       if (dateinitial.value === '' || datefinal.value === '') {
-        this.message = 'Por favor, llene todos los campos';
-        this.type = 'warning';
-        this.isCorrect = true;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.isCorrect = false;
-        }, 5000);
+        this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, llene todos los campos' });
       } else {
-        this.message = 'Descargando PDF';
-        this.type = 'load';
-        this.isCorrect = true;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.isCorrect = false;
-        }, 5000);
+        this.messageService.add({ severity: 'info', summary: 'Generando PDF', detail: 'Por favor, espere un momento' });
         this.reportService.getSalesBtwDates(dateinitial.value, datefinal.value).subscribe({
           next: (response:any) => {
             this.report = response;
             if(this.report.length > 0){
               this.reportService.exportSalesBtwDates(dateinitial.value, datefinal.value).subscribe({
                 next: (response) => {
-                  this.message = 'PDF descargado correctamente';
-                  this.type = 'success';
-                  this.isCorrect = true;
-                  setTimeout(() => {
-                    this.message = '';
-                    this.type = '';
-                    this.isCorrect = false;
-                  }, 5000);
+                  this.messageService.add({ severity: 'success', summary: 'PDF generado', detail: 'PDF generado correctamente' });
                   dateinitial.value = '';
                   datefinal.value = '';
                   
@@ -172,14 +144,7 @@ export class ReportComponent {
                 },
               });
             } else {
-              this.message = 'No hay ventas en ese rango de fechas';
-              this.type = 'warning';
-              this.isCorrect = true;
-              setTimeout(() => {
-                this.message = '';
-                this.type = '';
-                this.isCorrect = false;
-              }, 5000);
+              this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No se encontraron ventas en el rango de fechas seleccionado' });
             }
           },
           error: (error) => {
@@ -188,14 +153,8 @@ export class ReportComponent {
         });
       }
     } else {
-      this.message = 'Por favor, llene todos los campos';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      console.error('Elements with id #initaldate or #finaldate not found');
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo generar el PDF' });
     }
   }
 
@@ -204,17 +163,9 @@ export class ReportComponent {
     this.form.get('datefinal')?.enable();
     if (this.form.valid) {
       const report = this.form.value as unknown as Report;
-      console.log(report);
-      this.reportService.createReport(report).subscribe({
+            this.reportService.createReport(report).subscribe({
         next: (response) => {
-          this.message = 'Reporte creado correctamente';
-          this.type = 'success';
-          this.isCorrect = true;
-          setTimeout(() => {
-            this.message = '';
-            this.type = '';
-            this.isCorrect = false;
-          }, 5000);
+          this.messageService.add({ severity: 'success', summary: 'Reporte creado', detail: 'Reporte creado correctamente' });
           this.form.reset();
         },
         error: (error) => {
@@ -222,14 +173,7 @@ export class ReportComponent {
         },
       });
     } else {
-      this.message = 'Por favor, llene todos los campos';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, llene todos los campos' });
       this.form.markAllAsTouched();
     }
     if (this.isToday) {

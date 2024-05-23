@@ -12,8 +12,9 @@ import { NgxCurrencyDirective } from 'ngx-currency';
 import { ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { ImageService } from '../../services/image.service';
-import { ToastComponent } from '../toast/toast.component';
+import { ToastModule } from 'primeng/toast';
 import { switchMap } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-product-edit',
@@ -21,7 +22,7 @@ import { switchMap } from 'rxjs';
   providers: [],
   templateUrl: './product-edit.component.html',
   styleUrl: './product-edit.component.scss',
-  imports: [NgxCurrencyDirective, ReactiveFormsModule, ToastComponent],
+  imports: [NgxCurrencyDirective, ReactiveFormsModule, ToastModule],
 })
 export class ProductEditComponent {
   product: Product = {} as Product;
@@ -52,14 +53,11 @@ export class ProductEditComponent {
   selectedColors2: any[] = [{ color: '', url: File! }];
   currentImageIndex = 0;
   aux: Product = {} as Product;
-  isCorrect: boolean = false;
-  message: string = '';
-  type: string = '';
   selectedFile: File | null = null;
   isSeleted: boolean = false;
   color: string = '';
   isDeleted: boolean = false;
-  index :number = 0;
+  index: number = 0;
 
   fileChanged(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -77,16 +75,17 @@ export class ProductEditComponent {
     this.isDeleted = !this.isDeleted;
   }
 
-  close(){
+  close() {
     this.isDeleted = false;
   }
 
   async addImages() {
     if (this.selectedFile) {
       try {
-        this.message = 'Subiendo imagen...';
-        this.type = 'load';
-        this.isCorrect = true;
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Subiendo imagen',
+        });
         const photos = File;
         const color = this.color;
 
@@ -96,48 +95,35 @@ export class ProductEditComponent {
           );
           this.selectedFile = null;
           if (url) {
-            this.isCorrect = false;
-            this.message = 'Imagen subida correctamente';
-            this.type = 'success';
-            this.isCorrect = true;
-            setTimeout(() => {
-              this.message = '';
-              this.type = '';
-              this.isCorrect = false;
-            }, 5000);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Imagen subida',
+              detail: 'Imagen subida correctamente',
+            });
             this.isSeleted = false;
             this.selectedColors.push({ color: color || '', url });
             this.color = '';
           } else {
-            this.message = 'Error al subir la imagen';
-            this.type = 'error';
-            this.isCorrect = false;
-            setTimeout(() => {
-              this.message = '';
-              this.type = '';
-              this.isCorrect = false;
-            }, 5000);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error al subir la imagen',
+            });
           }
         }
       } catch (error) {
-        this.message = 'Error al subir la imagen';
-        this.type = 'error';
-        this.isCorrect = false;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.isCorrect = false;
-        }, 5000);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al subir la imagen',
+        });
       }
     } else {
-      this.message = 'No hay imagen seleccionada';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No hay imagen seleccionada',
+      });
     }
   }
 
@@ -147,8 +133,6 @@ export class ProductEditComponent {
 
   removebyIndex() {
     const url = this.selectedColors[this.index].url;
-    console.log(url);
-
     // Create a URL object
     const urlObj = new URL(url);
 
@@ -160,14 +144,11 @@ export class ProductEditComponent {
 
     this.imageService.deleteImage(fileName).then(() => {
       this.selectedColors.splice(this.index, 1);
-      this.message = 'Imagen eliminada correctamente';
-      this.type = 'success';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Imagen eliminada',
+        detail: 'Imagen eliminada correctamente',
+      });
     });
 
     //this.selectedColors.splice(index, 1);
@@ -178,14 +159,11 @@ export class ProductEditComponent {
       this.selectedFile = null;
       this.isSeleted = false;
     } else {
-      this.message = 'No hay imagen seleccionada';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No hay imagen seleccionada',
+      });
     }
   }
 
@@ -195,39 +173,24 @@ export class ProductEditComponent {
       this.product = this.form.value as Product;
       this.product.id = id;
       this.product.photos = this.selectedColors;
-      console.log(this.product);
-      this.message = 'Guardando cambios...';
-      this.type = 'load';
-      this.isCorrect = true;
-      setInterval(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Guardando cambios',
+      });
       this.productService.update(this.product).subscribe(() => {
-        this.message = 'Cambios guardados correctamente';
-        this.type = 'success';
-        this.isCorrect = true;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.setWindow('product');
-          this.isCorrect = false;
-        }, 5000);
-        
-      } );
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Producto actualizado',
+          detail: 'Producto actualizado correctamente',
+        });
+        this.setWindow('product');
+      });
     } else {
-      this.message = 'No hay cambios que guardar';
-      console.log("formulario",this.form.value);
-      console.log("producto",this.product);
-      console.log("diferente",this.isDifferent(this.product));
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 2000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No se han realizado cambios',
+      });
     }
   }
 
@@ -277,7 +240,6 @@ export class ProductEditComponent {
         this.product = product;
         this.selectedColors = product.photos;
         this.form.patchValue(product);
-        console.log(this.form.value);
       });
   }
 
@@ -286,7 +248,8 @@ export class ProductEditComponent {
     private formBuilder: FormBuilder,
     private router: Router,
     private imageService: ImageService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {

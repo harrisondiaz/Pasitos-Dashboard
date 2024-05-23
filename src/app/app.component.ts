@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet, Event } from '@angular/router';
+import { Router, RouterOutlet, } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UserService } from './services/user.service';
+
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthService } from './services/auth.service';
 import { HeaderComponent } from './components/header/header.component';
-import { filter } from 'rxjs';
+
 import { RouteStateService } from './services/route-state.service';
-import { AuthGuard } from './guards/route.guard';
+;
+import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ import { AuthGuard } from './guards/route.guard';
     ReactiveFormsModule,
     FooterComponent,
     HeaderComponent,
+    
   ]
 })
 export class AppComponent implements OnInit {
@@ -33,6 +35,7 @@ export class AppComponent implements OnInit {
     this.authService.getCurrentUser().subscribe((user) => {
       this.name = user?.email ?? '';
     });
+    this.primengConfig.ripple = true;
     
   }
 
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit {
   }
   
 
-  constructor(private router: Router, private authService: AuthService, private routeStateService: RouteStateService) {
+  constructor(private router: Router, private authService: AuthService, private routeStateService: RouteStateService, private primengConfig: PrimeNGConfig) {
     
   }
 }

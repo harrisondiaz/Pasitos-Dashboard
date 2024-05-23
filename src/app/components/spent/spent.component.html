@@ -1,4 +1,4 @@
-<div class="md:ml-64 mt-20">
+<div class="md:ml-64 mt-5">
   <a href="/dashboard/report" (click)="setWindow('report')" class=" mx-5 inline-flex px-5 py-2 border-pink-400 border rounded-lg">
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-pink-400" viewBox="0 0 24 24"><path fill="currentColor" d="m14 17l-5-5l5-5z"/></svg>
     Volver</a>
@@ -120,6 +120,4 @@
   } }
 </div>
 
-@if(isToast){
-<app-toast [message]="message" [type]="type"/>
-}
+<p-toast/>

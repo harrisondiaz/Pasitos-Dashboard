@@ -6,20 +6,19 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { NgxCurrencyDirective } from 'ngx-currency';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
 import { ImageService } from '../../services/image.service';
-import { ToastComponent } from '../toast/toast.component';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-new-produc',
   standalone: true,
   templateUrl: './new-produc.component.html',
   styleUrl: './new-produc.component.scss',
-  imports: [ReactiveFormsModule, NgxCurrencyDirective, ToastComponent],
+  imports: [ReactiveFormsModule, NgxCurrencyDirective, ToastModule],
 })
 export class NewProducComponent {
   form = new FormGroup({
@@ -40,16 +39,12 @@ export class NewProducComponent {
     description: new FormControl('', Validators.required),
     type: new FormControl('', Validators.required),
   });
-  
 
   isNegative = false;
   selectedColors: any[] = [];
   selectedColors2: any[] = [{ color: '', url: File! }];
   currentImageIndex = 0;
   providerList: any = [];
-  isCorrect: boolean = false;
-  message: string = '';
-  type: string = '';
   selectedFile: File | null = null;
   isSeleted: boolean = false;
   color: string = '';
@@ -105,61 +100,52 @@ export class NewProducComponent {
   async addImages() {
     if (this.selectedFile) {
       try {
-        this.message = 'Subiendo imagen...';
-        this.type = 'load';
-        this.isCorrect = true;
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Subiendo imagen',
+          detail: 'Por favor, espere...',
+          life: 5000,
+        });
         const color = this.color;
-        console.log(color);
-
         if (this.selectedFile) {
           const url = await this.imageService.uploadImageAndGetUrl(
             this.selectedFile
           );
           this.selectedFile = null;
           if (url) {
-            this.isCorrect = false;
-            this.message = 'Imagen subida correctamente';
-            this.type = 'success';
-            this.isCorrect = true;
-            setTimeout(() => {
-              this.message = '';
-              this.type = '';
-              this.isCorrect = false;
-            }, 5000);
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Imagen subida',
+              detail: 'Imagen subida correctamente',
+              life: 5000,
+            });
             this.selectedColors.push({ color: color || '', url });
             this.isSeleted = false;
             this.color = '';
           } else {
-            this.message = 'Error al subir la imagen';
-            this.type = 'error';
-            this.isCorrect = false;
-            setTimeout(() => {
-              this.message = '';
-              this.type = '';
-              this.isCorrect = false;
-              
-            }, 5000);
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error al subir la imagen',
+              life: 5000,
+            });
           }
         }
       } catch (error) {
-        this.message = 'Error al subir la imagen';
-        this.type = 'error';
-        this.isCorrect = false;
-        setTimeout(() => {
-          this.message = '';
-          this.type = '';
-          this.isCorrect = false;
-        }, 5000);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al subir la imagen',
+          life: 5000,
+        });
       }
     } else {
-      this.message = 'No hay imagen seleccionada';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, seleccione una imagen',
+        life: 5000,
+      });
     }
   }
 
@@ -169,8 +155,6 @@ export class NewProducComponent {
 
   removebyIndex(index: number) {
     const url = this.selectedColors[index].url;
-    console.log(url);
-
     // Create a URL object
     const urlObj = new URL(url);
 
@@ -182,14 +166,12 @@ export class NewProducComponent {
 
     this.imageService.deleteImage(fileName).then(() => {
       this.selectedColors.splice(index, 1);
-      this.message = 'Imagen eliminada correctamente';
-      this.type = 'success';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Imagen eliminada',
+        detail: 'Imagen eliminada correctamente',
+        life: 5000,
+      });
     });
 
     //this.selectedColors.splice(index, 1);
@@ -200,14 +182,12 @@ export class NewProducComponent {
       this.selectedFile = null;
       this.isSeleted = false;
     } else {
-      this.message = 'No hay imagen seleccionada';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No hay imagen seleccionada',
+        life: 5000,
+      });
     }
   }
 
@@ -215,47 +195,32 @@ export class NewProducComponent {
     if (this.form.valid && this.selectedColors.length > 0) {
       const product = this.form.value as unknown as Product;
       product.photos = this.selectedColors;
-      console.log(product);
       this.productService.create(product).subscribe({
         next: (response) => {
-          this.message = 'Producto creado correctamente';
-          this.type = 'success';
-          this.isCorrect = true;
-
-          setTimeout(() => {
-            this.message = '';
-            this.type = '';
-            this.isCorrect = false;
-          }, 1000);
-          this.message =
-            ' Te vamos a redirigir a la lista de productos en 5 segundos';
-          this.type = 'load';
-          this.isCorrect = true;
-          setTimeout(() => {
-            this.router.navigate(['dashboard', 'product']);
-            this.isCorrect = false;
-          }, 5000);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Producto creado',
+            detail: 'Producto creado correctamente',
+            life: 5000,
+          });
+          this.router.navigate(['dashboard', 'product']);
         },
         error: (error) => {
-          this.message = 'Error al crear el producto';
-          this.type = 'error';
-          this.isCorrect = true;
-          setTimeout(() => {
-            this.message = '';
-            this.type = '';
-            this.isCorrect = false;
-          }, 5000);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error al crear el producto',
+            life: 5000,
+          });
         },
       });
     } else {
-      this.message = 'Por favor, llene todos los campos o agregue una imagen';
-      this.type = 'warning';
-      this.isCorrect = true;
-      setTimeout(() => {
-        this.message = '';
-        this.type = '';
-        this.isCorrect = false;
-      }, 5000);
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, llene todos los campos',
+        life: 5000,
+      });
     }
   }
 
@@ -267,7 +232,8 @@ export class NewProducComponent {
   constructor(
     private productService: ProductService,
     private router: Router,
-    private imageService: ImageService
+    private imageService: ImageService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {

@@ -6,18 +6,17 @@ import { ColombiaService } from '../../services/colombia.service';
 import { FormControl } from '@angular/forms';
 import { PdfService } from '../../services/pdf.service';
 import { Router } from '@angular/router';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-provider',
   standalone: true,
   templateUrl: './provider.component.html',
   styleUrl: './provider.component.scss',
-  imports: [ViewProviderComponent],
+  imports: [ViewProviderComponent, ToastModule],
 })
-
 export class ProviderComponent {
-  
   providerList: Provider[] = [];
   colombia: any[] = [];
   isDropdownOpen: boolean = false;
@@ -25,8 +24,6 @@ export class ProviderComponent {
   isViewVisible: boolean = false;
   provider = {} as Provider;
   isDeleted: boolean = false;
-  isDeletedCorrectly: boolean = false;
-  isDeletedIncorrectly: boolean = false;
   isLoading: boolean = true;
   shimmer = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   search1 = new FormControl('');
@@ -46,17 +43,11 @@ export class ProviderComponent {
     this.providerService.delete(this.provider).subscribe({
       next: () => {
         this.getProviders();
-        this.isDeletedCorrectly = true;
-        setTimeout(() => {
-          this.isDeletedCorrectly = false;
-        }, 2000);
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proveedor eliminado correctamente' });
       },
       error: (error) => {
-        this.isDeletedIncorrectly = true;
-        setTimeout(() => {
-          this.isDeletedIncorrectly = false;
-        }, 2000);
         console.error(error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el proveedor' });
       },
     });
     this.isDeleted = false;
@@ -123,7 +114,12 @@ export class ProviderComponent {
   getbusinessname(provider: Provider) {
     if (provider.businessname !== '') {
       return provider.businessname;
-    } else if(provider.firstname === '' || provider.othernames === '' || provider.lastname === '' || provider.secondlastname) {
+    } else if (
+      provider.firstname === '' ||
+      provider.othernames === '' ||
+      provider.lastname === '' ||
+      provider.secondlastname
+    ) {
       return (
         provider.firstname +
         ' ' +
@@ -133,10 +129,10 @@ export class ProviderComponent {
         ' ' +
         provider.secondlastname
       );
-    }else{
+    } else {
       return 'No tiene nombre de empresa registrado';
     }
-  } 
+  }
 
   getCities(provider: Provider) {
     if (provider.city !== '') {
@@ -192,7 +188,6 @@ export class ProviderComponent {
         this.providerList = providers;
         this.isLoading = false;
         this.providers = this.providerList;
-        console.log(this.providers);
       },
       error: (error) => {
         console.error(error);
@@ -213,7 +208,12 @@ export class ProviderComponent {
     this.router.navigate(['dashboard', pasare, provider.id]);
   }
 
-  constructor(private providerService: ProviderService, private pdfService: PdfService, private router: Router) {}
+  constructor(
+    private providerService: ProviderService,
+    private pdfService: PdfService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
     this.getProviders();
@@ -223,7 +223,6 @@ export class ProviderComponent {
     let term = '';
     if (event) {
       term = event.target.value.toLowerCase();
-      console.log(term);
     }
 
     if (term !== '') {
@@ -248,7 +247,6 @@ export class ProviderComponent {
     }
   }
 
-  
   exportProviders() {
     this.pdfService.exportProviders(this.providers).subscribe({
       next: (response) => {
@@ -256,6 +254,7 @@ export class ProviderComponent {
         const url = window.URL.createObjectURL(blob);
         this.router.navigate(['/dashboard/provider']);
         window.open(url, '_blank');
-      }});
+      },
+    });
   }
 }

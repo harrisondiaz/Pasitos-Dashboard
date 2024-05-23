@@ -5,10 +5,12 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-view-provider',
   standalone: true,
-  imports: [],
+  imports: [ToastModule],
   templateUrl: './view-provider.component.html',
   styleUrl: './view-provider.component.scss',
 })
@@ -17,25 +19,34 @@ export class ViewProviderComponent {
   providers: Provider[] = [];
   provider: Provider = {} as Provider;
 
-  constructor(private providerService: ProviderService, private router: Router, private location: Location,private route: ActivatedRoute,) {}
+  constructor(
+    private providerService: ProviderService,
+    private router: Router,
+    private location: Location,
+    private route: ActivatedRoute,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {
-    this.route.paramMap.pipe(
-      switchMap((params: ParamMap) => {
-        return of(parseInt(params.get('id') || '0'));
-      })
-    ).subscribe((id: number) => {
-      this.id = id;
-      this.providerService.searchById(this.id).subscribe({
-        next: (res: any) => {
-          this.provider = res[0];
-          console.log(this.provider);
-        },
-        error: (error) => {
-          console.error(error);
-        },
+    this.route.paramMap
+      .pipe(
+        switchMap((params: ParamMap) => {
+          return of(parseInt(params.get('id') || '0'));
+        })
+      )
+      .subscribe((id: number) => {
+        this.id = id;
+        this.providerService.searchById(this.id).subscribe({
+          next: (res: any) => {
+            this.provider = res[0];
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proveedor encontrado' });
+          },
+          error: (error) => {
+            console.error(error);
+            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo encontrar el proveedor' });
+          },
+        });
       });
-    });
   }
 
   getNature() {
@@ -175,7 +186,7 @@ export class ViewProviderComponent {
   }
 
   setEdit() {
-    localStorage.setItem('window', 'provider/'+this.provider.id);
+    localStorage.setItem('window', 'provider/' + this.provider.id);
     this.router.navigate(['/dashboard/edit-provider', this.provider.id]);
   }
 

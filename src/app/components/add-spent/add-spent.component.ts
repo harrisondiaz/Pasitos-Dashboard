@@ -8,15 +8,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxCurrencyDirective } from 'ngx-currency';
-import { ToastComponent } from '../toast/toast.component';
+
 import { isEmpty } from 'rxjs';
 import { ReportService } from '../../services/report.service';
 import { Router } from '@angular/router';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-add-spent',
   standalone: true,
-  imports: [NgxCurrencyDirective, ToastComponent],
+  imports: [NgxCurrencyDirective, ToastModule],
   templateUrl: './add-spent.component.html',
   styleUrl: './add-spent.component.scss',
 })
@@ -24,10 +26,7 @@ export class AddSpentComponent {
   spent: any[] = [{ date: '', amount: 0, description: '' }];
   today = new Date().toISOString().split('T')[0];
   amountModel = '';
-  isCompleted = false;
   isToday = false;
-  message = '';
-  type = '';
 
   formatAmount() {
     let amount = Number(this.amountModel.replace(/\D/g, ''));
@@ -37,11 +36,15 @@ export class AddSpentComponent {
     }).format(amount);
   }
 
-  constructor(private spentService: ReportService,private router: Router) {}
+  constructor(private spentService: ReportService, private router: Router,private messageService: MessageService) {}
 
   isTodayDate(event: any, index: number) {
-    let input = document.querySelector('#inputDate'+index) as HTMLInputElement;
-    let input2 = document.querySelector('#movilDate'+index) as HTMLInputElement;
+    let input = document.querySelector(
+      '#inputDate' + index
+    ) as HTMLInputElement;
+    let input2 = document.querySelector(
+      '#movilDate' + index
+    ) as HTMLInputElement;
     const today = new Date();
     if (event.target.checked) {
       this.spent[index].date = today.toISOString().split('T')[0];
@@ -81,7 +84,6 @@ export class AddSpentComponent {
 
   setAmount(event: any, index: number) {
     this.spent[index].amount = event.target.value;
-    
   }
 
   setDate(event: any, index: number) {
@@ -94,9 +96,7 @@ export class AddSpentComponent {
 
   submit() {
     if (this.spent.length === 0) {
-      this.isCompleted = false;
-      this.message = 'Debe agregar al menos un gasto';
-      this.type = 'error';
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No hay gastos para agregar' });
       return;
     } else if (
       this.spent.some(
@@ -104,28 +104,14 @@ export class AddSpentComponent {
           spent.amount === 0 || spent.date === '' || spent.description === ''
       )
     ) {
-      console.log(this.spent);
-      this.isCompleted = false;
-      this.message = 'Debe llenar todos los campos';
-      this.type = 'warning';
-      this.isCompleted = true;
-      setTimeout(() => {
-        this.isCompleted = false;
-      }, 3000);
+      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, complete todos los campos' });
     } else if (this.spent.length > 0) {
-      this.isCompleted = true;
-      this.message = 'Gastos agregados correctamente';
-      this.type = 'success';
+      this.messageService.add({ severity: 'info', summary: 'Guardando gastos', detail: 'Por favor, espere un momento' });
       this.spentService.createSpent(this.spent).subscribe((res) => {
-        setTimeout(() => {
-          this.isCompleted = false;
-        }, 3000);
+        this.messageService.add({ severity: 'success', summary: 'Gastos guardados', detail: 'Gastos guardados correctamente' });
       });
-    this.clearSpent();
+      this.clearSpent();
     }
-    setTimeout(() => {
-      this.isCompleted = false;
-    }, 3000);
   }
 
   setWindow(parsedWindow: any) {
@@ -137,22 +123,29 @@ export class AddSpentComponent {
     this.spent = [];
     this.spent.push({ date: '', amount: 0, description: '' });
     let count = 0;
-    for(let i = 0; i < this.spent.length; i++) {
-      let input = document.querySelector('#inputDate'+i) as HTMLInputElement;
+    for (let i = 0; i < this.spent.length; i++) {
+      let input = document.querySelector('#inputDate' + i) as HTMLInputElement;
       input.value = '';
       input.disabled = false;
-      let checkbox = document.querySelector('#checkbox'+i) as HTMLInputElement;
+      let checkbox = document.querySelector(
+        '#checkbox' + i
+      ) as HTMLInputElement;
       checkbox.checked = false;
-      let inputAmount = document.querySelector('#inputAmount'+i) as HTMLInputElement;
+      let inputAmount = document.querySelector(
+        '#inputAmount' + i
+      ) as HTMLInputElement;
       inputAmount.value = '';
-      let inputDescription = document.querySelector('#inputDescription'+i) as HTMLInputElement;
+      let inputDescription = document.querySelector(
+        '#inputDescription' + i
+      ) as HTMLInputElement;
       inputDescription.value = '';
     }
-  
   }
 
   getPDF() {
+    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
     this.spentService.getPDF().subscribe((data) => {
+      this,this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
       const blob = new Blob([data], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       window.open(url);
