@@ -6,6 +6,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-header',
@@ -65,6 +66,7 @@ export class HeaderComponent {
     this.authService.getCurrentUser().subscribe((user) => {
       this.name = user?.email ?? '';
     });
+    initFlowbite();
   }
 
   getName() {
