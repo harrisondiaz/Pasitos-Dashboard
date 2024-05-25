@@ -177,13 +177,21 @@ export class ProductEditComponent {
         severity: 'info',
         summary: 'Guardando cambios',
       });
-      this.productService.update(this.product).subscribe(() => {
+      this.productService.update(this.product).subscribe(
+        (response) => {
         this.messageService.add({
           severity: 'success',
           summary: 'Producto actualizado',
           detail: 'Producto actualizado correctamente',
         });
         this.setWindow('product');
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al actualizar el producto',
+        })
       });
     } else {
       this.messageService.add({
