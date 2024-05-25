@@ -22,24 +22,46 @@ export class SpentComponent {
   }
 
   getPDF() {
-    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
-    this.spentService.getAll().subscribe((data: any) => {
-      this.spentArray = data;
-      if (this.spentArray.length === 0) {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay gastos registrados' });
-      } else {
-        this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
-        this.spentService.getPDF().subscribe((data) => {
-          const blob = new Blob([data], { type: 'application/pdf' });
-          const url = window.URL.createObjectURL(blob);
-          window.open(url);
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Descargando PDF...',
+    });
+    this.spentService.getAll().subscribe(
+      (data: any) => {
+        this.spentArray = data;
+        if (this.spentArray.length === 0) {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No hay gastos registrados',
+          });
+        } else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'PDF generado correctamente',
+          });
+          this.spentService.getPDF().subscribe((data) => {
+            const blob = new Blob([data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            window.open(url);
+          });
+        }
+      },
+      (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo generar el PDF',
         });
       }
-    });
+    );
   }
 
   getLastYear() {
-    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Descargando PDF...',
+    });
 
     let today = new Date();
     let lastYear = new Date();
@@ -51,23 +73,42 @@ export class SpentComponent {
 
     this.spentService
       .getSpentbyDate(formattedLastYear, formattedToday)
-      .subscribe((data: any) => {
-        this.spentArray = data;
-        if (this.spentArray.length === 0) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay gastos registrados' });
-        } else {
-          this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
-          this.spentService.getLastYear().subscribe((data) => {
-            const blob = new Blob([data], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            window.open(url);
+      .subscribe(
+        (data: any) => {
+          this.spentArray = data;
+          if (this.spentArray.length === 0) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'No hay gastos registrados',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'PDF generado correctamente',
+            });
+            this.spentService.getLastYear().subscribe((data) => {
+              const blob = new Blob([data], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              window.open(url);
+            });
+          }
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo generar el PDF',
           });
         }
-      });
+      );
   }
 
   getLastMonth() {
-    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Descargando PDF...',
+    });
     let today = new Date();
     let lastMonth = new Date();
     lastMonth.setMonth(lastMonth.getMonth() - 1);
@@ -78,23 +119,42 @@ export class SpentComponent {
 
     this.spentService
       .getSpentbyDate(formattedLastMonth, formattedToday)
-      .subscribe((data: any) => {
-        this.spentArray = data;
-        if (this.spentArray.length === 0) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay gastos registrados' });
-        } else {
-          this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
-          this.spentService.getLastMonth().subscribe((data) => {
-            const blob = new Blob([data], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            window.open(url);
+      .subscribe(
+        (data: any) => {
+          this.spentArray = data;
+          if (this.spentArray.length === 0) {
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'No hay gastos registrados',
+            });
+          } else {
+            this.messageService.add({
+              severity: 'success',
+              summary: 'PDF generado correctamente',
+            });
+            this.spentService.getLastMonth().subscribe((data) => {
+              const blob = new Blob([data], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              window.open(url);
+            });
+          }
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo generar el PDF',
           });
         }
-      });
+      );
   }
 
   getLastWeek() {
-    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Descargando PDF...',
+    });
 
     let today = new Date();
     let lastWeek = new Date();
@@ -109,17 +169,36 @@ export class SpentComponent {
       .subscribe((data: any) => {
         this.spentArray = data;
         if (this.spentArray.length === 0) {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No hay gastos registrados' });
-        } else {
-          this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
-          this.spentService.getLasWeek().subscribe((data) => {
-            const blob = new Blob([data], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            window.open(url);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No hay gastos registrados',
           });
+        } else {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'PDF generado correctamente',
+          });
+          this.spentService.getLasWeek().subscribe(
+            (data) => {
+              const blob = new Blob([data], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+              window.open(url);
+            },
+            (error) => {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'No se pudo generar el PDF',
+              });
+            }
+          );
         }
       });
   }
 
-  constructor(private spentService: ReportService, private messageService : MessageService) {}
+  constructor(
+    private spentService: ReportService,
+    private messageService: MessageService
+  ) {}
 }

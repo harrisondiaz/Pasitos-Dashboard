@@ -36,7 +36,11 @@ export class AddSpentComponent {
     }).format(amount);
   }
 
-  constructor(private spentService: ReportService, private router: Router,private messageService: MessageService) {}
+  constructor(
+    private spentService: ReportService,
+    private router: Router,
+    private messageService: MessageService
+  ) {}
 
   isTodayDate(event: any, index: number) {
     let input = document.querySelector(
@@ -96,7 +100,11 @@ export class AddSpentComponent {
 
   submit() {
     if (this.spent.length === 0) {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No hay gastos para agregar' });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No hay gastos para agregar',
+      });
       return;
     } else if (
       this.spent.some(
@@ -104,12 +112,33 @@ export class AddSpentComponent {
           spent.amount === 0 || spent.date === '' || spent.description === ''
       )
     ) {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, complete todos los campos' });
-    } else if (this.spent.length > 0) {
-      this.messageService.add({ severity: 'info', summary: 'Guardando gastos', detail: 'Por favor, espere un momento' });
-      this.spentService.createSpent(this.spent).subscribe((res) => {
-        this.messageService.add({ severity: 'success', summary: 'Gastos guardados', detail: 'Gastos guardados correctamente' });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, complete todos los campos',
       });
+    } else if (this.spent.length > 0) {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Guardando gastos',
+        detail: 'Por favor, espere un momento',
+      });
+      this.spentService.createSpent(this.spent).subscribe(
+        (res) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Gastos guardados',
+            detail: 'Gastos guardados correctamente',
+          });
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudieron guardar los gastos',
+          });
+        }
+      );
       this.clearSpent();
     }
   }
@@ -143,9 +172,16 @@ export class AddSpentComponent {
   }
 
   getPDF() {
-    this.messageService.add({ severity: 'info', summary: 'Descargando PDF...' });
+    this.messageService.add({
+      severity: 'info',
+      summary: 'Descargando PDF...',
+    });
     this.spentService.getPDF().subscribe((data) => {
-      this,this.messageService.add({ severity: 'success', summary: 'PDF generado correctamente' });
+      this,
+        this.messageService.add({
+          severity: 'success',
+          summary: 'PDF generado correctamente',
+        });
       const blob = new Blob([data], { type: 'application/pdf' });
       const url = window.URL.createObjectURL(blob);
       window.open(url);

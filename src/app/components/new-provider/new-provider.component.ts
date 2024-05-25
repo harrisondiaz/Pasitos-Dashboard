@@ -95,31 +95,51 @@ export class NewProviderComponent {
   submit() {
     if (this.form.valid) {
       if (
-        this.form.controls.firstname.value === '' ||
-        this.form.controls.lastname.value === '' ||
-        this.form.controls.businessname.value === '' ||
-        this.form.controls.othernames.value === '' ||
-        this.form.controls.secondlastname.value === ''
+        (this.form.controls.firstname.value === '' &&
+          this.form.controls.lastname.value === '' &&
+          this.form.controls.businessname.value !== '') ||
+        (this.form.controls.businessname.value === '' &&
+          (this.form.controls.firstname.value !== '' ||
+            this.form.controls.lastname.value !== ''))
       ) {
-        alert('Debe tener nombres y apellidos o razón social');
-        return;
-      } else {
         this.providerService.create(this.form.value as Provider).subscribe({
           next: (response) => {
-            this.messageService.add({ severity: 'success', summary: 'Proveedor creado', detail: 'Proveedor creado correctamente', life: 5000 });
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Proveedor creado',
+              detail: 'Proveedor creado correctamente',
+              life: 5000,
+            });
             this.setWindow('provider');
           },
           error: (error) => {
-            this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear el proveedor', life: 5000});
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Error al crear el proveedor',
+              life: 5000,
+            });
           },
         });
+        
+      } else {
+        this.messageService.add({
+          severity: 'warning',
+          summary: 'Advertencia',
+          detail: 'debe tener nombre y apellidos o Razón Social',
+          life: 5000,
+        });
+        return;
       }
     } else {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, llene todos los campos', life: 5000 });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, llene todos los campos',
+        life: 5000,
+      });
     }
   }
-
- 
 
   constructor(
     private colombiaService: ColombiaService,

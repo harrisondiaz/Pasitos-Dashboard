@@ -113,17 +113,6 @@ export class ProductComponent implements OnInit {
     // Set hasColor property
     product.hasColor = colors.some((color) => color !== '');
 
-    if (product.id === 13) {
-      console.log(
-        colors.map((color) => {
-          const photoUrls = this.groupedPhotosByColor[color].map(
-            (photo) => photo.url
-          );
-          return [color, photoUrls];
-        })
-      );
-    }
-
     if (!product.hasColor) {
       return [
         [product.photos[0].color, product.photos.map((photo) => photo.url)],

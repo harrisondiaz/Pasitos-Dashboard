@@ -121,6 +121,9 @@ export class EditProviderComponent {
           this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proveedor actualizado correctamente' });
             this.setWindow('provider');
           
+        },
+        (error) => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al actualizar el proveedor' });
         });
     } else {
       this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No hay cambios para guardar' });

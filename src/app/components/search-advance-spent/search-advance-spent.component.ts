@@ -13,12 +13,15 @@ import { MessageService } from 'primeng/api';
 export class SearchAdvanceSpentComponent {
   isTable = false;
   spent: any[] = [];
-  
+
   today = new Date().toISOString().split('T')[0];
   initDate = '';
   minDate = '2001-01-01';
 
-  constructor(private spentService: ReportService, private messageService: MessageService) {}
+  constructor(
+    private spentService: ReportService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit() {}
 
@@ -49,6 +52,11 @@ export class SearchAdvanceSpentComponent {
       }
     } else {
       console.error('Elements with id #inputDate or #finaldate not found');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Elementos con id #inputDate o #finaldate no encontrados',
+      });
     }
   }
 
@@ -59,20 +67,44 @@ export class SearchAdvanceSpentComponent {
       .value;
 
     if (initday !== '' && finaldate !== '') {
-      this.messageService.add({ severity: 'info', summary: 'Buscando gastos', detail: 'Por favor, espere un momento' });
-      this.spentService
-        .getSpentbyDate(initday, finaldate)
-        .subscribe((data: any) => {
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Buscando gastos',
+        detail: 'Por favor, espere un momento',
+      });
+      this.spentService.getSpentbyDate(initday, finaldate).subscribe(
+        (data: any) => {
           this.spent = data;
           if (this.spent.length === 0) {
-            this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No se encontraron gastos en el rango de fechas seleccionado' });
+            this.messageService.add({
+              severity: 'warning',
+              summary: 'Advertencia',
+              detail:
+                'No se encontraron gastos en el rango de fechas seleccionado',
+            });
           } else {
             this.isTable = true;
-            this.messageService.add({ severity: 'success', summary: 'Gastos encontrados', detail: 'Gastos encontrados correctamente' });
+            this.messageService.add({
+              severity: 'success',
+              summary: 'Gastos encontrados',
+              detail: 'Gastos encontrados correctamente',
+            });
           }
-        });
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudieron encontrar los gastos',
+          });
+        }
+      );
     } else {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, seleccione una fecha de inicio y una fecha final' });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, seleccione una fecha de inicio y una fecha final',
+      });
     }
   }
 
@@ -83,26 +115,51 @@ export class SearchAdvanceSpentComponent {
       .value;
 
     if (initday !== '' && finaldate !== '') {
-      this.messageService.add({ severity: 'info', summary: 'Generando PDF', detail: 'Por favor, espere un momento' });
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Generando PDF',
+        detail: 'Por favor, espere un momento',
+      });
       this.spentService
         .getSpentbyDate(initday, finaldate)
         .subscribe((data: any) => {
           this.spent = data;
           if (this.spent.length === 0) {
-            this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No se encontraron gastos en el rango de fechas seleccionado' });
+            this.messageService.add({
+              severity: 'warning',
+              summary: 'Advertencia',
+              detail:
+                'No se encontraron gastos en el rango de fechas seleccionado',
+            });
           } else {
             this.spentService
               .getSpentPDFbyDate(initday, finaldate)
               .subscribe((data) => {
-                this.messageService.add({ severity: 'success', summary: 'PDF generado', detail: 'PDF generado correctamente' });
+                this.messageService.add({
+                  severity: 'success',
+                  summary: 'PDF generado',
+                  detail: 'PDF generado correctamente',
+                });
                 const blob = new Blob([data], { type: 'application/pdf' });
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
               });
           }
-        });
+        },
+        (error) => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudieron encontrar los gastos',
+          });
+        }
+      );
     } else {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'Por favor, seleccione una fecha de inicio y una fecha final' });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'Por favor, seleccione una fecha de inicio y una fecha final',
+      });
     }
   }
 }

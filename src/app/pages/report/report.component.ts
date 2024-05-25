@@ -236,6 +236,11 @@ export class ReportComponent {
                     },
                     error: (error) => {
                       console.error(error);
+                      this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Error al generar el PDF',
+                      });
                     },
                   });
               } else {
@@ -249,6 +254,7 @@ export class ReportComponent {
             },
             error: (error) => {
               console.error(error);
+              this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al generar el PDF' });
             },
           });
       }
@@ -278,6 +284,7 @@ export class ReportComponent {
         },
         error: (error) => {
           console.error(error);
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al crear el reporte de ventas' });
         },
       });
     } else {
