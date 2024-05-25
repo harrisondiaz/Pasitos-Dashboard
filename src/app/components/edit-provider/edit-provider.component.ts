@@ -113,24 +113,41 @@ export class EditProviderComponent {
   submit() {
     if (this.form.valid && this.isDifferent()) {
       const id = this.provider.id;
+      if (this.form.controls.businessname.value === '') {
+        this.form.controls.businessname.setValue(
+          this.form.controls.firstname.value +
+            ' ' +
+            this.form.controls.lastname.value
+        );
+      }
       this.provider = this.form.value as Provider;
       this.provider.id = id;
-      this.providerService
-        .update(this.provider)
-        .subscribe((provider: Provider) => {
-          this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Proveedor actualizado correctamente' });
-            this.setWindow('provider');
-          
+
+      this.providerService.update(this.provider).subscribe(
+        (provider: Provider) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'Proveedor actualizado correctamente',
+          });
+          this.setWindow('provider');
         },
         (error) => {
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Error al actualizar el proveedor' });
-        });
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error al actualizar el proveedor',
+          });
+        }
+      );
     } else {
-      this.messageService.add({ severity: 'warning', summary: 'Advertencia', detail: 'No hay cambios para guardar' });
+      this.messageService.add({
+        severity: 'warning',
+        summary: 'Advertencia',
+        detail: 'No hay cambios para guardar',
+      });
     }
   }
-
-  
 
   constructor(
     private colombiaService: ColombiaService,

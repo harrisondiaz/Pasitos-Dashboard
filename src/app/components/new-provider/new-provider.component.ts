@@ -102,6 +102,13 @@ export class NewProviderComponent {
           (this.form.controls.firstname.value !== '' ||
             this.form.controls.lastname.value !== ''))
       ) {
+        if (this.form.controls.businessname.value === '') {
+          this.form.controls.businessname.setValue(
+            this.form.controls.firstname.value +
+              ' ' +
+              this.form.controls.lastname.value
+          );
+        }
         this.providerService.create(this.form.value as Provider).subscribe({
           next: (response) => {
             this.messageService.add({
@@ -121,7 +128,6 @@ export class NewProviderComponent {
             });
           },
         });
-        
       } else {
         this.messageService.add({
           severity: 'warning',
