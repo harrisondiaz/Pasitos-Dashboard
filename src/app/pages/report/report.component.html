@@ -218,39 +218,43 @@
       <ul
         class="list-disc flex flex-col md:flex-row justify-around gap-16 ml-5"
       >
-        @for (item of items; track $index) {
-        <li class="gap-5 mb-2 text-gray-700 dark:text-gray-400">
-          <div class="flex flex-col justify-center">
-            <img
-              src="{{ item.url }}"
-              alt="{{ item.productname }}"
-              class="w-20 h-20 rounded-lg"
-            />
-            <p class="">{{ item.productname }}</p>
-          </div>
-
-          <div class="inline-flex mx-10">
-            <a
-              (click)="setEdit('edit-product', item.id)"
-              class="flex justify-center gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
-            >
-              Ir<svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+        @if(items.length > 0){
+          @for (item of items; track $index) {
+            <li class="gap-5 mb-2 text-gray-700 dark:text-gray-400">
+              <div class="flex flex-col justify-center">
+                <img
+                  src="{{ item.url }}"
+                  alt="{{ item.productname }}"
+                  class="w-20 h-20 rounded-lg"
                 />
-              </svg>
-            </a>
-          </div>
-        </li>
+                <p class="">{{ item.productname }}</p>
+              </div>
+    
+              <div class="inline-flex mx-10">
+                <a
+                  (click)="setEdit('edit-product', item.id)"
+                  class="flex justify-center gap-3 text-center px-3 py-1 bg-blue-500 text-white font-semibold rounded-lg"
+                >
+                  Ir<svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-5 h-5"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M12 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6m-7 1l9-9m-5 0h5v5"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </li>
+            }
+        }@else {
+          <li class="text-gray-700 dark:text-gray-400">No hay productos con poco stock</li>
         }
       </ul>
     </div>
