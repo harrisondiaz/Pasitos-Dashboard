@@ -71,164 +71,9 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        <div
-          class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6"
-        >
-          <div class="flex flex-col md:w-6/12">
-            <label
-              for="quantity"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Cantidad</label
-            >
-            <input
-              formControlName="quantity"
-              id="quantity"
-              name="quantity"
-              type="numebr"
-              currencyMask
-              [options]="{
-                prefix: '',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="type"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Tipo de unidad</label
-            >
-            <select
-              formControlName="type"
-              id="type"
-              name="type"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option
-                value="UNIDAD"
-                [selected]="this.form.value.type === 'UNIDAD'"
-              >
-                Unidad
-              </option>
-              <option
-                value="PAQUETE"
-                [selected]="this.form.value.type === 'PAQUETE'"
-              >
-                Paquete
-              </option>
-              <option value="CAJA" [selected]="this.form.value.type === 'CAJA'">
-                Caja
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="flex flex-col md:w-9/12 md:flex-row md:gap-x-5 gap-y-5">
-          <div class="flex flex-col w-full">
-            <label
-              for="costWithoutVAT"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo sin IVA</label
-            >
-            <input
-              formControlName="costwithoutvat"
-              id="costWithoutVAT"
-              name="costWithoutVAT"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="costWithVAT"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo con IVA</label
-            >
-            <input
-              formControlName="costwithvat"
-              id="costWithVAT"
-              name="costWithVAT"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="vat"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >IVA</label
-            >
-            <input
-              formControlName="vat"
-              id="vat"
-              name="vat"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '',
-                suffix: ' %',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              [defaultValue]="19"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="totalCost"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo total</label
-            >
-            <input
-              formControlName="totalcost"
-              id="totalCost"
-              name="totalCost"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
-        </div>
+               
+          
+          
         <div class="flex flex-col md:w-3/6 md:flex-row md:gap-x-5 gap-y-5">
           <div class="flex flex-col w-full">
             <label
@@ -253,64 +98,9 @@
               }"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
-            @if(isNegative){
-            <p class="block text-sm font-medium text-red-500">
-              El precio de venta no puede ser menor al precio total.
-            </p>
-            }
+            
           </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="homepriceutilitypercentage"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >% utilidad</label
-            >
-            <input
-              formControlName="homepriceutilitypercentage"
-              id="homepriceutilitypercentage"
-              name="homepriceutilitypercentage"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '',
-                suffix: ' %',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: true,
-                allowZero: true,
-                precision: 0
-              }"
-              [defaultValue]="30"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="homepriceutility"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Utilidad</label
-            >
-            <input
-              formControlName="homepriceutilityvalue"
-              id="homepriceutility"
-              name="homepriceutility"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: true,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
+          
         </div>
         <div
           class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6"
@@ -540,6 +330,13 @@
               </label>
             </div>
             @if(isSeleted){
+              <div class="flex items-center justify-center w-full mt-5">
+                <img
+                  src="{{ imageSrc }}"
+                  class="w-44 h-44 border rounded-xl shadow-lg"
+                  alt="{{ this.form.value.productname }}"
+                />
+              </div>
             <p class="block text-sm font-medium text-lime-500">
               Se ha selecionado una imagen
             </p>

@@ -29,7 +29,7 @@
               >ID</label
             >
             <input
-            formControlName="id"
+              formControlName="id"
               id="id"
               name="id"
               type="number"
@@ -38,10 +38,10 @@
             <p
               class="block text-sm font-medium text-gray-500 dark:text-gray-300 -translate-y-5"
             >
-              El ID se generará automáticamente.
+              El ID no puede ser modificado.
             </p>
           </div>
-  
+
           <div class="md:flex md:flex-col md:w-full">
             <label
               for="reference"
@@ -57,7 +57,7 @@
             />
           </div>
         </div>
-  
+
         <div class="md:w-3/4">
           <label
             for="productName"
@@ -72,162 +72,7 @@
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           />
         </div>
-        <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
-          <div class="flex flex-col md:w-6/12">
-            <label
-              for="quantity"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Cantidad</label
-            >
-            <input
-              formControlName="quantity"
-              id="quantity"
-              name="quantity"
-              type="numebr"
-              currencyMask
-              [options]="{
-                prefix: '',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0,
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="type"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Tipo de unidad</label
-            >
-            <select
-              formControlName="type"
-              id="type"
-              name="type"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option
-                value="UNIDAD"
-                [selected]="this.form.value.type === 'UNIDAD'"
-              >
-                Unidad
-              </option>
-              <option
-                value="PAQUETE"
-                [selected]="this.form.value.type === 'PAQUETE'"
-              >
-                Paquete
-              </option>
-              <option value="CAJA" [selected]="this.form.value.type === 'CAJA'">
-                Caja
-              </option>
-            </select>
-          </div>
-        </div>
-        <div class="flex flex-col md:w-9/12 md:flex-row md:gap-x-5 gap-y-5">
-          <div class="flex flex-col w-full">
-            <label
-              for="costWithoutVAT"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo sin IVA</label
-            >
-            <input
-              formControlName="costwithoutvat"
-              id="costWithoutVAT"
-              name="costWithoutVAT"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="costWithVAT"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo con IVA</label
-            >
-            <input
-              formControlName="costwithvat"
-              id="costWithVAT"
-              name="costWithVAT"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="vat"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >IVA</label
-            >
-            <input
-              formControlName="vat"
-              id="vat"
-              name="vat"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '',
-                suffix: ' %',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              [defaultValue]="19"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="totalCost"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Costo total</label
-            >
-            <input
-              formControlName="totalcost"
-              id="totalCost"
-              name="totalCost"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: false,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
-        </div>
+
         <div class="flex flex-col md:w-3/6 md:flex-row md:gap-x-5 gap-y-5">
           <div class="flex flex-col w-full">
             <label
@@ -252,66 +97,12 @@
               }"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
-            @if(isNegative){
-            <p
-              class="block text-sm font-medium text-red-500 "
-            > El precio de venta no puede ser menor al precio total.</p>
-            }
           </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="homepriceutilitypercentage"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >% utilidad</label
-            >
-            <input
-              formControlName="homepriceutilitypercentage"
-              id="homepriceutilitypercentage"
-              name="homepriceutilitypercentage"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '',
-                suffix: ' %',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: true,
-                allowZero: true,
-                precision: 0
-              }"
-              [defaultValue]="30"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
-          <div class="flex flex-col w-full">
-            <label
-              for="homepriceutility"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
-              >Utilidad</label
-            >
-            <input
-              formControlName="homepriceutilityvalue"
-              id="homepriceutility"
-              name="homepriceutility"
-              type="text"
-              currencyMask
-              [options]="{
-                prefix: '$ ',
-                thousands: ',',
-                decimal: '.',
-                align: 'left',
-                allowNegative: true,
-                allowZero: true,
-                precision: 0
-              }"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block cursor-not-allowed w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              readonly
-            />
-          </div>
+          
         </div>
-        <div class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6">
+        <div
+          class="flex flex-col gap-5 md:gap-0 md:flex-row md:gap-x-5 md:w-3/6"
+        >
           <div class="flex flex-col w-full">
             <label
               for="stock"
@@ -348,37 +139,19 @@
               name="category"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option
-                value="Alimentación"
-              >
-                Alimentación
-              </option>
-              <option
-                value="Aseo"
-              >
-                Aseo
-              </option>
-              <option
-                value="Para Dormir"
-              >
-                Para dormir
-              </option>
-              <option
-                value="Jugueteria"
-  
-              >
-                Jugueteria
-              </option>
-              <option value="Accesorios" >
-                Accesorios
-              </option>
+              <option value="Alimentación">Alimentación</option>
+              <option value="Aseo">Aseo</option>
+              <option value="Para Dormir">Para dormir</option>
+              <option value="Jugueteria">Jugueteria</option>
+              <option value="Accesorios">Accesorios</option>
             </select>
           </div>
         </div>
         <div class="flex flex-row md:w-3/4">
           <div class="flex flex-col w-full">
             <label
-              for="provider" class="block text-sm font-medium text-gray-700 dark:text-gray-400"
+              for="provider"
+              class="block text-sm font-medium text-gray-700 dark:text-gray-400"
               >Proveedor</label
             >
             <select
@@ -387,19 +160,21 @@
               name="provider"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-            <option  [selected]="this.form.value.supplier === 0">Seleccione un proveedor</option>
-            @for (item of providerList; track $index) {
+              <option [selected]="this.form.value.supplier === 0">
+                Seleccione un proveedor
+              </option>
+              @for (item of providerList; track $index) {
               <option
-                value="{{ item.id}}"
+                value="{{ item.id }}"
                 [selected]="item.id === this.form.value.supplier"
               >
                 {{ item.businessname }}
               </option>
-            }
+              }
             </select>
           </div>
         </div>
-        <div 
+        <div
           class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
         >
           @for (item of selectedColors; track $index) {
@@ -410,11 +185,12 @@
               >Color</label
             >
             <select
-            (change)="changeColorIndex($event, $index)"
+              (change)="changeColorIndex($event, $index)"
               id="color"
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
+              >
+              <option value="" [selected]="item.color === ''">Sin color</option>
               <option value="white" [selected]="item.color === 'white'">
                 Blanco
               </option>
@@ -433,7 +209,9 @@
               <option value="purple" [selected]="item.color === 'purple'">
                 Púrpura
               </option>
-              <option value="red" [selected]="item.color === 'red'">Rojo</option>
+              <option value="red" [selected]="item.color === 'red'">
+                Rojo
+              </option>
               <option value="white" [selected]="item.color === 'white'">
                 Blanco
               </option>
@@ -443,8 +221,8 @@
               <option value="blue" [selected]="item.color === 'blue'">
                 Azul
               </option>
-              <option value="" [selected]="item.color ===''">
-                Sin color
+              <option value="orange" [selected]="item.color === 'orange'">
+                Naranja
               </option>
             </select>
             <div class="flex flex-row justify-between">
@@ -457,7 +235,7 @@
                 class="mt-5 -translate-x-32 translate-y-2 md:-translate-x-5 md:translate-y-2 lg:-translate-x-14 lg:translate-y-2"
               >
                 <button
-                (click)="toogleDelete($index)"
+                  (click)="toogleDelete($index)"
                   type="button"
                   class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-1 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 >
@@ -477,10 +255,9 @@
           </div>
           }
         </div>
-        <div 
+        <div
           class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
         >
-        
           <div class="flex flex-col">
             <label
               for="color"
@@ -488,12 +265,13 @@
               >Color</label
             >
             <select
-            (change)="changeColor($event)"
+              (change)="changeColor($event)"
               id="color"
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
-              <option selected>Selecione un color</option>
+            <option selected>Selecione un color</option>
+            <option value="" selected>Sin Color</option>
               <option value="white">Blanco</option>
               <option value="black">Negro</option>
               <option value="brown">Marrón</option>
@@ -504,15 +282,17 @@
               <option value="white">Blanco</option>
               <option value="yellow">Amarillo</option>
               <option value="blue">Azul</option>
-              <option value="">Sin Color</option>
+              <option value="orange">Naranja</option>
             </select>
-  
+
             <div class="flex items-center justify-center w-full mt-5">
               <label
                 for="dropzone-file"
                 class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
               >
-                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <div
+                  class="flex flex-col items-center justify-center pt-5 pb-6"
+                >
                   <svg
                     class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
                     aria-hidden="true"
@@ -548,12 +328,18 @@
               </label>
             </div>
             @if(isSeleted){
-            <p
-              class="block text-sm font-medium text-lime-500 "
-            > Se ha selecionado una imagen </p>
+              <div class="flex flex-row justify-center mt-5">
+                <img
+                  src="{{ imageSrc }}"
+                  class="w-44 h-44 border rounded-xl shadow-lg"
+                  alt="{{ this.form.value.productname }}"
+                />
+              </div>
+            <p class="block text-sm font-medium text-lime-500">
+              Se ha selecionado una imagen
+            </p>
             }
           </div>
-          
         </div>
         <div class="flex flex-row gap-x-5">
           <button
@@ -561,20 +347,26 @@
             type="button"
             class="flex flex-row focus:outline-none text-white bg-lime-500 hover:bg-lime-600 focus:ring-4 focus:ring-lime-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-lime-600 dark:hover:bg-lime-700 dark:focus:ring-lime-900"
           >
-           
-          @if(isSeleted){
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 me-2 text-white dark:text-gray-400" viewBox="0 0 24 24"><path fill="currentColor" d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z"/></svg>
-            Subir imagen
-          }@else {
+            @if(isSeleted){
             <svg
-            class="w-5 h-5 me-2 text-white dark:text-gray-400"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-          </svg>
-          Agregar Imagen
-          }
+              xmlns="http://www.w3.org/2000/svg"
+              class="w-5 h-5 me-2 text-white dark:text-gray-400"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="currentColor"
+                d="M7 20v-2h10v2zm4-4V7.825L8.4 10.4L7 9l5-5l5 5l-1.4 1.4L13 7.825V16z"
+              />
+            </svg>
+            Subir imagen }@else {
+            <svg
+              class="w-5 h-5 me-2 text-white dark:text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+            </svg>
+            Agregar Imagen }
           </button>
           <button
             (click)="remove()"
@@ -608,7 +400,7 @@
             class="w-full px-4 py-2 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
           ></textarea>
         </div>
-  
+
         <div class="flex items-center justify-between mt-4">
           <button
             (click)="setWindow('product')"
@@ -618,7 +410,7 @@
             Cancelar
           </button>
           <button
-          (click)="updateProduct()"
+            (click)="updateProduct()"
             type="submit"
             class="px-4 py-2 rounded-md bg-blue-500 text-white font-medium hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
@@ -628,13 +420,10 @@
       </form>
     </div>
   </div>
-  
 </div>
 
-
-
 @if(isDeleted){
-  <div
+<div
   class="fixed top-0 left-0 z-50 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50"
 >
   <div
@@ -680,8 +469,8 @@
         />
       </svg>
       <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-        ¿Estás seguro de que deseas eliminar esta imagen? Esta acción no se puede
-        deshacer y puede provocar errores. 
+        ¿Estás seguro de que deseas eliminar esta imagen? Esta acción no se
+        puede deshacer y puede provocar errores.
       </h3>
       <button
         (click)="removebyIndex()"
@@ -703,4 +492,4 @@
   </div>
 </div>
 }
-<p-toast/>
+<p-toast />

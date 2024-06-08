@@ -25,19 +25,19 @@ export class NewProducComponent {
     id: new FormControl(0, Validators.required),
     reference: new FormControl('', Validators.required),
     productname: new FormControl('', Validators.required),
-    quantity: new FormControl(0, Validators.required),
-    costwithoutvat: new FormControl(0, Validators.required),
-    costwithvat: new FormControl(0, Validators.required),
-    vat: new FormControl(0.0, Validators.required),
-    totalcost: new FormControl(0, Validators.required),
+    quantity: new FormControl(0),
+    costwithoutvat: new FormControl(0),
+    costwithvat: new FormControl(0),
+    vat: new FormControl(0.0),
+    totalcost: new FormControl(0),
     stock: new FormControl(0, Validators.required),
     classification: new FormControl(0, Validators.required),
     supplier: new FormControl(0, Validators.required),
     homepricevalue: new FormControl(0, Validators.required),
-    homepriceutilitypercentage: new FormControl(0.0, Validators.required),
-    homepriceutilityvalue: new FormControl(0, Validators.required),
+    homepriceutilitypercentage: new FormControl(0.0),
+    homepriceutilityvalue: new FormControl(0),
     description: new FormControl('', Validators.required),
-    type: new FormControl('', Validators.required),
+    type: new FormControl(''),
   });
 
   isNegative = false;
@@ -47,6 +47,7 @@ export class NewProducComponent {
   providerList: any = [];
   selectedFile: File | null = null;
   isSeleted: boolean = false;
+  imageSrc: string | ArrayBuffer | null = null;
   color: string = '';
   setValues() {
     this.form.valueChanges.subscribe((values) => {
@@ -87,10 +88,22 @@ export class NewProducComponent {
   }
 
   fileChanged(event: Event) {
-    const target = event.target as HTMLInputElement;
-    const file: File = (target.files as FileList)[0];
-    this.selectedFile = file;
-    this.isSeleted = true;
+    if (
+      event.target instanceof HTMLInputElement &&
+      event.target.files &&
+      event.target.files[0]
+    ) {
+      const file = event.target.files[0];
+      this.selectedFile = file; 
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        if (e.target && e.target.result) {
+          this.imageSrc = e.target.result;
+        }
+      };
+      reader.readAsDataURL(file);
+      this.isSeleted = true;
+    }
   }
 
   changeColor(event: any) {
@@ -119,9 +132,16 @@ export class NewProducComponent {
               detail: 'Imagen subida correctamente',
               life: 5000,
             });
+
             this.selectedColors.push({ color: color || '', url });
             this.isSeleted = false;
             this.color = '';
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Recuerda',
+              detail: 'Cambiar el color de la imagen nueva',
+              life: 5000,
+            });
           } else {
             this.messageService.add({
               severity: 'error',
