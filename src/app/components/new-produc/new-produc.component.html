@@ -402,6 +402,7 @@
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
+              <option value="" [selected]="item.color === ''">Sin color</option>
               <option value="white" [selected]="item.color === 'white'">
                 Blanco
               </option>
@@ -432,7 +433,9 @@
               <option value="blue" [selected]="item.color === 'blue'">
                 Azul
               </option>
-              <option value="" [selected]="item.color === ''">Sin color</option>
+              <option value="orange" [selected]="item.color === 'orange'">
+                Naranja
+              </option>
             </select>
             <div class="flex flex-row justify-between">
               <img
@@ -479,6 +482,7 @@
               name="color"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
+              <option value="" selected>Sin Color</option>
               <option value="white">Blanco</option>
               <option value="black">Negro</option>
               <option value="brown">Marrón</option>
@@ -489,7 +493,7 @@
               <option value="white">Blanco</option>
               <option value="yellow">Amarillo</option>
               <option value="blue">Azul</option>
-              <option value="">Sin Color</option>
+              <option value="orange">Naranja</option>
             </select>
 
             <div class="flex items-center justify-center w-full mt-5">
@@ -623,4 +627,4 @@
   </div>
 </div>
 
-<p-toast/>
+<p-toast />
