@@ -162,6 +162,7 @@ export class ProductEditComponent {
         summary: 'Imagen eliminada',
         detail: 'Imagen eliminada correctamente',
       });
+      this.close();
     });
 
     //this.selectedColors.splice(index, 1);
@@ -216,33 +217,42 @@ export class ProductEditComponent {
   }
 
   isDifferent(product: Product): boolean {
-    let productVatString = product.vat.toString();
-    let decimalIndex = productVatString.indexOf('.');
-    if (decimalIndex !== -1) {
-      productVatString = productVatString.substring(0, decimalIndex + 3);
+  let productCopy: any = { ...product };
+  for (let key in productCopy) {
+    if (productCopy[key] === null) {
+      productCopy[key] = '';
+    } else if (typeof productCopy[key] === 'number') {
+      productCopy[key] = productCopy[key].toString();
     }
-
-    return (
-      this.form.value.id === product.id ||
-      this.form.value.reference === product.reference ||
-      this.form.value.productname === product.productname ||
-      this.form.value.quantity === product.quantity ||
-      this.form.value.costwithoutvat === product.costwithoutvat ||
-      this.form.value.costwithvat === product.costwithvat ||
-      this.form.value.vat!.toFixed(2) === productVatString ||
-      this.form.value.totalcost === product.totalcost ||
-      this.form.value.stock === product.stock ||
-      this.form.value.classification === product.classification ||
-      this.form.value.supplier === product.supplier ||
-      this.form.value.homepricevalue === product.homeprice.value ||
-      this.form.value.homepriceutilitypercentage!.toFixed(2) ===
-        product.homeprice.utilitypercentage.toFixed(2) ||
-      this.form.value.homepriceutilityvalue ===
-        product.homeprice.utilityvalue ||
-      this.form.value.description === product.description ||
-      this.form.value.type === product.type
-    );
   }
+
+  let productVatString = productCopy.vat;
+  let decimalIndex = productVatString.indexOf('.');
+  if (decimalIndex !== -1) {
+    productVatString = productVatString.substring(0, decimalIndex + 3);
+  }
+
+  return (
+    this.form.value.id === productCopy.id ||
+    this.form.value.reference === productCopy.reference ||
+    this.form.value.productname === productCopy.productname ||
+    this.form.value.quantity === productCopy.quantity ||
+    this.form.value.costwithoutvat === productCopy.costwithoutvat ||
+    this.form.value.costwithvat === productCopy.costwithvat ||
+    this.form.value.vat!.toFixed(2) === productVatString ||
+    this.form.value.totalcost === productCopy.totalcost ||
+    this.form.value.stock === productCopy.stock ||
+    this.form.value.classification === productCopy.classification ||
+    this.form.value.supplier === productCopy.supplier ||
+    this.form.value.homepricevalue === productCopy.homeprice.value ||
+    this.form.value.homepriceutilitypercentage!.toFixed(2) ===
+      productCopy.homeprice.utilitypercentage.toFixed(2) ||
+    this.form.value.homepriceutilityvalue ===
+      productCopy.homeprice.utilityvalue ||
+    this.form.value.description === productCopy.description ||
+    this.form.value.type === productCopy.type
+  );
+}
 
   setWindow(pasare: string) {
     localStorage.setItem('window', pasare);
