@@ -165,27 +165,26 @@
     <div
       class="w-full justify-around max-w-sm pl-5 pr-5 pt-5 pb-2 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col items-stretch"
     >
-      @if(!hasColor(item)){
+      @if(!hasColor(item)|| hasColor(item) && item.currentColor === ''){
       <img
-        src="{{ item.photos[0].url }}"
+        src="{{ getFirstPhoto(item) }}"
         alt="{{ item.productname }}"
         class="w-full h-96 object-contain rounded-lg shadow-lg"
       />
-      }@else { @for (color of formatColors(item); track $index) { @if
-      (item.currentColor === color[0]) {
-      <img
-        src="{{ item.currentPhoto }}"
-        alt="{{ item.productname }}"
-        class="w-full h-96 object-contain rounded-lg shadow-lg"
-      />
-      } @else{
+      }@else if(hasColor(item)) { @for (color of formatColors(item); track
+      $index) { @if (item.currentColor === color[0]) {
       <img
         src="{{ item.currentPhoto }}"
         alt="{{ item.productname }}"
         class="w-full h-96 object-contain rounded-lg shadow-lg"
       />
-
-      } } }
+      } } }@else {
+      <img
+        src="{{ getFirstPhoto(item) }}"
+        alt="{{ item.productname }}"
+        class="w-full h-96 object-contain rounded-lg shadow-lg"
+      />
+      }
       <a class="md:mt-5">
         <h5
           class="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"

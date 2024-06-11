@@ -60,8 +60,11 @@ export class ProductComponent implements OnInit {
     }
   }
 
+  
+
   hasColor(product: Product): boolean {
     product.hasColor = product.photos.some((photo) => photo.color !== '');
+    
     return product.hasColor;
   }
 
@@ -105,6 +108,14 @@ export class ProductComponent implements OnInit {
 
   setEdit(pasare: string, product: Product) {
     this.router.navigate(['dashboard', pasare, product.id]);
+  }
+
+  getFirstPhoto(product: Product): string {
+    return product.photos[0].url;
+  }
+
+  isFirstColor(product: Product, color: string): boolean {
+    return product.photos[0].color === color;
   }
 
   formatColors(product: Product): [string, string[]][] {
